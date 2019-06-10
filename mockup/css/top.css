@@ -1,0 +1,38 @@
+
+body{
+  background-color: #f0f0f3;
+}
+
+
+.aq-wrapper{
+  margin-top: 80px;
+}
+.aq-header{
+  margin:20px 0;
+}
+
+.aq-menu{
+  display: flex;
+  justify-content: space-around;
+  width:689px;
+  height: 250px;
+  margin:150px auto;
+}
+
+.aq-menu__item{
+  width: 200px;
+  height: inherit;
+  border: solid 2px black;
+  border-radius: 2em;
+}
+
+.aq-menu__link{
+  height:250px;
+}
+
+
+.aq-list__item{
+  list-style: none;
+  padding:10px 0;
+  text-align: center;
+}
