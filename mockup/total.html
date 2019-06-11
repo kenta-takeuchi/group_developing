@@ -9,28 +9,33 @@
   <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.2.2/semantic.min.js"></script>
 </head>
 <body>
+  <div class="ui container">
+
   <div class="ui borderless topmenu menu">
     <div class="ui container aq-header">
       <h1 class="ui center aligned">集計表</h1>
     </div>
   </div>
-  <div class="ui raised very padded text container segment">
-    <h2 class="ui header">6月度受注総計</h2>
-    <div class="ui statistics horizontal">
+  <div class="ui segment center aligned text container">
+    <div class="ui small statistics">
+      <div class="statistic">
+        <h2>6月度受注総計</h2>
+      </div>
       <div class="pink statistic">
-        <div class="label">受注件数：</div>
+        <div class="label">受注件数</div>
         <div class="value">500</div>
         <div class="label">件</div>
       </div>
-    </div>
-    <div class="ui statistics horizontal">
       <div class="orange statistic">
-        <div class="label">受注総額：</div>
+        <div class="label">受注総額</div>
         <div class="value">2,000,000,000</div>
         <div class="label">円</div>
       </div>
     </div>
   </div>
+
+
+
   <table class="ui celled padded table">
     <thead>
       <tr>
@@ -65,5 +70,6 @@
       </tr>
     </tfoot>
   </table>
+</div>
 </body>
 </html>

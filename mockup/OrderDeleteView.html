@@ -2,20 +2,26 @@
 <html>
 <head>
   <meta charset="utf-8">
-  <title>検索結果表示</title>
+  <title>削除画面</title>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.2.2/semantic.min.css">
   <link rel="stylesheet" type="text/css" href="css/master.css">
   <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
   <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.2.2/semantic.min.js"></script>
 </head>
 <body>
-  <div class="ui container">
-
-
+<div class="ui container">
   <div class="ui borderless topmenu menu">
     <div class="ui container aq-header">
-      <h1 class="ui center aligned">受注詳細</h1>
+      <h1>受注削除</h1>
     </div>
+  </div>
+
+  <div class="ui negative message">
+    <i class="close icon"></i>
+    <div class="header">
+      以下の受注を削除します。
+    </div>
+    <p>よろしければ確認ボタンを押してください。</p>
   </div>
   <table class="ui celled padded table">
     <thead>
@@ -46,12 +52,11 @@
     <tfoot>
       <tr>
         <th colspan="12" class="center aligned">
-          <button class="ui button teal"type="button" name="button">編集</button>
-          <button class="ui button"type="button" name="button">削除</button>
+          <button class="ui button teal"type="button" name="button">確認</button>
         </th>
       </tr>
     </tfoot>
   </table>
-  </div>
+</div>
 </body>
 </html>
