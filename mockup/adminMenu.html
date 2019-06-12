@@ -10,23 +10,71 @@
   <body>
     <div class="ui container">
 
-    <div class="ui borderless topmenu menu">
-      <div class="ui container aq-header">
-        <h1 class="ui center aligned">受注管理メニュー</h1>
-      </div>
-    </div>
-
-    <div class="aq-wrapper">
-
-      <div class="ui raised very padded center aligned text container segment">
-        <div class="ui link list">
-          <h2 class="active">受注分析</h2>
-          <a class="item" href="">受注集計</a>
-          <a class="item" href="">各種分析</a>
+      <div class="ui borderless topmenu menu">
+        <div class="ui container aq-header">
+          <h1 class="ui center aligned">管理者メニュー</h1>
+        </div>
+        <div class="ui header item">
+          <button class="ui button header item">
+            ログアウト
+          </button>
         </div>
       </div>
 
-    </div>
+      <div class="aq-wrapper">
+
+        <div class="ui raised very padded center aligned text container segment">
+          <div class="ui link list">
+            <h2 class="ui header">受注分析/集計</h2><br>
+            <form class="ui form" action="" method="post">
+              <div class="field inline">
+                <label>受注分析：</label>
+                <div class="ui input">
+                  <select class="ui select" name="">
+                    <option value="1">1月</option>
+                    <option value="2">2月</option>
+                    <option value="3">3月</option>
+                    <option value="4">4月</option>
+                    <option value="5">5月</option>
+                    <option value="6">6月</option>
+                    <option value="7">7月</option>
+                    <option value="8">8月</option>
+                    <option value="9">9月</option>
+                    <option value="10">10月</option>
+                    <option value="11">11月</option>
+                    <option value="12">12月</option>
+                  </select>
+                </div>
+                <button class="ui teal button field" type="submit">分析</button>
+              </div>
+
+            </form>
+            <p></p>
+            <form class="ui form" action="" method="post">
+              <div class="field inline">
+                <label>受注集計：</label>
+                <div class="ui input">
+                  <select class="ui select" name="">
+                    <option value="1">1月</option>
+                    <option value="2">2月</option>
+                    <option value="3">3月</option>
+                    <option value="4">4月</option>
+                    <option value="5">5月</option>
+                    <option value="6">6月</option>
+                    <option value="7">7月</option>
+                    <option value="8">8月</option>
+                    <option value="9">9月</option>
+                    <option value="10">10月</option>
+                    <option value="11">11月</option>
+                    <option value="12">12月</option>
+                  </select>
+                </div>
+                <button class="ui green button field" type="submit">集計</button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
     </div>
   </body>
 </html>
