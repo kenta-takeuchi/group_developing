@@ -1,11 +1,12 @@
 
 body{
   background-color: #f0f0f3;
+  padding-top:30px;/*ほんとはダメなんだけどごめん*/
 }
 
 
 .aq-wrapper{
-  margin-top: 80px;
+  margin-top: 30px;
 }
 .aq-header{
   margin:20px 0;
