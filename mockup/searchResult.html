@@ -12,44 +12,48 @@
   <div class="ui container">
 
 
-  <div class="ui borderless topmenu menu">
-    <div class="ui container aq-header">
-      <h1>検索結果一覧</h1>
-    </div>
-  </div>
-  <div class="ui padded grid container">
-    <!-- 検索結果群 -->
-    <div class="ui special cards">
-      <!-- 検索結果 -->
-      <div class="card">
-        <div class="blurring dimmable image">
-          <div class="ui dimmer">
-            <div class="content">
-              <div class="center">
-                <h2 class="ui inverted icon header">
-                  <i class="heart icon"></i>
-                  Selected!
-                </h2>
-              </div>
-            </div>
-          </div>
-          <!-- 商品画像（必要なければ削除） -->
-          <!-- <img src="https://images.pexels.com/photos/46710/pexels-photo-46710.jpeg"> -->
-        </div>
-        <div class="content">
-          <h3>受注登録日：</h3>
-          <h3>仕入れ先コード：</h3>
-          <h3>受注スタッフコード：</h3>
-          <h3>受注コード</h3>
-            <div class="ui">
-              <!-- ここに編集したい項目の詳細を書く -->
-              <button class="ui teal button" id="myBtn" value="0" onclick="myFunction()">詳細を見る</button>
-              <div class="ui heart rating" data-rating="4"></div>
-            </div>
-          </div>
-        </div>
+    <div class="ui borderless topmenu menu">
+      <div class="ui container aq-header">
+        <h1>検索結果一覧</h1>
       </div>
     </div>
-    </div>
-  </body>
+    <table class="ui celled padded table center aligned">
+      <thead>
+        <tr>
+          <th>登録日</th>
+      　  <th>仕入れ先コード</th>
+    　    <th>受注コード</th>
+    　    <th>受注スタッフコード</th>
+    　    <th>編集／削除</th>
+    　  </tr>
+  　  </thead>
+      <tbody>
+        <tr>
+          <td>YYYY/MM/DD</td>
+          <td class="single line">test</td>
+          <td>test</td>
+          <td>test</td>
+          <td>
+            <form class="ui form center aligned" action="index.html" method="post">
+              <button class="ui button teal"type="button" name="button">編集</button>
+              <button class="ui button"type="button" name="button">削除</button>
+            </form>
+          </td>
+        </tr>
+        <tr>
+          <td>YYYY/MM/DD</td>
+          <td>test</td>
+          <td>test</td>
+          <td>test</td>
+          <td>
+            <form class="ui form center aligned" action="index.html" method="post">
+              <button class="ui button teal"type="button" name="button">編集</button>
+              <button class="ui button"type="button" name="button">削除</button>
+            </form>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</body>
 </html>

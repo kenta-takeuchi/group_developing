@@ -9,38 +9,39 @@
 </head>
   <body>
     <div class="ui container">
-
-
     <div class="ui borderless topmenu menu">
       <div class="ui container aq-header">
         <h1 class="ui center aligned">受注検索フォーム</h1>
       </div>
     </div>
     <div class="aq-wrapper">
-      <div class="ui raised very padded center aligned text container segment">
-        <h2>受注検索</h2>
-        <div class="ui category search">
+      <form class="ui form raised very padded center aligned text container segment">
+        <h2 class="ui header">受注検索</h2>
+        <div class="field inline">
+          <label>登録日</label>
           <div class="ui input">
-            <input class="prompt" type="date" placeholder="登録日">
+            <input class="prompt" type="date">
           </div>
         </div>
         <br>
-        <div class="ui category search">
+        <div class="field inline">
+          <label>仕入れ先コード</label>
           <div class="ui input">
-            <input class="prompt" type="text" placeholder="仕入れ先コード">
+            <input class="prompt" type="text">
           </div>
         </div>
         <br>
-        <div class="ui category search">
+        <div class="field inline">
+          <label>受注スタッフコード</label>
           <div class="ui input">
-            <input class="prompt" type="text" placeholder="受注スタッフコード">
+            <input class="prompt" type="text">
           </div>
         </div>
         <br>
         <div class="actions">
           <button class=" ui large teal button" type="submit">検索</button>
         </div>
-      </div>
+      </form>
     </div>
     </div>
   </body>
