@@ -46,6 +46,10 @@ import java.io.Serializable;
 		public String getEmployee_code() {
 			return employee_code;
 		}
+		
+		public void getEmployee_code(String employee_code) {
+			this.employee_code = employee_code;
+		}
 
 		public java.sql.Date getOrdered_date() {
 			return ordered_date;
@@ -83,9 +87,7 @@ import java.io.Serializable;
 			this.employee_code = employee_code;
 		}
 
-		public void getEmployee_code(String employee_code) {
-			this.employee_code = employee_code;
-		}
+		
 	}
 
 
