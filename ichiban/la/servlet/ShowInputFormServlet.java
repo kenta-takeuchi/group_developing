@@ -20,8 +20,8 @@ public class ShowInputFormServlet extends HttpServlet {
 
 			String action = request.getParameter("action");
 			if(action == null || action.length() == 0 || action.equals("")) {
-				
-				gotoPage(request, response, "/Login.jsp");
+
+				gotoPage(request, response, "/login.html");
 
 			}else if(action.equals("regist")) {
 				ProductBean bean = new ProductBean();

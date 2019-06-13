@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+    <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html>
 <html lang="en" dir="ltr">
 <head>
@@ -18,7 +19,7 @@
     </div>
       <div class="aq-wrapper">
         <div class="ui raised very padded center aligned text container segment">
-          <form class="ui form" action="/group_developing/ichiban/ShowInputFormServlet?action=regist">
+          <form class="ui form" action="/group_developing/ShowInputFormServlet?action=regist">
             <div class="field">
               <h2>得意先コード</h2>
               <input type="text" name="customer_code" placeholder="半角数字のみ" required>
