@@ -2,6 +2,7 @@
     <wb-module deploy-name="group_developing">
         <wb-resource deploy-path="/" source-path="/WebContent" tag="defaultRootSource"/>
         <wb-resource deploy-path="/WEB-INF/classes" source-path="/src"/>
+        <wb-resource deploy-path="/WEB-INF/classes" source-path="/ichiban"/>
         <property name="context-root" value="group_developing"/>
         <property name="java-output-path" value="/group_developing/build/classes"/>
     </wb-module>
