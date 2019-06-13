@@ -1,0 +1,29 @@
+*{
+  margin:0;
+  padding:0;
+}
+
+.aq-wrapper{
+  width: 100%;
+}
+
+.aq-container{
+  width: 480px;
+  margin:0 auto;
+}
+
+.aq-container__inner{
+  padding:10px 0;
+}
+
+.aq-login{
+  width: inherit;
+  height: 300px;
+  padding: 15px;
+  border: solid 1px black;
+}
+
+.aq-form{
+  width: 280px;
+  margin: 0 auto;
+}
