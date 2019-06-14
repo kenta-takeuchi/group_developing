@@ -11,7 +11,8 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import la.dao.DataAccessException;
-import la.dao.PostgreSQLLoginDao;
+import la.dao.PostgreSQLEmployeeDao;
+import la.java.LoginCheck;
 
 /**
  * Servlet implementation class LoginServlet
@@ -34,12 +35,25 @@ public class AdminLoginServlet extends HttpServlet {
 		request.setCharacterEncoding("UTF-8");
 		response.setContentType("text/html;charset=UTF-8");
 
+		LoginCheck logchk = new LoginCheck();
+		logchk.checkAdmin(request, response);
+
+		gotoPage(request,response, "/adminMenu.jsp");
+	}
+
+	/**
+	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
+	 */
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		request.setCharacterEncoding("UTF-8");
+		response.setContentType("text/html;charset=UTF-8");
+
 		String employee_code = request.getParameter("employee_code");
 		String password = request.getParameter("password");
 
-		PostgreSQLLoginDao dao = null;
+		PostgreSQLEmployeeDao dao = null;
 		try {
-			dao = new PostgreSQLLoginDao();
+			dao = new PostgreSQLEmployeeDao();
 		} catch (DataAccessException e1) {
 			// TODO 自動生成された catch ブロック
 			e1.printStackTrace();
@@ -59,14 +73,6 @@ public class AdminLoginServlet extends HttpServlet {
 			e.printStackTrace();
 			gotoPage(request,response, "/loginError.html");
 		}
-	}
-
-	/**
-	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
-	 */
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		doGet(request, response);
 	}
 
 	private void gotoPage(HttpServletRequest request,

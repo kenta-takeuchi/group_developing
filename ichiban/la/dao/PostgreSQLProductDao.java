@@ -14,10 +14,10 @@ import la.bean.OrderBean;
 import la.bean.OrderTotalBean;
 import la.java.CalcMonth;
 
-public class PostgreSQLOrderDao {
+public class PostgreSQLProductDao {
 	private Connection con;
 
-	public PostgreSQLOrderDao() throws DataAccessException {
+	public PostgreSQLProductDao() throws DataAccessException {
 		DBManager database = new DBManager();
 		con = database.getConnection();
 	}
@@ -62,7 +62,22 @@ public class PostgreSQLOrderDao {
 		try {
 
 			// SQL文の作成
-			String sql = "SELECT ordered_date, count(*), sum(total_fee), avg(total_fee), max(total_fee) FROM ‘order’ WHERE ordered_date BETWEEN ? AND ? GROUP BY ordered_date";
+			String sql = "select this.code, this.name, this.sum_sales, pre.sum_sales, (this.sum_sales - pre.sum_sales) as result\r\n" +
+					"FROM " +
+					"SELECT p.code, p.name, sum(od.quantity) AS sum_sales FROM product p " +
+					"JOIN order_detail od ON p.code = od.product_code " +
+					"JOIN ‘order’ o ON od.order_id = o.id " +
+					"WHERE o.ordered_date BETWEEN ? AND ? " +
+					"GROUP BY p.code " +
+					") this" +
+					", " +
+					"( " +
+					"SELECT p.code, p.name, sum(od.quantity) AS sum_sales FROM product p " +
+					"JOIN order_detail od ON p.code = od.product_code " +
+					"JOIN ‘order’ o ON od.order_id = o.id " +
+					"WHERE o.ordered_date BETWEEN ? AND ? " +
+					"GROUP BY p.code " +
+					")pre";
 			// PreparedStatementオブジェクトの取得
 			st = con.prepareStatement(sql);
 			st.setDate(1, sqlStartDate);

@@ -4,10 +4,10 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 
-public class PostgreSQLLoginDao {
+public class PostgreSQLEmployeeDao {
 	private Connection con;
 
-	public PostgreSQLLoginDao() throws DataAccessException {
+	public PostgreSQLEmployeeDao() throws DataAccessException {
 		DBManager database = new DBManager();
 		con = database.getConnection();
 	}
@@ -62,7 +62,7 @@ public class PostgreSQLLoginDao {
 			// SQLの実行
 			rs = st.executeQuery();
 			// 結果の取得および表示
-			if (rs != null) {
+			if (rs.next()) {
 				return true;
 			} else {
 				return false;

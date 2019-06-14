@@ -1,6 +1,7 @@
 package la.servlet;
 
 import java.io.IOException;
+import java.util.List;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -8,63 +9,67 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
+import la.bean.OrderTotalBean;
 import la.dao.DataAccessException;
-import la.dao.PostgreSQLEmployeeDao;;
+import la.dao.PostgreSQLOrderDao;
+import la.java.LoginCheck;
 
 /**
  * Servlet implementation class LoginServlet
  */
-@WebServlet("/LoginServlet")
-public class LoginServlet extends HttpServlet {
+@WebServlet("/ShowOrderAnalyzeServlet")
+public class ShowOrderAnalyzeServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
-    /**
-     * @see HttpServlet#HttpServlet()
-     */
-    public LoginServlet() {
-        super();
-    }
+	/**
+	 * @see HttpServlet#HttpServlet()
+	 */
+	public ShowOrderAnalyzeServlet() {
+		super();
+	}
 
 	/**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	protected void doGet(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+
 		request.setCharacterEncoding("UTF-8");
 		response.setContentType("text/html;charset=UTF-8");
 
-		String employee_code = request.getParameter("employee_code");
-		String password = request.getParameter("password");
-		
-		PostgreSQLEmployeeDao dao = null;
+		LoginCheck logchk = new LoginCheck();
+		logchk.checkAdmin(request, response);
+
+		String year = request.getParameter("year");
+		String month = request.getParameter("month");
+
+		PostgreSQLOrderDao dao = null;
+
 		try {
-			dao = new PostgreSQLEmployeeDao();
+			dao = new PostgreSQLOrderDao();
 		} catch (DataAccessException e1) {
 			// TODO 自動生成された catch ブロック
 			e1.printStackTrace();
-		}
 
+		}
 		try {
-			Boolean isLogin = dao.loginEmployee(employee_code, password);
-			if (isLogin == true) {
-				HttpSession session = request.getSession();
-				session.setAttribute("isLogin", "true");
-				gotoPage(request,response, "/MainMenu.jsp");
-			} else {
-				gotoPage(request,response, "/loginError.html");
-			}
+			List<OrderTotalBean> list = dao.selectByOrderedDate(year, month);
+			request.setAttribute("List", list);
+			gotoPage(request,response, "/orderTotal.jsp");
 		} catch (DataAccessException e) {
 			// TODO 自動生成された catch ブロック
 			e.printStackTrace();
-			gotoPage(request,response, "/loginError.html");
+			gotoPage(request,response, "/AdminMenu.jsp");
 		}
+
 	}
 
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	protected void doPost(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		doGet(request, response);
 	}
