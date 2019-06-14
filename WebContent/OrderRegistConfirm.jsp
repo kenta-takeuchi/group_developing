@@ -27,27 +27,18 @@
         <thead>
           <tr>
             <th>番号</th>
-          　<th>カテゴリ</th>
         　  <th>商品名</th>
         　  <th>受注数</th>
-        　  <th>商品単価</th>
         　</tr>
       　</thead>
         <tbody>
+          <c:forEach items="${list}" var="bean" varStatus="stat">
           <tr>
-            <td>1</td>
-            <td class="single line">test</td>
-            <td>test</td>
-            <td>test</td>
-            <td>test</td>
-          </tr>
-          <tr>
-            <td>2</td>
-            <td>test</td>
-            <td>test</td>
-            <td>test</td>
-            <td>test</td>
-          </tr>
+              <td class="single line">${stat.count}</td>
+              <td>${bean.order_id}</td>
+              <td>${bean.quantity}</td>
+            </tr>
+          </c:forEach>
         </tbody>
         <tfoot>
           <tr>

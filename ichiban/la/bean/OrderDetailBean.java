@@ -19,11 +19,11 @@ public class OrderDetailBean implements Serializable {
 
 	}
 
-	public String getOrderId() {
+	public String getOrder_id() {
 		return order_id;
 	}
 
-	public void setOrderId(String order_id) {
+	public void setOrder_id(String order_id) {
 		this.order_id = order_id;
 	}
 
@@ -50,4 +50,5 @@ public class OrderDetailBean implements Serializable {
 	public void setTotlaFee(int total_fee) {
 		this.total_fee = total_fee;
 	}
+
 }
