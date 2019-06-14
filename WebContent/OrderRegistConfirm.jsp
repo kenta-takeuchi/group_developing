@@ -23,7 +23,10 @@
         <div class="header">以下の受注を登録します</div>
         <p>よろしければ確認ボタンを押してください。</p>
        </div>
-      <table class="ui celled padded table center aligned">
+       <label class="ui label large">
+         得意先コード：${customer_code}
+       </label>
+       <table class="ui celled padded table center aligned">
         <thead>
           <tr>
             <th>番号</th>
@@ -44,7 +47,6 @@
           <tr>
             <th colspan="12" class="center aligned">
               <button class="ui button teal"type="button" name="button">確認</button>
-
             </th>
           </tr>
         </tfoot>
