@@ -19,21 +19,17 @@ public class ShowInputFormServlet extends HttpServlet {
 		request.setCharacterEncoding("UTF-8");
 
 			String action = request.getParameter("action");
-			if(action == null || action.length() == 0 || action.equals("")) {
 
-				gotoPage(request, response, "/login.html");
-
-			}else if(action.equals("regist")) {
-				ProductBean bean = new ProductBean();
-				bean.setName(request.getParameter("name"));
-				bean.setCode(request.getParameter("code"));
-				bean.setCategory_Code(request.getParameter("category_code"));
-				gotoPage(request, response, "/OrderRegistConfirm.jsp");
-			}else {
-				request.setAttribute("message", "正しく操作してください");
-				gotoPage(request, response, "/OrderRegistError.jsp");
-			}
-
+				if(action.equals("regist")) {
+					ProductBean bean = new ProductBean();
+					bean.setName(request.getParameter("name"));
+					bean.setCode(request.getParameter("code"));
+					bean.setCategory_Code(request.getParameter("category_code"));
+					gotoPage(request, response, "/OrderRegistConfirm.jsp");
+				}else {
+					request.setAttribute("message", "正しく操作してください");
+					gotoPage(request, response, "/OrderRegistError.jsp");
+				}
 	}
 	private void gotoPage(HttpServletRequest request,
 			HttpServletResponse response, String page) throws ServletException,IOException {

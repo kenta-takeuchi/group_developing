@@ -9,6 +9,7 @@
     <link rel="stylesheet" href="css/master.css">
     <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
     <script src="js/semantic.min.js"></script>
+    <script src="js/script.js"></script>
   </head>
   <body>
     <div class="ui container">
@@ -17,12 +18,11 @@
           <h1>受注変更</h1>
         </div>
       </div>
-      <div class="ui negative message">
-        <div class="header">
-          以下の受注を変更します。
-        </div>
+      <div class="ui green message">
+        <i class="close icon"></i>
+        <div class="header">以下の受注を登録します</div>
         <p>よろしければ確認ボタンを押してください。</p>
-      </div>
+       </div>
       <table class="ui celled padded table center aligned">
         <thead>
           <tr>

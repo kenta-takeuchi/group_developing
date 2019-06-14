@@ -19,7 +19,7 @@
     </div>
       <div class="aq-wrapper">
         <div class="ui raised very padded center aligned text container segment">
-          <form class="ui form" action="/group_developing/ShowInputFormServlet?action=regist">
+          <form class="ui form" action="/group_developing/ShowInputFormServlet?action=regist" method="post">
             <div class="field">
               <h2>得意先コード</h2>
               <input type="text" name="customer_code" placeholder="半角数字のみ" required>
