@@ -19,7 +19,7 @@
           <h1 class="ui center aligned">管理者メニュー</h1>
         </div>
         <div class="ui header item">
-          <form class="ui form" action="" method="post">
+          <form class="ui form" action="/group_developing/LogoutServlet" method="post">
             <button class="ui button header item" type="submit">
               ログアウト
             </button>

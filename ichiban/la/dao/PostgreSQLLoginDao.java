@@ -26,7 +26,7 @@ public class PostgreSQLLoginDao {
 			// SQLの実行
 			rs = st.executeQuery();
 			// 結果の取得および表示
-			if (rs != null) {
+			if (rs.next()) {
 				return true;
 			} else {
 				return false;
