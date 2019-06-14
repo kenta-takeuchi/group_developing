@@ -15,7 +15,7 @@ logincheck.check(request, response);
 */
 
 public class LoginCheck {
-	public void check(HttpServletRequest request, HttpServletResponse response) {
+	public void checkEmployee(HttpServletRequest request, HttpServletResponse response) {
 		// セッションからログインしているかを確認する
 		HttpSession session = request.getSession(false);
 		if (session == null) {
@@ -31,6 +31,31 @@ public class LoginCheck {
 			if (isLogin == null || !isLogin.equals("true")) {
 				try {
 					gotoPage(request, response, "/login.html");
+				} catch (ServletException e) {
+					e.printStackTrace();
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+			}
+		}
+	}
+
+	public void checkAdmin(HttpServletRequest request, HttpServletResponse response) {
+		// セッションからログインしているかを確認する
+		HttpSession session = request.getSession(false);
+		if (session == null) {
+			try {
+				gotoPage(request, response, "/adminLogin.html");
+			} catch (ServletException e) {
+				e.printStackTrace();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		} else {
+			String isLogin = (String)session.getAttribute("isLogin");
+			if (isLogin == null || !isLogin.equals("true")) {
+				try {
+					gotoPage(request, response, "/adminLogin.html");
 				} catch (ServletException e) {
 					e.printStackTrace();
 				} catch (IOException e) {

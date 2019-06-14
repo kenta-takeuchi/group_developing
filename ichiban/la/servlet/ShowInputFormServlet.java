@@ -1,6 +1,7 @@
 package la.servlet;
 
 import java.io.IOException;
+import java.util.ArrayList;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -9,7 +10,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import la.bean.ProductBean;
+import la.bean.OrderDetailBean;
 
 @WebServlet("/ShowInputFormServlet")
 public class ShowInputFormServlet extends HttpServlet {
@@ -19,21 +20,28 @@ public class ShowInputFormServlet extends HttpServlet {
 		request.setCharacterEncoding("UTF-8");
 
 			String action = request.getParameter("action");
-			if(action == null || action.length() == 0 || action.equals("")) {
-				
-				gotoPage(request, response, "/Login.jsp");
 
-			}else if(action.equals("regist")) {
-				ProductBean bean = new ProductBean();
-				bean.setName(request.getParameter("name"));
-				bean.setCode(request.getParameter("code"));
-				bean.setCategory_Code(request.getParameter("category_code"));
-				gotoPage(request, response, "/OrderRegistConfirm.jsp");
-			}else {
-				request.setAttribute("message", "正しく操作してください");
-				gotoPage(request, response, "/OrderRegistError.jsp");
-			}
+ 				if(action.equals("regist")) {
+ 					String customer_code = request.getParameter("customer_code");
+ 					request.setAttribute("customer_code", customer_code);
+ 					// 次のサーブレットに渡すリストを準備
+ 					ArrayList<OrderDetailBean> list= new ArrayList<OrderDetailBean>();
+ 					for (int cnt = 1; cnt < 11; cnt++) {
+ 						// 前画面から渡された１明細ごとにBeanを作成し、リストに追加
+ 	 					OrderDetailBean bean = new OrderDetailBean();
+ 	 					if (request.getParameter("order_id" + cnt).length() > 0) {
+ 	 	 					bean.setOrder_id(request.getParameter("order_id" + cnt));
+ 	 	 					bean.setQuantity(Integer.parseInt(request.getParameter("quantity" + cnt)));
+ 	 	 					list.add(bean);
+ 	 					}
+ 					}
+					request.setAttribute("list", list);
 
+					gotoPage(request, response, "/OrderRegistConfirm.jsp");
+				}else {
+					request.setAttribute("message", "正しく操作してください");
+					gotoPage(request, response, "/OrderRegistError.jsp");
+				}
 	}
 	private void gotoPage(HttpServletRequest request,
 			HttpServletResponse response, String page) throws ServletException,IOException {

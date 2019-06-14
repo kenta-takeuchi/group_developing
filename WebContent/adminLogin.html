@@ -9,18 +9,18 @@
   </head>
   <body>
     <div class="ui container">
-      <div class="ui borderless topmenu menu">
+      <div class="ui borderless green inverted menu is-adminlogin">
         <div class="ui container aq-header">
-          <h1 class="ui center aligned">受注管理システム</h1>
+          <h1 class="ui center aligned">管理者ログイン</h1>
         </div>
       </div>
       <div class="aq-wrapper">
-        <form class="ui form raised very padded center aligned text container segment" action="#">
-          <h2 class="ui header">管理者ログイン</h2><br>
+        <form class="ui form raised very padded center aligned text container segment" action="/group_developing/AdminLoginServlet" method="POST">
+          <h2 class="ui header">ログイン</h2><br>
           <div class="field inline">
             <label>ID</label>
             <div class="ui left input">
-              <input type="text" name="" autofocus="true">
+              <input type="text" name="employee_code" autofocus="true">
             </div>
           </div>
           <br>
@@ -33,7 +33,7 @@
           <br>
           <br>
           <div class="actions inline">
-            <button class="ui large teal button" type="submit">ログイン</button>
+            <button class="ui large green button" type="submit">ログイン</button>
             <a href="login.html">受注担当者はこちら</a>
           </div>
           <br>

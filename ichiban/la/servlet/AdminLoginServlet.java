@@ -10,6 +10,10 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import la.dao.DataAccessException;
+import la.dao.PostgreSQLEmployeeDao;
+import la.java.LoginCheck;
+
 /**
  * Servlet implementation class LoginServlet
  */
@@ -31,27 +35,44 @@ public class AdminLoginServlet extends HttpServlet {
 		request.setCharacterEncoding("UTF-8");
 		response.setContentType("text/html;charset=UTF-8");
 
-		String employee_code = request.getParameter("employee_code");
-		String password = request.getParameter("password");
+		LoginCheck logchk = new LoginCheck();
+		logchk.checkAdmin(request, response);
 
-		if (employee_code.equals("0001") && password.equals("ichiban")) {
-			HttpSession session = request.getSession();
-			session.setAttribute("isLogin", "true");
-			gotoPage(request,response, "/MainMenu.jsp");
-		}
-
-		else {
-			gotoPage(request,response, "/loginError.html");
-		}
-
+		gotoPage(request,response, "/adminMenu.jsp");
 	}
 
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		doGet(request, response);
+		request.setCharacterEncoding("UTF-8");
+		response.setContentType("text/html;charset=UTF-8");
+
+		String employee_code = request.getParameter("employee_code");
+		String password = request.getParameter("password");
+
+		PostgreSQLEmployeeDao dao = null;
+		try {
+			dao = new PostgreSQLEmployeeDao();
+		} catch (DataAccessException e1) {
+			// TODO 自動生成された catch ブロック
+			e1.printStackTrace();
+		}
+
+		try {
+			Boolean isLogin = dao.loginAdmin(employee_code, password, "0001");
+			if (isLogin == true) {
+				HttpSession session = request.getSession();
+				session.setAttribute("isLogin", "true");
+				gotoPage(request,response, "/adminMenu.jsp");
+			} else {
+				gotoPage(request,response, "/loginError.html");
+			}
+		} catch (DataAccessException e) {
+			// TODO 自動生成された catch ブロック
+			e.printStackTrace();
+			gotoPage(request,response, "/loginError.html");
+		}
 	}
 
 	private void gotoPage(HttpServletRequest request,
