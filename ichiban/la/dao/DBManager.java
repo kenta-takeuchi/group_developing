@@ -9,9 +9,9 @@ import java.sql.Statement;
 
 public class DBManager {
 	private String DRIVER = "org.postgresql.Driver";
-	private String URL = "jdbc:postgressql:ichiban";
+	private String URL = "jdbc:postgresql:ichiban";
 	private String USER  = "ichiban";
-	private String PASS = "ichban";
+	private String PASS = "ichiban";
 
 	public Connection getConnection() throws DataAccessException {
 		try {
@@ -24,7 +24,6 @@ public class DBManager {
 			return conn;
 
 		} catch (Exception e) {
-			System.out.println("err");
 			e.printStackTrace();
 			throw new DataAccessException("接続に失敗しました。");
 		}
