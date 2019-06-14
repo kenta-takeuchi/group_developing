@@ -11,8 +11,7 @@
     <script src="js/semantic.min.js"></script>
   </head>
   <body>
-
-  <form action = "/group_developing/HelloServlet" method="post">
+  <form action = "/OrderSearchResult.jsp" method="post">
 
 
     <div class="ui container">
@@ -24,23 +23,23 @@
       <div class="aq-wrapper">
           <h2 class="ui header">受注検索</h2>
           <div class="field inline">
-            <label>登録日</label>
+            <label>登録日<b>${OrderBean.ordered_date}</b></label>
             <div class="ui input">
-              <input class="prompt" type="date">
+              <input class="prompt" name="date" type="date">
             </div>
           </div>
           <br>
           <div class="field inline">
-            <label>仕入れ先コード</label>
+            <label>得意先コード<b>${OrderBean.customer_code}</b></label>
             <div class="ui input">
-              <input class="prompt" type="text">
+              <input class="prompt" name="customer_code" type="text">
             </div>
           </div>
           <br>
           <div class="field inline">
-            <label>受注スタッフコード</label>
+            <label>受注スタッフコード<b>${OrderBean.employee_code}</b></label>
             <div class="ui input">
-              <input class="prompt" type="text">
+              <input class="prompt" name="employee_code" type="text">
             </div>
           </div>
           <br>
@@ -55,3 +54,8 @@
 </body>
 
 </html>
+
+
+
+
+

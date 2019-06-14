@@ -4,12 +4,9 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>受注検索</title>
+<title>エラー</title>
 </head>
 <body>
-
-<jsp:include page="/OrderSearchtest.jsp">
-
-
+<h1>${message}</h1>
 </body>
 </html>
