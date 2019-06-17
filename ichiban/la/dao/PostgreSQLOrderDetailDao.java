@@ -11,6 +11,7 @@ import la.bean.OrderDetailBean;
 
 public class PostgreSQLOrderDetailDao {
 	private Connection con;
+	private List<OrderBean> list;
 
 	public PostgreSQLOrderDetailDao() throws DataAccessException {
 		DBManager database = new DBManager();
@@ -49,21 +50,27 @@ public class PostgreSQLOrderDetailDao {
 
 
 	public OrderDetailBean selectByOrderId(String order_id) throws DataAccessException {
+		return null;
 	}
 
 	public OrderDetailBean selectByProductCode(String product_code) throws DataAccessException {
+		return null;
 	}
 
 	public OrderDetailBean selectById(String order_id, String product_code) throws DataAccessException {
+		return null;
 	}
 
 	public Boolean update(String order_id, String product_code) throws DataAccessException {
+		return null;
 	}
 
 	public OrderDetailBean update(String id) throws DataAccessException {
+		return null;
 	}
 
 	public OrderDetailBean createOrderDetailFromResultSet(ResultSet rs) throws DataAccessException {
+		return null;
 	}
 
 }

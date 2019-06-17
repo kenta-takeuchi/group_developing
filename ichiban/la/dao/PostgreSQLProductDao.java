@@ -12,13 +12,12 @@ import java.util.List;
 
 import la.bean.OrderBean;
 import la.bean.OrderTotalBean;
-import la.bean.SearchResultBean;
 import la.java.CalcMonth;
 
-public class PostgreSQLOrderDao {
+public class PostgreSQLProductDao {
 	private Connection con;
 
-	public PostgreSQLOrderDao() throws DataAccessException {
+	public PostgreSQLProductDao() throws DataAccessException {
 		DBManager database = new DBManager();
 		con = database.getConnection();
 	}
@@ -35,46 +34,6 @@ public class PostgreSQLOrderDao {
 	public OrderBean selectByEmployeeCode(String employee_code) throws DataAccessException {
 		return null;
 	}
-
-	public List<SearchResultBean> select(String add_sql) throws DataAccessException {
-		PreparedStatement st = null;
-		ResultSet rs = null;
-		try {
-
-			// SQL文の作成
-			String sql = "SELECT * FROM ‘order’ WHERE 1=1" + add_sql;
-			// PreparedStatementオブジェクトの取得
-			st = con.prepareStatement(sql);
-			// SQLの実行
-			rs = st.executeQuery();
-			// 結果の取得および表示
-			List<SearchResultBean> list = new ArrayList<SearchResultBean>();
-
-			while (rs.next()) {
-				int id = rs.getInt("id");
-				java.sql.Date ordered_date = rs.getDate("ordered_date");
-				String customer_code = rs.getString("customer_code");
-				String employee_code = rs.getString("employee_code");
-				SearchResultBean bean = new SearchResultBean(id, ordered_date, customer_code, employee_code);
-				list.add(bean);
-			}
-			return list;
-		} catch (Exception e) {
-			e.printStackTrace();
-			throw new DataAccessException("レコードの取得に失敗しました。");
-		} finally {
-			try {
-				DBManager database = new DBManager();
-				// リソースの開放
-				if(rs != null) database.close(rs);
-				if(st != null) database.close(st);
-				database.close(con);
-			} catch (Exception e) {
-				throw new DataAccessException("リソースの開放に失敗しました。");
-			}
-		}
-	}
-
 
 	public List<OrderTotalBean> selectByOrderedDate(String year, String month) throws DataAccessException {
 		PreparedStatement st = null;
@@ -103,7 +62,22 @@ public class PostgreSQLOrderDao {
 		try {
 
 			// SQL文の作成
-			String sql = "SELECT ordered_date, count(*), sum(total_fee), avg(total_fee), max(total_fee) FROM ‘order’ WHERE ordered_date BETWEEN ? AND ? GROUP BY ordered_date";
+			String sql = "select this.code, this.name, this.sum_sales, pre.sum_sales, (this.sum_sales - pre.sum_sales) as result\r\n" +
+					"FROM " +
+					"SELECT p.code, p.name, sum(od.quantity) AS sum_sales FROM product p " +
+					"JOIN order_detail od ON p.code = od.product_code " +
+					"JOIN ‘order’ o ON od.order_id = o.id " +
+					"WHERE o.ordered_date BETWEEN ? AND ? " +
+					"GROUP BY p.code " +
+					") this" +
+					", " +
+					"( " +
+					"SELECT p.code, p.name, sum(od.quantity) AS sum_sales FROM product p " +
+					"JOIN order_detail od ON p.code = od.product_code " +
+					"JOIN ‘order’ o ON od.order_id = o.id " +
+					"WHERE o.ordered_date BETWEEN ? AND ? " +
+					"GROUP BY p.code " +
+					")pre";
 			// PreparedStatementオブジェクトの取得
 			st = con.prepareStatement(sql);
 			st.setDate(1, sqlStartDate);

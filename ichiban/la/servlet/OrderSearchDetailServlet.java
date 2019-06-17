@@ -1,6 +1,7 @@
 package la.servlet;
 
 import java.io.IOException;
+import java.util.List;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -9,52 +10,54 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import la.bean.OrderBean;
+import la.dao.DataAccessException;
+import la.dao.PostgreSQLOrderDetailDao;
 
 /**
  * Servlet implementation class OrderSearchDetail
  */
-@WebServlet("/OrderSearchDetail")
+@WebServlet("/OrderSearchDetailServlet")
 public class OrderSearchDetailServlet extends HttpServlet {
-	private static final long serialVersionUID = 1L;
 
-    /**
-     * @see HttpServlet#HttpServlet()
-     */
-    public OrderSearchDetailServlet() {
-        super();
-        // TODO Auto-generated constructor stub
+	/**
+	 * @see HttpServlet#HttpServlet()
+	 */
+	public OrderSearchDetailServlet() {
+		super();
+		// TODO Auto-generated constructor stub
 
-
-
-    }
+	}
 
 	/**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	protected void doGet(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		RequestDispatcher rd = request.getRequestDispatcher("/OrderSearchDetail.jsp");
-
-
-/*		try {
+		try {
 			String action = request.getParameter("action");
-			if (false) {
+			if (action.equals("detail")) {
 				PostgreSQLOrderDetailDao dao = new PostgreSQLOrderDetailDao();
-				gotoPage(request, response, "/OrderSearchDetail.jsp");
+				List<OrderBean> list = dao.select();
+				request.setAttribute("order", list);
+				RequestDispatcher rd = request.getRequestDispatcher("/OrderSearchDetail.jsp");
+				rd.forward(request, response);
 			}
-*/		}
+		} catch (DataAccessException e) {
+			e.printStackTrace();
+			request.setAttribute("message", "内部エラーが発生しました。");
+			RequestDispatcher rd = request.getRequestDispatcher("/errInternal.jsp");
+			rd.forward(request, response);
 
-private void gotoPage(HttpServletRequest request, HttpServletResponse response, String string) {
-	// TODO 自動生成されたメソッド・スタブ
-}
-
-
-
+		}
+	}
 
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	protected void doPost(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		doGet(request, response);
 	}
