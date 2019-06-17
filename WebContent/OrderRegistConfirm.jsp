@@ -19,41 +19,47 @@
         </div>
       </div>
       <div class="ui green message">
-        <i class="close icon"></i>
         <div class="header">以下の受注を登録します</div>
         <p>よろしければ確認ボタンを押してください。</p>
        </div>
-       <label class="ui label large">
-         得意先コード：${customer_code}
-       </label>
-       <table class="ui celled padded table center aligned">
-        <thead>
-          <tr>
-            <th>番号</th>
-        　  <th>商品名</th>
-        　  <th>受注数</th>
-        　</tr>
-      　</thead>
-        <tbody>
-          <c:forEach items="${list}" var="bean" varStatus="stat">
-          <tr>
-              <td class="single line">${stat.count}</td>
-              <td>${bean.order_id}</td>
-              <td>${bean.quantity}</td>
+       <form class="ui form" action="/group_developing/ConfirmControllerServlet" method="post">
+         <label class="ui label large">
+           得意先コード：${customer_code}
+         </label>
+         <table class="ui celled padded table center aligned">
+          <thead>
+            <tr>
+              <th>番号</th>
+              <th>商品名</th>
+              <th>受注数</th>
             </tr>
-          </c:forEach>
-        </tbody>
-        <tfoot>
-          <tr>
-            <th colspan="12" class="center aligned">
-              <button class="ui button teal"type="button" name="button">確認</button>
-            </th>
-          </tr>
-        </tfoot>
-      </table>
-      <button class="ui button green"type="button" name="">
-        TOPに戻る
-      </button>
+          </thead>
+          <tbody>
+            <c:forEach items="${list}" var="bean" varStatus="stat">
+              <tr>
+                <td class="single line">${stat.count}</td>
+                <td>${bean.order_id}</td>
+                <td>${bean.quantity}</td>
+                <input type="hidden" name="order_id_${stat.count}" value="${bean.order_id}">
+                <input type="hidden" name="quantity_${stat.count}" value="${bean.quantity}">
+              </tr>
+            </c:forEach>
+          </tbody>
+          <tfoot>
+            <tr>
+              <th colspan="12" class="center aligned">
+                <button class="ui button teal"type="submit" name="button">確認</button>
+                <input type="hidden" name="customer_code" value="${customer_code}">
+              </th>
+            </tr>
+          </tfoot>
+        </table>
+      </form>
+      <form class="ui form" action="BacktoRegist" method="post">
+        <button class="ui button green" type="submit" name="">
+          TOPに戻る
+        </button>
+       </form>
     </div>
   </body>
 </html>
