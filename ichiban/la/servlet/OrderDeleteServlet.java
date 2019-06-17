@@ -8,63 +8,73 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
 import la.dao.DataAccessException;
-import la.dao.PostgreSQLEmployeeDao;;
+import la.dao.PostgreSQLOrderDao;
+import la.dao.PostgreSQLOrderDetailDao;
+import la.java.LoginManager;
 
 /**
  * Servlet implementation class LoginServlet
  */
-@WebServlet("/LoginServlet")
-public class LoginServlet extends HttpServlet {
+@WebServlet("/OrderDeleteServlet")
+public class OrderDeleteServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
-    /**
-     * @see HttpServlet#HttpServlet()
-     */
-    public LoginServlet() {
-        super();
-    }
+	/**
+	 * @see HttpServlet#HttpServlet()
+	 */
+	public OrderDeleteServlet() {
+		super();
+	}
 
 	/**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	protected void doGet(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+
 		request.setCharacterEncoding("UTF-8");
 		response.setContentType("text/html;charset=UTF-8");
 
-		String employee_code = request.getParameter("employee_code");
-		String password = request.getParameter("password");
-		
-		PostgreSQLEmployeeDao dao = null;
+		boolean flg = LoginManager.checkEmployee(request, response);
+		if (flg == false) {
+			return;
+		}
+
+		String order_id = request.getParameter("order_id");
+
+		PostgreSQLOrderDao daoOrder = null;
 		try {
-			dao = new PostgreSQLEmployeeDao();
+			daoOrder = new PostgreSQLOrderDao();
+		} catch (DataAccessException e1) {
+			// TODO 自動生成された catch ブロック
+			e1.printStackTrace();
+		}
+		PostgreSQLOrderDetailDao daoOrderDetail = null;
+		try {
+			daoOrderDetail = new PostgreSQLOrderDetailDao();
 		} catch (DataAccessException e1) {
 			// TODO 自動生成された catch ブロック
 			e1.printStackTrace();
 		}
 
 		try {
-			Boolean isLogin = dao.loginEmployee(employee_code, password);
-			if (isLogin == true) {
-				HttpSession session = request.getSession();
-				session.setAttribute("isLogin", "true");
-				gotoPage(request,response, "/MainMenu.jsp");
-			} else {
-				gotoPage(request,response, "/loginError.html");
-			}
+			daoOrderDetail.deleteByOrderId(order_id);
+			daoOrder.deleteById(order_id);
+			gotoPage(request,response, "/MainMenu.jsp");
 		} catch (DataAccessException e) {
 			// TODO 自動生成された catch ブロック
 			e.printStackTrace();
-			gotoPage(request,response, "/loginError.html");
+			gotoPage(request,response, "/MainMenu.jsp");
 		}
 	}
 
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	protected void doPost(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		doGet(request, response);
 	}

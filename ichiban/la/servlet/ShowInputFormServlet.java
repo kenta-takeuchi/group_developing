@@ -18,11 +18,13 @@ public class ShowInputFormServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException {
 		request.setCharacterEncoding("UTF-8");
+		response.setContentType("text/html;charset=UTF-8");
 
 			String action = request.getParameter("action");
 
-
  				if(action.equals("regist")) {
+ 					String customer_code = request.getParameter("customer_code");
+ 					request.setAttribute("customer_code", customer_code);
  					// 次のサーブレットに渡すリストを準備
  					ArrayList<OrderDetailBean> list= new ArrayList<OrderDetailBean>();
  					for (int cnt = 1; cnt < 11; cnt++) {

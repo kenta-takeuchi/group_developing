@@ -36,6 +36,7 @@ public class PostgreSQLOrderDao {
 		return null;
 	}
 
+<<<<<<< HEAD
 	public List<SearchResultBean> select(String add_sql) throws DataAccessException {
 		PreparedStatement st = null;
 		ResultSet rs = null;
@@ -77,28 +78,25 @@ public class PostgreSQLOrderDao {
 
 
 	public List<OrderTotalBean> selectByOrderedDate(String year, String month) throws DataAccessException {
+=======
+	public List<OrderTotalBean> selectByOrderedDate(String year, String month) throws DataAccessException, ParseException {
+>>>>>>> 77b40b394609ebdb5163ff2bce408f5cec644940
 		PreparedStatement st = null;
 		ResultSet rs = null;
 
-		Date startDate = null;
-		try {
-			startDate = new SimpleDateFormat("yyyy-MM-dd").parse(year + "-" + month + "-01");
-		} catch (ParseException e2) {
-			// TODO 自動生成された catch ブロック
-			e2.printStackTrace();
-		}
-		Date endDate = null;
-		CalcMonth calc = new CalcMonth();
+		Date thisDate = new SimpleDateFormat("yyyy-MM-dd").parse(year + "-" + month + "-01");
 
-		try {
-			endDate = calc.getNextMonth(startDate);
-		} catch (ParseException e1) {
-			// TODO 自動生成された catch ブロック
-			e1.printStackTrace();
-		}
+		System.out.println(0);
+		Date nextDate = CalcMonth.getCalcMonth(thisDate, 1);
 
-		java.sql.Date sqlStartDate = calc.CastToSQLDate(startDate);
-		java.sql.Date sqlEndDate = calc.CastToSQLDate(endDate);
+		System.out.println(1);
+
+		java.sql.Date sqlThisDate = CalcMonth.CastToSQLDate(thisDate);
+		java.sql.Date sqlNextDate = CalcMonth.CastToSQLDate(nextDate);
+		System.out.println(2);
+
+		System.out.println(sqlThisDate);
+		System.out.println(sqlNextDate);
 
 		try {
 
@@ -106,8 +104,8 @@ public class PostgreSQLOrderDao {
 			String sql = "SELECT ordered_date, count(*), sum(total_fee), avg(total_fee), max(total_fee) FROM ‘order’ WHERE ordered_date BETWEEN ? AND ? GROUP BY ordered_date";
 			// PreparedStatementオブジェクトの取得
 			st = con.prepareStatement(sql);
-			st.setDate(1, sqlStartDate);
-			st.setDate(2, sqlEndDate);
+			st.setDate(1, sqlThisDate);
+			st.setDate(2, sqlNextDate);
 			// SQLの実行
 			rs = st.executeQuery();
 			// 結果の取得および表示
@@ -145,6 +143,37 @@ public class PostgreSQLOrderDao {
 
 	public Boolean createOrderFromResultSet(ResultSet rs) throws DataAccessException {
 		return null;
+	}
+
+	public int deleteById(String id) throws DataAccessException {
+		PreparedStatement st = null;
+		ResultSet rs = null;
+
+		try {
+
+			// SQL文の作成
+			String sql = "DELETE FROM ‘order’ WHERE id = ?";
+			// PreparedStatementオブジェクトの取得
+			st = con.prepareStatement(sql);
+			st.setString(1, id);
+			// SQLの実行
+			int rows = st.executeUpdate();
+			// 結果の取得および表示
+			return rows;
+		} catch (Exception e) {
+			e.printStackTrace();
+			throw new DataAccessException("レコードの取得に失敗しました。");
+		} finally {
+			try {
+				DBManager database = new DBManager();
+				// リソースの開放
+				if(rs != null) database.close(rs);
+				if(st != null) database.close(st);
+				database.close(con);
+			} catch (Exception e) {
+				throw new DataAccessException("リソースの開放に失敗しました。");
+			}
+		}
 	}
 
 }
