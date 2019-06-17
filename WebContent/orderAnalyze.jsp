@@ -1,5 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ page import="java.util.*" %>
+
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 
 <!DOCTYPE html>
@@ -31,13 +33,15 @@
       　  </tr>
     　  </thead>
         <tbody>
-          <tr>
-            <td>test</td>
-            <td>test</td>
-            <td>test</td>
-            <td>test</td>
-            <td>test</td>
-          </tr>
+          <c:forEach items="${List}" var="l">
+            <tr>
+              <th>${l.product_code}</th>
+              <th>${l.product_name}</th>
+              <th>${l.this_quantity}</th>
+              <th>${l.pre_quantity}</th>
+              <th>${l.compare_quantity}</th>
+            </tr>
+          </c:forEach>
           <tr>
             <td>test</td>
             <td>test</td>

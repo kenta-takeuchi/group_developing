@@ -31,7 +31,7 @@
         <div class="ui raised very padded center aligned text container segment">
           <div class="ui link list">
             <h2 class="ui header">受注分析/集計</h2><br>
-            <form class="ui form" action="/group_developing/ShowOrderTotalServlet" method="post">
+            <form class="ui form" action="/group_developing/ShowOrderAnalyzeServlet" method="post">
               <div class="field inline">
                 <label>受注分析：</label>
                 <div class="ui input">
@@ -58,7 +58,7 @@
                 <button class="ui teal button field" type="submit">分析</button>
               </div>
             </form>
-            <form class="ui form" action="" method="post">
+            <form class="ui form" action="/group_developing/ShowOrderTotalServlet" method="post">
               <div class="field inline">
                 <label>受注集計：</label>
                 <div class="ui input">
@@ -67,7 +67,7 @@
                   </select>
                 </div>
                 <div class="ui input">
-                  <select class="ui select" name="">
+                  <select class="ui select" name="month">
                     <option value="01">1月</option>
                     <option value="02">2月</option>
                     <option value="03">3月</option>

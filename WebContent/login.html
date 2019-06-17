@@ -15,7 +15,7 @@
       </div>
     </div>
     <div class="aq-wrapper">
-      <form class="ui form raised very padded center aligned text container segment" action="/group_developing/LoginServlet" method="POST">
+      <form class="ui form raised very padded center aligned text container segment" action="/group_developing/ShowMainMenuServlet" method="POST">
         <h2 class="ui header">受注担当者ログイン</h2><br>
         <div class="field inline">
           <label>ID</label>
@@ -34,6 +34,7 @@
         <br>
         <div class="actions inline">
           <button class="ui large teal button" type="submit">ログイン</button>
+          <input type="hidden" name="action" value="employeeLogin">
           <a href="adminLogin.html">管理者はこちら</a>
         </div>
         <br>
