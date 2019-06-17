@@ -10,9 +10,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import la.dao.DataAccessException;
-import la.dao.PostgreSQLOrderDao;
 import la.dao.PostgreSQLOrderDetailDao;
-import la.dao.PostgreSQLProductDao;
 
 
 
@@ -46,23 +44,31 @@ public class OrderUpdateServlet extends HttpServlet {
 				request.setAttribute("message", "エラー");
 			}else if(action.equals("regist")) {
 				String code = request.getParameter("code");
+
+
 				String productName = request.getParameter("productName");
 				int quantity = Integer.parseInt(request.getParameter("quantity"));
-				if(code != null || productName != null || quantity > 0) {
-
-				}
-
-				//受注コードを変更
-				PostgreSQLOrderDao dao = new PostgreSQLOrderDao();
-				dao.codeUpdate(code);
-
-				//商品名を変更
-				PostgreSQLProductDao productDao = new PostgreSQLProductDao();
-				productDao.nameUpdate(productName);
-
-				//商品数量を変更
 				PostgreSQLOrderDetailDao detailDao = new PostgreSQLOrderDetailDao();
-				detailDao.quantityUpdate(quantity);
+//				detailDao.(code);
+//
+//
+//				PostgreSQLOrderDetailDao detailDao = new PostgreSQLOrderDetailDao();
+//				detailDao.quantityUpdate(quantity);
+//
+////				if(code != null || productName != null || quantity > 0) {
+////
+////				}
+//
+//				//得意先コードを変更
+//				PostgreSQLOrderDao dao = new PostgreSQLOrderDao();
+//				dao.codeUpdate(code);
+//
+//
+//				PostgreSQLProductDao productDao = new PostgreSQLProductDao();
+//				productDao.nameUpdate(productName);
+//
+//				//商品数量を変更
+
 
 
 				request.setAttribute("message", "更新しました。");

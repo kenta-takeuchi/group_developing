@@ -3,15 +3,12 @@ package la.dao;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-<<<<<<< HEAD
-
-import la.bean.OrderDetailBean;
-=======
 import java.util.ArrayList;
 import java.util.List;
 
+import la.bean.OrderDetailBean;
 import la.bean.UpdateBean;
->>>>>>> 67f78d682bdc82c2d52dece658570fdf5c98f2fb
+
 
 
 public class PostgreSQLOrderDetailDao {
@@ -22,7 +19,7 @@ public class PostgreSQLOrderDetailDao {
 		con = database.getConnection();
 	}
 
-<<<<<<< HEAD
+
 	public OrderDetailBean selectByOrderId(String order_id) throws DataAccessException {
 		return null;
 	}
@@ -63,7 +60,21 @@ public class PostgreSQLOrderDetailDao {
 			// 結果の取得および表示
 			return rows;
 		} catch (Exception e) {
-=======
+		e.printStackTrace();
+		throw new DataAccessException("レコードの取得に失敗しました。");
+		}finally {
+			try {
+				DBManager database = new DBManager();
+				// リソースの開放
+				if(rs != null) database.close(rs);
+				if(st != null) database.close(st);
+				database.close(con);
+			} catch (Exception e) {
+				throw new DataAccessException("リソースの開放に失敗しました。");
+			}
+		}
+	}
+
 //	public List<OrderBean> select() throws DataAccessException {
 //		PreparedStatement st = null;
 //		ResultSet rs = null;
@@ -78,12 +89,19 @@ public class PostgreSQLOrderDetailDao {
 				rs = st.executeQuery();
 
 				List<UpdateBean> list = new ArrayList<UpdateBean>();
+				int cnt = 10;
 				while(rs.next()) {
 					String productName = rs.getString("name");
 					int quantity = rs.getInt("quantity");
 					UpdateBean bean = new UpdateBean(orderCode, productName, quantity);
 					list.add(bean);
+					cnt--;
 				}
+
+				for (int i=0; i < cnt; i++) {
+					list.add(null);
+				}
+
 				return list;
 
 //		try {
@@ -96,7 +114,7 @@ public class PostgreSQLOrderDetailDao {
 //			// 結果の取得および表示
 //			return list;
 		}catch (Exception e) {
->>>>>>> 67f78d682bdc82c2d52dece658570fdf5c98f2fb
+
 			e.printStackTrace();
 			throw new DataAccessException("レコードの取得に失敗しました。");
 		}finally {
@@ -110,11 +128,9 @@ public class PostgreSQLOrderDetailDao {
 				throw new DataAccessException("リソースの開放に失敗しました。");
 			}
 		}
-	}
-<<<<<<< HEAD
 
-=======
->>>>>>> 67f78d682bdc82c2d52dece658570fdf5c98f2fb
+	}
+
 }
 //
 //

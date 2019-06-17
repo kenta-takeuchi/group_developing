@@ -10,22 +10,24 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import la.bean.ProductBean;
 import la.bean.UpdateBean;
 import la.dao.DataAccessException;
 //import la.dao.PostgreSQLOrderDao;
 import la.dao.PostgreSQLOrderDetailDao;
+import la.dao.PostgreSQLProductDao;
 
 /**
  * Servlet implementation class ShowUpdateFormServlet
  */
-@WebServlet("/OrderShowUpdateFormServlet")
-public class OrderShowUpdateFormServlet extends HttpServlet {
+@WebServlet("/ShowOrderUpdateFormServlet")
+public class ShowOrderUpdateFormServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
 	/**
 	 * @see HttpServlet#HttpServlet()
 	 */
-	public OrderShowUpdateFormServlet() {
+	public ShowOrderUpdateFormServlet() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
@@ -42,22 +44,21 @@ public class OrderShowUpdateFormServlet extends HttpServlet {
 		// TODO Auto-generated method stub
 
 		try {
-			String action = request.getParameter("action");
-
-			if(action == null || action.length() == 0 || action.equals("")) {
-				request.setAttribute("message", "エラー");
-			}else if(action.equals("update")) {
-				String code = request.getParameter("code");
-				PostgreSQLOrderDetailDao detailDao = new PostgreSQLOrderDetailDao();
-				List<UpdateBean> list = detailDao.findByUpdateCode(code);
-				request.setAttribute("items", list);
-				request.setAttribute("orderCode", code);
-				gotoPage(request, response, "/OrderUpdateView.jsp");
-			}
+			String order_id = request.getParameter("order_id");
+			PostgreSQLOrderDetailDao detailDao = new PostgreSQLOrderDetailDao();
+			List<UpdateBean> order_details = detailDao.findByUpdateCode(order_id);
+			PostgreSQLProductDao productDao = new PostgreSQLProductDao();
+			List<ProductBean> products = productDao.selectAll();
+			request.setAttribute("order_details", order_details);
+			request.setAttribute("order_id", order_id);
+			request.setAttribute("products", products);
+			gotoPage(request, response, "/OrderUpdate.jsp");
 		}catch(DataAccessException e){
 			e.printStackTrace();
 			request.setAttribute("message", "エラー");
 			gotoPage(request, response,"");
+		}finally {
+
 		}
 	}
 
