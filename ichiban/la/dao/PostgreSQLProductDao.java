@@ -11,6 +11,7 @@ import java.util.List;
 
 import la.bean.OrderAnalyzeBean;
 import la.bean.OrderBean;
+import la.bean.ProductBean;
 import la.java.CalcMonth;
 
 public class PostgreSQLProductDao {
@@ -19,6 +20,42 @@ public class PostgreSQLProductDao {
 	public PostgreSQLProductDao() throws DataAccessException {
 		DBManager database = new DBManager();
 		con = database.getConnection();
+	}
+
+	public List<ProductBean> selectAll() throws DataAccessException {
+		PreparedStatement st = null;
+		ResultSet rs = null;
+		String sql = "SELECT code, name FROM product";
+		// PreparedStatementオブジェクトの取得
+		try {
+			st = con.prepareStatement(sql);
+			rs = st.executeQuery();
+			// 結果の取得および表示
+
+			List<ProductBean> list = new ArrayList<ProductBean>();
+			while (rs.next()) {
+				String code = rs.getString("code");
+				String name = rs.getString("name");
+				ProductBean bean = new ProductBean(code, name);
+				list.add(bean);
+			}
+			return list;
+		} catch (Exception e) {
+			e.printStackTrace();
+			throw new DataAccessException("レコードの取得に失敗しました。");
+		} finally {
+			try {
+				DBManager database = new DBManager();
+				// リソースの開放
+				if(rs != null) database.close(rs);
+				if(st != null) database.close(st);
+				database.close(con);
+			} catch (Exception e) {
+				throw new DataAccessException("リソースの開放に失敗しました。");
+			}
+		}
+
+
 	}
 
 	public OrderBean selectById(String id) throws DataAccessException {

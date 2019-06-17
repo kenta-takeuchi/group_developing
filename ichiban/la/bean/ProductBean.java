@@ -21,6 +21,15 @@ public class ProductBean {
 		this.unit = unit;
 
 	}
+	
+	public ProductBean(
+			String code,
+			String name) {
+
+		this.code = code;
+		this.name = name;
+
+	}
 
 	public ProductBean() {
 
