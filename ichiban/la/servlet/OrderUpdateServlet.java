@@ -44,8 +44,18 @@ public class OrderUpdateServlet extends HttpServlet {
 				request.setAttribute("message", "エラー");
 			}else if(action.equals("regist")) {
 				String code = request.getParameter("code");
-				PostgreSQLOrderDao dao = new PostgreSQLOrderDao();
+				String productName = request.getParameter("productName");
+				int quantity = Integer.parseInt(request.getParameter("quantity"));
+
 				PostgreSQLOrderDetailDao detailDao = new PostgreSQLOrderDetailDao();
+				PostgreSQLOrderDao dao = new PostgreSQLOrderDao();
+				request.setAttribute("code", code);
+				UpdateBean bean = new UpdateBean();
+				bean.setOrderCode(code);
+				bean.setProductName(productName);
+				bean.setQuantity(quantity);
+
+
 				List<UpdateBean> list = detailDao.findByUpdateCode(code);
 				request.setAttribute("items", list);
 				gotoPage(request, response, "/MainMenu.jsp");

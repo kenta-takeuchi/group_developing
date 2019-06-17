@@ -22,41 +22,42 @@
           <form class="ui form" action="OrderUpdateServlet?action=regist" method = "post" method = "post">
             <div class="field">
               <h2>得意先コード</h2>
-              <input type="text" name="" placeholder="半角数字のみ" required>
+              <input type="text" name="orderCode" value= "${orderCode}" required>
             </div>
             <div class="field">
               <h2>商品入力</h2>
             </div>
-
             <div class="four fields">
               <div class="field">
                 <label class="ui label">番号</label>
-                <br>
-                <p>1</p>
-              </div>
-              <div class="field">
-                <label class="ui label">カテゴリ</label>
-                <br>
-                <input type="text" name="" placeholder="" required>
               </div>
               <div class="field">
                 <label class="ui label">商品名</label>
                 <br>
-                <input type="text" name="" placeholder="" required>
+
               </div>
               <div class="field">
                 <label class="ui label">受注数</label>
                 <br>
-                <input type="number" min="1" name="" placeholder="" required>
               </div>
             </div>
+            <!--c:forEach items = "${items}" var = "item" varStatus = "stat"
+            	var ="i" begin = "1" end = "10" step = "1"-->
+            <c:forEach items = "${items}" var = "item" varStatus = "stat">
+            	<div class="four fields">
+                	<p> ${stat.count}</p>
+                </div>
+                <div class="field">
+                	<input type="text" name="productName" value="${item.productName}" >
+              	</div>
+              	<div class="field">
+                	<input type="number" min="1" name="quantity" value="${item.quantity }" >
+              	</div>
+            </c:forEach>
 
             <div class="four fields">
               <div class="field">
                 <p>2</p>
-              </div>
-              <div class="field">
-                <input type="text" name="" placeholder="" >
               </div>
               <div class="field">
                 <input type="text" name="" placeholder="" >
@@ -74,9 +75,6 @@
                 <input type="text" name="" placeholder="" >
               </div>
               <div class="field">
-                <input type="text" name="" placeholder="" >
-              </div>
-              <div class="field">
                 <input type="number" min="1" name="" placeholder="" >
               </div>
             </div>
@@ -84,9 +82,6 @@
             <div class="four fields">
               <div class="field">
                 <p>4</p>
-              </div>
-              <div class="field">
-                <input type="text" name="" placeholder="" >
               </div>
               <div class="field">
                 <input type="text" name="" placeholder="" >
@@ -104,9 +99,6 @@
                 <input type="text" name="" placeholder="" >
               </div>
               <div class="field">
-                <input type="text" name="" placeholder="" >
-              </div>
-              <div class="field">
                 <input type="number" min="1" name="" placeholder="" >
               </div>
             </div>
@@ -114,9 +106,6 @@
             <div class="four fields">
               <div class="field">
                 <p>6</p>
-              </div>
-              <div class="field">
-                <input type="text" name="" placeholder="" >
               </div>
               <div class="field">
                 <input type="text" name="" placeholder="" >
@@ -134,9 +123,6 @@
                 <input type="text" name="" placeholder="" >
               </div>
               <div class="field">
-                <input type="text" name="" placeholder="" >
-              </div>
-              <div class="field">
                 <input type="number" min="1" name="" placeholder="" >
               </div>
             </div>
@@ -144,9 +130,6 @@
             <div class="four fields">
               <div class="field">
                 <p>8</p>
-              </div>
-              <div class="field">
-                <input type="text" name="" placeholder="" >
               </div>
               <div class="field">
                 <input type="text" name="" placeholder="" >
@@ -164,9 +147,6 @@
                 <input type="text" name="" placeholder="" >
               </div>
               <div class="field">
-                <input type="text" name="" placeholder="" >
-              </div>
-              <div class="field">
                 <input type="number" min="1" name="" placeholder="" >
               </div>
             </div>
@@ -174,9 +154,6 @@
             <div class="four fields">
               <div class="field">
                 <p>10</p>
-              </div>
-              <div class="field">
-                <input type="text" name="" placeholder="" >
               </div>
               <div class="field">
                 <input type="text" name="" placeholder="" >

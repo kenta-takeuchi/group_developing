@@ -65,7 +65,8 @@
           <tr>
             <th colspan="12" class="center aligned">
             <form action = "OrderShowUpdateFormServlet?action=update" method = "post">
-            	<input type="hidden" name="code" value="${order_code}">
+            	<!-- input type="hidden" name="code" value="${order_code}"-->
+            	<input type="hidden" name="code" value="0001">
             	<button class="ui button teal" type="submit" name="button">変更</button>
             </form>
               <button class="ui button"type="button" name="button" >削除</button>

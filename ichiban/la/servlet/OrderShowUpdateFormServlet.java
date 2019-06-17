@@ -1,6 +1,7 @@
 package la.servlet;
 
 import java.io.IOException;
+import java.util.List;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -8,6 +9,11 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
+import la.bean.UpdateBean;
+import la.dao.DataAccessException;
+//import la.dao.PostgreSQLOrderDao;
+import la.dao.PostgreSQLOrderDetailDao;
 
 /**
  * Servlet implementation class ShowUpdateFormServlet
@@ -32,21 +38,24 @@ public class OrderShowUpdateFormServlet extends HttpServlet {
 
 		//gotoPage(request, response,"/OrderUpdateView.jsp");
 		// TODO Auto-generated method stub
+
 		try {
 			String action = request.getParameter("action");
 
-			if (action == null || action.length() == 0 || action.equals("")) {
+			if(action == null || action.length() == 0 || action.equals("")) {
 				request.setAttribute("message", "エラー");
-				gotoPage(request, response, "");
-			}else if (action.equals("update")) {
+			}else if(action.equals("update")) {
 				String code = request.getParameter("code");
+				PostgreSQLOrderDetailDao detailDao = new PostgreSQLOrderDetailDao();
+				List<UpdateBean> list = detailDao.findByUpdateCode(code);
+				request.setAttribute("items", list);
 				request.setAttribute("orderCode", code);
 				gotoPage(request, response, "/OrderUpdateView.jsp");
 			}
-		} catch (Exception e) {
+		}catch(DataAccessException e){
 			e.printStackTrace();
 			request.setAttribute("message", "エラー");
-			gotoPage(request, response, "");
+			gotoPage(request, response,"");
 		}
 	}
 
