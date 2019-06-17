@@ -79,21 +79,21 @@ public class PostgreSQLOrderDetailDao {
 //		PreparedStatement st = null;
 //		ResultSet rs = null;
 
-		public List<UpdateBean> findByUpdateCode(String orderCode) throws DataAccessException{
+		public List<UpdateBean> findByUpdateCode(String order_id) throws DataAccessException{
 			PreparedStatement st = null;
 			ResultSet rs = null;
 			try {
-				String sql = "SELECT p.name, od.quantity FROM product p JOIN order_detail od ON p.code = od.product_code WHERE od.order_id = ?";
+				String sql = "SELECT p.code, od.quantity FROM product p JOIN order_detail od ON p.code = od.product_code WHERE od.order_id = ?";
 				st = con.prepareStatement(sql);
-				st.setString(1,orderCode);
+				st.setString(1,order_id);
 				rs = st.executeQuery();
 
 				List<UpdateBean> list = new ArrayList<UpdateBean>();
 				int cnt = 10;
 				while(rs.next()) {
-					String productName = rs.getString("name");
+					String code = rs.getString("code");
 					int quantity = rs.getInt("quantity");
-					UpdateBean bean = new UpdateBean(orderCode, productName, quantity);
+					UpdateBean bean = new UpdateBean(order_id, code, quantity);
 					list.add(bean);
 					cnt--;
 				}

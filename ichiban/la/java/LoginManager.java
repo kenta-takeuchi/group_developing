@@ -33,6 +33,7 @@ public class LoginManager {
 		if (isLogin == true) {
 			HttpSession session = request.getSession();
 			session.setAttribute("isLogin", "employee");
+			session.setAttribute("employee_code", employee_code);
 			return true;
 		} else {
 			return false;
@@ -55,6 +56,7 @@ public class LoginManager {
 		if (isLogin == true) {
 			HttpSession session = request.getSession();
 			session.setAttribute("isLogin", "admin");
+			session.setAttribute("employee_code", employee_code);
 			return true;
 		} else {
 			return false;
