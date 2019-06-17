@@ -51,6 +51,7 @@ public class PostgreSQLOrderDetailDao {
 		}catch (Exception e) {
 			e.printStackTrace();
 			throw new DataAccessException("レコードの取得に失敗しました。");
+
 		}finally {
 			try {
 				DBManager database = new DBManager();
@@ -63,8 +64,69 @@ public class PostgreSQLOrderDetailDao {
 			}
 		}
 	}
+
+		public int quantityUpdate(int quantity) throws DataAccessException{
+			PreparedStatement st = null;
+			ResultSet rs = null;
+
+			try {
+				String sql = "UPDATE order_detail SET quantity = ?";
+				st = con.prepareStatement(sql);
+				st.setInt(1,quantity);
+				//行数を返す。しかしこの行数は使用しない
+				int rows = st.executeUpdate();
+				return rows;
+			} catch (Exception e) {
+				e.printStackTrace();
+				throw new DataAccessException("レコードの取得に失敗しました。");
+			} finally {
+				try {
+					DBManager database = new DBManager();
+					// リソースの開放
+					if(rs != null) database.close(rs);
+					if(st != null) database.close(st);
+					database.close(con);
+				} catch (Exception e) {
+					throw new DataAccessException("リソースの開放に失敗しました。");
+				}
+			}
+		}
+
+		public List<UpdateBean> findByUpdateKey(String orderCode) throws DataAccessException{
+			PreparedStatement st = null;
+			ResultSet rs = null;
+
+			try {
+				String sql = "DELETE FROM order_detail WHERE order_id = ?";
+				st.setString(1,orderCode);
+				st = con.prepareStatement(sql);
+				rs = st.executeQuery();
+				List<UpdateBean> list = new ArrayList<UpdateBean>();
+				while(rs.next()) {
+					String productName = rs.getString("name");
+					int quantity = rs.getInt("quantity");
+					UpdateBean bean = new UpdateBean(orderCode, productName, quantity);
+					list.add(bean);
+				}
+				return list;
+
+				}catch (Exception e) {
+					e.printStackTrace();
+					throw new DataAccessException("レコードの取得に失敗しました。");
+				} finally {
+					try {
+						DBManager database = new DBManager();
+						// リソースの開放
+						if(rs != null) database.close(rs);
+						if(st != null) database.close(st);
+						database.close(con);
+					} catch (Exception e) {
+						throw new DataAccessException("リソースの開放に失敗しました。");
+
+					}
+				}
+		}
 }
-//
 //
 //
 //	public OrderDetailBean selectByOrderId(String order_id) throws DataAccessException {

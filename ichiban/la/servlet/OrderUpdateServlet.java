@@ -1,7 +1,6 @@
 package la.servlet;
 
 import java.io.IOException;
-import java.util.List;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -10,10 +9,11 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import la.bean.UpdateBean;
 import la.dao.DataAccessException;
 import la.dao.PostgreSQLOrderDao;
 import la.dao.PostgreSQLOrderDetailDao;
+import la.dao.PostgreSQLProductDao;
+
 
 
 /**
@@ -36,6 +36,8 @@ public class OrderUpdateServlet extends HttpServlet {
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
+		request.setCharacterEncoding("UTF-8");
+		response.setContentType("text/html;charset=UTF-8");
 		// TODO Auto-generated method stub
 		try {
 			String action = request.getParameter("action");
@@ -46,24 +48,31 @@ public class OrderUpdateServlet extends HttpServlet {
 				String code = request.getParameter("code");
 				String productName = request.getParameter("productName");
 				int quantity = Integer.parseInt(request.getParameter("quantity"));
+				if(code != null || productName != null || quantity > 0) {
 
-				PostgreSQLOrderDetailDao detailDao = new PostgreSQLOrderDetailDao();
+				}
+
+				//受注コードを変更
 				PostgreSQLOrderDao dao = new PostgreSQLOrderDao();
-				request.setAttribute("code", code);
-				UpdateBean bean = new UpdateBean();
-				bean.setOrderCode(code);
-				bean.setProductName(productName);
-				bean.setQuantity(quantity);
+				dao.codeUpdate(code);
+
+				//商品名を変更
+				PostgreSQLProductDao productDao = new PostgreSQLProductDao();
+				productDao.nameUpdate(productName);
+
+				//商品数量を変更
+				PostgreSQLOrderDetailDao detailDao = new PostgreSQLOrderDetailDao();
+				detailDao.quantityUpdate(quantity);
 
 
-				List<UpdateBean> list = detailDao.findByUpdateCode(code);
-				request.setAttribute("items", list);
-				gotoPage(request, response, "/MainMenu.jsp");
+				request.setAttribute("message", "更新しました。");
+				gotoPage(request, response,"/Message.jsp");
+
 			}
 		}catch(DataAccessException e){
 			e.printStackTrace();
-			request.setAttribute("message", "エラー");
-			gotoPage(request, response,"");
+			request.setAttribute("message", "正しく操作してください");
+			gotoPage(request, response,"/Message.jsp");
 		}
 	}
 

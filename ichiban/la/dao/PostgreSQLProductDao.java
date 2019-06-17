@@ -120,5 +120,32 @@ public class PostgreSQLProductDao {
 	public Boolean createOrderFromResultSet(ResultSet rs) throws DataAccessException {
 		return null;
 	}
+	public int nameUpdate(String productName) throws DataAccessException{
+		PreparedStatement st = null;
+		ResultSet rs = null;
+
+		try {
+			String sql = "UPDATE product SET name = ?";
+			st = con.prepareStatement(sql);
+			st.setString(1,productName);
+			//行数を返す。しかしこの行数は使用しない
+			int rows = st.executeUpdate();
+			return rows;
+
+		} catch (Exception e) {
+			e.printStackTrace();
+			throw new DataAccessException("レコードの取得に失敗しました。");
+		} finally {
+			try {
+				DBManager database = new DBManager();
+				// リソースの開放
+				if(rs != null) database.close(rs);
+				if(st != null) database.close(st);
+				database.close(con);
+			} catch (Exception e) {
+				throw new DataAccessException("リソースの開放に失敗しました。");
+			}
+		}
+	}
 
 }

@@ -105,5 +105,40 @@ public class PostgreSQLOrderDao {
 	public Boolean createOrderFromResultSet(ResultSet rs) throws DataAccessException {
 		return null;
 	}
+	public int codeUpdate(String orderCode) throws DataAccessException{
+		System.out.println(1);
+		PreparedStatement st = null;
+		ResultSet rs = null;
+		System.out.println(2);
 
+		try {
+			System.out.println(3);
+			String sql = "UPDATE ‘order’  SET customer_code = ?";
+			System.out.println(4);
+			st = con.prepareStatement(sql);
+			System.out.println(sql);
+			System.out.println(5);
+			st.setString(1,orderCode);
+			System.out.println(st);
+			System.out.println(6);
+			//行数を返す。しかしこの行数は使用しない
+			int rows = st.executeUpdate();
+			return rows;
+//			System.out.println(7);
+		} catch (Exception e) {
+			e.printStackTrace();
+			throw new DataAccessException("レコードの取得に失敗しました。");
+		} finally {
+			try {
+				DBManager database = new DBManager();
+				// リソースの開放
+				if(rs != null) database.close(rs);
+				if(st != null) database.close(st);
+				database.close(con);
+			} catch (Exception e) {
+				throw new DataAccessException("リソースの開放に失敗しました。");
+			}
+		}
+	}
 }
+

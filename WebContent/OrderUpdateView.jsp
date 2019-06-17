@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+
 <%@ taglib prefix = "c" uri = "http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html lang="en" dir="ltr">
@@ -41,9 +42,9 @@
                 <br>
               </div>
             </div>
-            <!--c:forEach items = "${items}" var = "item" varStatus = "stat"
-            	var ="i" begin = "1" end = "10" step = "1"-->
-            <c:forEach items = "${items}" var = "item" varStatus = "stat">
+            <c:forEach items = "${items}" var = "item" varStatus = "stat"
+            	var ="i" begin = "1" end = "10" step = "1">
+            <!--c:forEach items = "${items}" var = "item" varStatus = "stat"-->
             	<div class="four fields">
                 	<p> ${stat.count}</p>
                 </div>
