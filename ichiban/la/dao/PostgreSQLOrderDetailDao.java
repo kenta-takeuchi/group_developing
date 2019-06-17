@@ -3,10 +3,15 @@ package la.dao;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+<<<<<<< HEAD
+
+import la.bean.OrderDetailBean;
+=======
 import java.util.ArrayList;
 import java.util.List;
 
 import la.bean.UpdateBean;
+>>>>>>> 67f78d682bdc82c2d52dece658570fdf5c98f2fb
 
 
 public class PostgreSQLOrderDetailDao {
@@ -17,6 +22,48 @@ public class PostgreSQLOrderDetailDao {
 		con = database.getConnection();
 	}
 
+<<<<<<< HEAD
+	public OrderDetailBean selectByOrderId(String order_id) throws DataAccessException {
+		return null;
+	}
+
+	public OrderDetailBean selectByProductCode(String product_code) throws DataAccessException {
+		return null;
+	}
+
+	public OrderDetailBean selectById(String order_id, String product_code) throws DataAccessException {
+		return null;
+	}
+
+	public Boolean update(String order_id, String product_code) throws DataAccessException {
+		return null;
+	}
+
+	public OrderDetailBean update(String id) throws DataAccessException {
+		return null;
+	}
+
+	public OrderDetailBean createOrderDetailFromResultSet(ResultSet rs) throws DataAccessException {
+		return null;
+	}
+
+	public int deleteByOrderId(String id) throws DataAccessException {
+		PreparedStatement st = null;
+		ResultSet rs = null;
+
+		try {
+
+			// SQL文の作成
+			String sql = "DELETE FROM order_detail WHERE order_id = ?";
+			// PreparedStatementオブジェクトの取得
+			st = con.prepareStatement(sql);
+			st.setString(1, id);
+			// SQLの実行
+			int rows = st.executeUpdate();
+			// 結果の取得および表示
+			return rows;
+		} catch (Exception e) {
+=======
 //	public List<OrderBean> select() throws DataAccessException {
 //		PreparedStatement st = null;
 //		ResultSet rs = null;
@@ -49,9 +96,9 @@ public class PostgreSQLOrderDetailDao {
 //			// 結果の取得および表示
 //			return list;
 		}catch (Exception e) {
+>>>>>>> 67f78d682bdc82c2d52dece658570fdf5c98f2fb
 			e.printStackTrace();
 			throw new DataAccessException("レコードの取得に失敗しました。");
-
 		}finally {
 			try {
 				DBManager database = new DBManager();
@@ -64,69 +111,12 @@ public class PostgreSQLOrderDetailDao {
 			}
 		}
 	}
+<<<<<<< HEAD
 
-		public int quantityUpdate(int quantity) throws DataAccessException{
-			PreparedStatement st = null;
-			ResultSet rs = null;
-
-			try {
-				String sql = "UPDATE order_detail SET quantity = ?";
-				st = con.prepareStatement(sql);
-				st.setInt(1,quantity);
-				//行数を返す。しかしこの行数は使用しない
-				int rows = st.executeUpdate();
-				return rows;
-			} catch (Exception e) {
-				e.printStackTrace();
-				throw new DataAccessException("レコードの取得に失敗しました。");
-			} finally {
-				try {
-					DBManager database = new DBManager();
-					// リソースの開放
-					if(rs != null) database.close(rs);
-					if(st != null) database.close(st);
-					database.close(con);
-				} catch (Exception e) {
-					throw new DataAccessException("リソースの開放に失敗しました。");
-				}
-			}
-		}
-
-		public List<UpdateBean> findByUpdateKey(String orderCode) throws DataAccessException{
-			PreparedStatement st = null;
-			ResultSet rs = null;
-
-			try {
-				String sql = "DELETE FROM order_detail WHERE order_id = ?";
-				st.setString(1,orderCode);
-				st = con.prepareStatement(sql);
-				rs = st.executeQuery();
-				List<UpdateBean> list = new ArrayList<UpdateBean>();
-				while(rs.next()) {
-					String productName = rs.getString("name");
-					int quantity = rs.getInt("quantity");
-					UpdateBean bean = new UpdateBean(orderCode, productName, quantity);
-					list.add(bean);
-				}
-				return list;
-
-				}catch (Exception e) {
-					e.printStackTrace();
-					throw new DataAccessException("レコードの取得に失敗しました。");
-				} finally {
-					try {
-						DBManager database = new DBManager();
-						// リソースの開放
-						if(rs != null) database.close(rs);
-						if(st != null) database.close(st);
-						database.close(con);
-					} catch (Exception e) {
-						throw new DataAccessException("リソースの開放に失敗しました。");
-
-					}
-				}
-		}
+=======
+>>>>>>> 67f78d682bdc82c2d52dece658570fdf5c98f2fb
 }
+//
 //
 //
 //	public OrderDetailBean selectByOrderId(String order_id) throws DataAccessException {

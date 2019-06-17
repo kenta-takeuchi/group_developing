@@ -19,14 +19,14 @@ import la.java.LoginManager;
 /**
  * Servlet implementation class LoginServlet
  */
-@WebServlet("/ShowOrderAnalyzeServlet")
-public class ShowOrderAnalyzeServlet extends HttpServlet {
+@WebServlet("/ShowOrderDeleteConfirmServlet")
+public class ShowOrderDeleteConfirmServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
 	/**
 	 * @see HttpServlet#HttpServlet()
 	 */
-	public ShowOrderAnalyzeServlet() {
+	public ShowOrderDeleteConfirmServlet() {
 		super();
 	}
 
@@ -39,10 +39,7 @@ public class ShowOrderAnalyzeServlet extends HttpServlet {
 		request.setCharacterEncoding("UTF-8");
 		response.setContentType("text/html;charset=UTF-8");
 
-		boolean flg = LoginManager.checkAdmin(request, response);
-		if (flg == false) {
-			return;
-		}
+		LoginManager.checkAdmin(request, response);
 
 		String year = request.getParameter("year");
 		String month = request.getParameter("month");
