@@ -64,15 +64,12 @@
         <tfoot>
           <tr>
             <th colspan="12" class="center aligned">
-            <form action = "ShowOrderUpdateFormServlet" method = "post">
-            	<input type="hidden" name="order_id" value="0001">
-            	<button class="ui button teal" type="submit" name="update">変更</button>
+            <form action = "OrderShowUpdateFormServlet?action=update" method = "post">
+            	<!-- input type="hidden" name="code" value="${order_code}"-->
+            	<input type="hidden" name="code" value="0001">
+            	<button class="ui button teal" type="submit" name="button">変更</button>
             </form>
-            <form action = "OrderShowUpdateFormServlet" method = "post">
-            	<input type="hidden" name="order_id" value="0001">
-            	<button class="ui button"type="submit" name="delete" >削除</button>
-            </form>
-
+              <button class="ui button"type="button" name="button" >削除</button>
             </th>
           </tr>
         </tfoot>
