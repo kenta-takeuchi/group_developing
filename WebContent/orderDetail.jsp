@@ -65,6 +65,7 @@
           <tr>
             <th colspan="12" class="center aligned">
             <form action = "ShowOrderUpdateFormServlet" method = "post">
+               	<!-- input type="hidden" name="order_id" value="${order_id}"-->
             	<input type="hidden" name="order_id" value="0001">
             	<button class="ui button teal" type="submit" name="update">変更</button>
             </form>

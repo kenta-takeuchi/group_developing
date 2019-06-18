@@ -83,7 +83,9 @@ public class PostgreSQLOrderDetailDao {
 			PreparedStatement st = null;
 			ResultSet rs = null;
 			try {
-				String sql = "SELECT p.name, od.quantity FROM product p JOIN order_detail od ON p.code = od.product_code WHERE od.order_id = ?";
+				String sql = "SELECT p.name, od.quantity o.customer_code "
+						+ "FROM product p JOIN order_detail od ON p.code = od.product_code "
+						+ "WHERE od.order_id = ?";
 				st = con.prepareStatement(sql);
 				st.setString(1,orderCode);
 				rs = st.executeQuery();
