@@ -32,13 +32,11 @@ public class SearchServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException {
 		//パラメーターの解析
-		System.out.println(0);
 		String ordered_date = request.getParameter("ordered_date");
 		String customer_code = request.getParameter("customer_code");
 		String employee_code = request.getParameter("employee_code");
 		//パラメータチェック
 		boolean flg = true;
-		System.out.println(1);
 		String add_sql = "";
 		if (ordered_date.length() != 0) {
 			if (ordered_date.matches("[0-9]{4}-[0-9]{2}-[0-9]{2}")) {
@@ -61,22 +59,17 @@ public class SearchServlet extends HttpServlet {
 				flg = false;
 			}
 		}
-		System.out.println(2);
 		if (!flg) {
 			RequestDispatcher rd = request.getRequestDispatcher("/Search.jsp");
 			rd.forward(request, response);
 		}
 
-		System.out.println(3);
 		try {
 			PostgreSQLOrderDao dao = new PostgreSQLOrderDao();
 			List<SearchResultBean> list = dao.select(add_sql);
 			request.setAttribute("searchResults", list);
-			System.out.println(4);
 			RequestDispatcher rd = request.getRequestDispatcher("/OrderSearchResult.jsp");
-			System.out.println(5);
 			rd.forward(request, response);
-			System.out.println(6);
 		} catch (DataAccessException e) {
 			e.printStackTrace();
 			request.setAttribute("message", "内部エラーが発生しました。");

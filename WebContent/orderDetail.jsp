@@ -1,7 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
-<%@ page import="java.util.*" %>
-
+	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 
 <!DOCTYPE html>
@@ -23,8 +21,7 @@
 
 		<div class="ui borderless topmenu menu">
 			<div class="ui container aq-header">
-				<h1 class="ui center aligned">受注詳細${order_code} TODO
-					受注コードをorder_codeで受け取る前提</h1>
+				<h1 class="ui center aligned">受注詳細（注文番号：${order_id}）</h1>
 				<!--form action="OrderShowUpdateFormServlet?action=update" method = "post">
 	          <select name = "code">
 		          <option value="1">1
@@ -36,54 +33,39 @@
 			<thead>
 				<tr>
 					<th>番号</th>
-					<th>カテゴリ</th>
-					<th>商品名</th>
-					<th>受注数</th>
-					<th>商品単価</th>
+					<th>商品コード</th>
+					<th>受注数量</th>
+					<th>金額</th>
 				</tr>
 			</thead>
 			<tbody>
-				<c:forEach items="${orderDetails}" var="orderDetail"
-					varStatus="stat">
+				<c:forEach items="${orderDetails}" var="orderDetail" varStatus="stat">
 					<tr>
-						<td>${stat.count}</td>
-						<td class="single line">${orderDetail.category}</td>
-						<td>${orderDetail.productName}</td>
+						<td class="single line">${stat.count}</td>
+						<td>${orderDetail.product_code}</td>
 						<td>${orderDetail.quantity}</td>
-						<td>${orderDetail.productPrice}</td>
+						<td>${orderDetail.total_fee}</td>
 					</tr>
 				</c:forEach>
-				<tr>
-					<td>1</td>
-					<td class="single line">test</td>
-					<td>test</td>
-					<td>test</td>
-					<td>test</td>
-				</tr>
-				<tr>
-					<td>2</td>
-					<td>test</td>
-					<td>test</td>
-					<td>test</td>
-					<td>test</td>
-				</tr>
 			</tbody>
 			<tfoot>
 				<tr>
 					<th colspan="12" class="center aligned">
-						<form action="ShowOrderUpdateFormServlet" method="post">
-							<input type="hidden" name="order_id" value="0001">
-							<button class="ui button teal" type="submit" name="update">変更</button>
+						<form action="OrderShowUpdateFormServlet?action=update" method="post">
+							<!-- input type="hidden" name="code" value="${order_code}"-->
+							<input type="hidden" name="code" value="${order_id}">
+							<button class="ui button teal" type="submit" name="button">変更</button>
 						</form>
-						<form action="OrderShowUpdateFormServlet" method="post">
-							<input type="hidden" name="order_id" value="0001">
-							<button class="ui button" type="submit" name="delete">削除</button>
+						<form action="OrderShowUpdateFormServlet?action=update" method="post">
+							<!-- input type="hidden" name="code" value="${order_code}"-->
+							<input type="hidden" name="code" value="${order_id}">
+							<button class="ui button" type="button" name="button">削除</button>
 						</form>
+
 					</th>
 				</tr>
 			</tfoot>
 		</table>
-		<p>TODO 検索結果は${orderDetail}で受け取る前提</p>
 	</div>
 </body>
 </html>

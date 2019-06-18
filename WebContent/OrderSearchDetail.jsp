@@ -11,14 +11,11 @@
 <body>
 
 	<h1>受注詳細</h1>
-	<c:forEach items="${order}" var="order">
-	<tr><td>${OrderBean.order_id}</td></tr>
-	<tr><td>${OrderBean.customer_code}</td></tr>
-	<tr><td>${OrderBean.employee_code}</td></tr>
-	<tr><td>${OrderBean.ordered_date}</td></tr>
-	<tr><td>${OrderBean.tax}</td></tr>
-	<tr><td>${OrderBean.count_of_order_detail}</td></tr>
-	<tr><td>${OrderBean.total_fee}</td></tr>
+	<c:forEach items="${sr}" var="order">
+	<tr><td>${OrderDetailBean.order_id}</td></tr>
+	<tr><td>${OrderDetailBean.customer_code}</td></tr>
+	<tr><td>${OrderDetailBean.quantity}</td></tr>
+	<tr><td>${OrderDetailBean.total_fee}</td></tr>
 
 
 	</c:forEach>

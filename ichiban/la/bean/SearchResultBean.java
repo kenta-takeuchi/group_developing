@@ -2,11 +2,11 @@ package la.bean;
 
 public class SearchResultBean {
 	private java.sql.Date date;
-	private int id;
+	private String id;
 	private String customer_code;
 	private String employee_code;
 
-	public SearchResultBean(int id, java.sql.Date date, String employee_code, String customer_code) {
+	public SearchResultBean(String id, java.sql.Date date, String employee_code, String customer_code) {
 		// TODO 自動生成されたコンストラクター・スタブ
 		this.id = id;
 		this.date = date;
@@ -22,11 +22,11 @@ public class SearchResultBean {
 		this.date = date;
 	}
 
-	public int getId() {
+	public String getId() {
 		return id;
 	}
 
-	public void setId(int id) {
+	public void setId(String id) {
 		this.id = id;
 	}
 
@@ -45,5 +45,6 @@ public class SearchResultBean {
 	public void setEmployee_code(String employee_code) {
 		this.employee_code = employee_code;
 	}
+
 
 }

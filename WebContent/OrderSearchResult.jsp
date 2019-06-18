@@ -43,7 +43,7 @@
 						<td>${sr.customer_code}</td>
 						<td>
 							<form class="ui form center aligned"
-								action="/OrderSearchDetailServlet?action=detail" method="post">
+								action="/group_developing/ShowOrderDetailServlet?action=detail" method="post">
 								<input type="hidden" name="order_id" value="${sr.id}">
 								<button class="ui button teal" type="submit" name="detail">詳細をみる</button>
 							</form>

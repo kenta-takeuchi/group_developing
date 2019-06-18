@@ -36,7 +36,6 @@ public class PostgreSQLOrderDao {
 		return null;
 	}
 
-<<<<<<< HEAD
 	public List<SearchResultBean> select(String add_sql) throws DataAccessException {
 		PreparedStatement st = null;
 		ResultSet rs = null;
@@ -52,7 +51,7 @@ public class PostgreSQLOrderDao {
 			List<SearchResultBean> list = new ArrayList<SearchResultBean>();
 
 			while (rs.next()) {
-				int id = rs.getInt("id");
+				String id = rs.getString("id");
 				java.sql.Date ordered_date = rs.getDate("ordered_date");
 				String customer_code = rs.getString("customer_code");
 				String employee_code = rs.getString("employee_code");
@@ -77,10 +76,8 @@ public class PostgreSQLOrderDao {
 	}
 
 
-	public List<OrderTotalBean> selectByOrderedDate(String year, String month) throws DataAccessException {
-=======
 	public List<OrderTotalBean> selectByOrderedDate(String year, String month) throws DataAccessException, ParseException {
->>>>>>> 77b40b394609ebdb5163ff2bce408f5cec644940
+
 		PreparedStatement st = null;
 		ResultSet rs = null;
 
