@@ -1,6 +1,8 @@
 package la.bean;
 
-public class SearchResultBean {
+import java.io.Serializable;
+
+public class SearchResultBean implements Serializable{
 	private java.sql.Date date;
 	private String id;
 	private String customer_code;
@@ -12,6 +14,10 @@ public class SearchResultBean {
 		this.date = date;
 		this.employee_code = employee_code;
 		this.customer_code = customer_code;
+	}
+
+	public SearchResultBean() {
+
 	}
 
 	public java.sql.Date getDate() {
