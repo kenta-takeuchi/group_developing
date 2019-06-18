@@ -1,6 +1,7 @@
 package la.servlet;
 
 import java.io.IOException;
+
 import java.util.ArrayList;
 
 import javax.servlet.RequestDispatcher;
@@ -37,8 +38,8 @@ public class ShowInputFormServlet extends HttpServlet {
  	 					}
  					}
 					request.setAttribute("list", list);
-
 					gotoPage(request, response, "/OrderRegistConfirm.jsp");
+					
 				}else {
 					request.setAttribute("message", "正しく操作してください");
 					gotoPage(request, response, "/OrderRegistError.jsp");
@@ -50,8 +51,7 @@ public class ShowInputFormServlet extends HttpServlet {
 		RequestDispatcher rd = request.getRequestDispatcher(page);
 		rd.forward(request, response);
 	}
-	protected void doPost(HttpServletRequest request,
-			HttpServletResponse response) throws ServletException, IOException {
+	protected void doPost(HttpServletRequest request,HttpServletResponse response) throws ServletException, IOException {
 		doGet(request, response);
 	}
 }

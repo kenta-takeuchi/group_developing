@@ -1,6 +1,8 @@
 package la.servlet;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -9,6 +11,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import la.bean.UpdateBean;
 import la.dao.DataAccessException;
 import la.dao.PostgreSQLOrderDetailDao;
 
@@ -43,12 +46,50 @@ public class OrderUpdateServlet extends HttpServlet {
 			if(action == null || action.length() == 0 || action.equals("")) {
 				request.setAttribute("message", "エラー");
 			}else if(action.equals("regist")) {
-				String code = request.getParameter("code");
+				String order_id = request.getParameter("order_id");
 
-
-				String productName = request.getParameter("productName");
+				String product_name = request.getParameter("product_name");
 				int quantity = Integer.parseInt(request.getParameter("quantity"));
 				PostgreSQLOrderDetailDao detailDao = new PostgreSQLOrderDetailDao();
+
+				List<UpdateBean> order_details = new ArrayList<UpdateBean>();
+				UpdateBean bean;
+				for (int i=0; i<10; i++) {
+					String cnt = request.getParameter("quantity_" + i);
+					//cntが空っぽだったら次の処理へ
+					if ((cnt == null) || (cnt.length() == 0)) {
+						continue;
+					}else if ((cnt != null) || (cnt.length() >= 0))
+						try {
+							//既存のデータを消去する処理
+							detailDao.deleteByOrderId(order_id);
+
+							Integer.parseInt(cnt);
+							bean = new UpdateBean(order_id, product_name, quantity);
+							order_details.add(bean);
+							} catch (Exception e) {
+								request.setAttribute("message", "正しく操作してください");
+								gotoPage(request, response,"/Message.jsp");
+								return;
+					}
+
+					//resistOrderDetailは仮名、登録するメソッド名
+					detailDao.resistOrderDetail(order_details);
+
+
+					request.setAttribute("message", "更新しました。");
+					gotoPage(request, response,"/Message.jsp");
+				}
+
+
+
+
+
+
+				// DAOに接続してください
+
+
+
 //				detailDao.(code);
 //
 //
@@ -71,8 +112,7 @@ public class OrderUpdateServlet extends HttpServlet {
 
 
 
-				request.setAttribute("message", "更新しました。");
-				gotoPage(request, response,"/Message.jsp");
+
 
 			}
 		}catch(DataAccessException e){

@@ -26,7 +26,7 @@
 					method="post" method="post">
 					<div class="field">
 						<h2>得意先コード</h2>
-						<input type="text" name="orderCode" value="${order_id}" required>
+						<input type="text" name="customer" value="${customer_code}" required>
 					</div>
 					<div class="field">
 						<h2>商品入力</h2>
@@ -51,7 +51,7 @@
 								<p>${stat.count}</p>
 							</div>
 							<div class="field">
-								<select class="ui select" name="product">
+								<select class="ui select" name="product_${stat.count}">
 									<c:forEach items="${products}" var="p">
 										<c:choose>
 											<c:when test="${p.code == od.product_code}">
@@ -65,7 +65,7 @@
 								</select>
 							</div>
 							<div class="field">
-								<input type="number" min="1" name="quantity"
+								<input type="number" min="1" name="quantity_${stat.count}"
 									value="${od.quantity}">
 							</div>
 						</div>
