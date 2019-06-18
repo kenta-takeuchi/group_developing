@@ -119,9 +119,8 @@ public class PostgreSQLOrderDetailDao {
 			PreparedStatement st = null;
 			ResultSet rs = null;
 			try {
-				String sql = "SELECT p.name, od.quantity o.customer_code "
-						+ "FROM product p JOIN order_detail od ON p.code = od.product_code "
-						+ "WHERE od.order_id = ?";
+				//order_detailと‘order’からproduct_code、od.quantity、o.customer_codeを取得する
+				String sql = "SELECT od.product_code, od.quantity FROM order_detail WHERE od.order_id = ?";
 				st = con.prepareStatement(sql);
 				st.setString(1,order_id);
 				rs = st.executeQuery();
@@ -129,9 +128,10 @@ public class PostgreSQLOrderDetailDao {
 				List<UpdateBean> list = new ArrayList<UpdateBean>();
 				int cnt = 10;
 				while(rs.next()) {
-					String code = rs.getString("code");
+					String product_code = rs.getString("product_code");
 					int quantity = rs.getInt("quantity");
-					UpdateBean bean = new UpdateBean(order_id, code, quantity);
+					String customer_code = rs.getString("customer_code");
+					UpdateBean bean = new UpdateBean(order_id, product_code, quantity);
 					list.add(bean);
 					cnt--;
 				}

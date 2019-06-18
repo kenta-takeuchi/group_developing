@@ -47,9 +47,19 @@ public class OrderUpdateServlet extends HttpServlet {
 				request.setAttribute("message", "エラー");
 			}else if(action.equals("regist")) {
 				String order_id = request.getParameter("order_id");
+				String product_code = request.getParameter("product_code");
+				String customer_code = request.getParameter("customer_code");
+				String quantity = request.getParameter("quantity");
 
-				String product_name = request.getParameter("product_name");
-				int quantity = Integer.parseInt(request.getParameter("quantity"));
+				//quantityが整数だったらint型にする
+				if (quantity.matches("[0-9]{5}")) {
+					 Integer.parseInt(quantity);
+				}else {
+					request.setAttribute("message", "受注数には数字を入力してください。");
+					gotoPage(request, response,"/OrderUpdate.jsp");
+					return;
+				}
+
 				PostgreSQLOrderDetailDao detailDao = new PostgreSQLOrderDetailDao();
 
 				List<UpdateBean> order_details = new ArrayList<UpdateBean>();
@@ -65,7 +75,7 @@ public class OrderUpdateServlet extends HttpServlet {
 							detailDao.deleteByOrderId(order_id);
 
 							Integer.parseInt(cnt);
-							bean = new UpdateBean(order_id, product_name, quantity);
+							bean = new UpdateBean(order_id, product_code, customer_code, quantity);
 							order_details.add(bean);
 							} catch (Exception e) {
 								request.setAttribute("message", "正しく操作してください");

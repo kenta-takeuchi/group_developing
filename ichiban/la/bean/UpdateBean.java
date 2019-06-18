@@ -7,6 +7,12 @@ public class UpdateBean implements Serializable{
 	private String product_code;
 	private int quantity;
 
+	public UpdateBean(String order_id, String product_code, String customer_code, int quantity) {
+		this.order_id = order_id;
+		this.product_code = product_code;
+		this.quantity = quantity;
+	}
+
 	public String getOrder_id() {
 		return order_id;
 	}
@@ -23,6 +29,7 @@ public class UpdateBean implements Serializable{
 		this.product_code = product_code;
 	}
 
+
 	public int getQuantity() {
 		return quantity;
 	}
@@ -31,11 +38,7 @@ public class UpdateBean implements Serializable{
 		this.quantity = quantity;
 	}
 
-	public UpdateBean(String order_id, String product_code, int quantity) {
-		this.order_id = order_id;
-		this.product_code = product_code;
-		this.quantity = quantity;
-	}
+
 
 
 
