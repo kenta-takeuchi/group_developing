@@ -1,9 +1,11 @@
 package la.dao;
 
+import java.math.BigDecimal;
 import java.sql.Connection;
 import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
@@ -75,21 +77,18 @@ public class PostgreSQLOrderDao {
 	}
 
 
-	public List<OrderTotalBean> selectByOrderedDate(String year, String month) throws DataAccessException, ParseException {
+	public List<OrderTotalBean> selectByOrderedDate(String year, String month) throws DataAccessException, ParseException{
 
 		PreparedStatement st = null;
 		ResultSet rs = null;
 
-		Date thisDate = new SimpleDateFormat("yyyy-MM-dd").parse(year + "-" + month + "-01");
+		java.util.Date thisDate = new SimpleDateFormat("yyyy-MM-dd").parse(year + "-" + month + "-01");
 
-		System.out.println(0);
-		Date nextDate = CalcMonth.getCalcMonth(thisDate, 1);
+		java.util.Date nextDate = CalcMonth.getCalcMonth(thisDate, 1);
 
-		System.out.println(1);
 
-		java.sql.Date sqlThisDate = CalcMonth.CastToSQLDate(thisDate);
-		java.sql.Date sqlNextDate = CalcMonth.CastToSQLDate(nextDate);
-		System.out.println(2);
+		Date sqlThisDate = CalcMonth.CastToSQLDate(thisDate);
+		Date sqlNextDate = CalcMonth.CastToSQLDate(nextDate);
 
 		System.out.println(sqlThisDate);
 		System.out.println(sqlNextDate);
@@ -107,7 +106,15 @@ public class PostgreSQLOrderDao {
 			// 結果の取得および表示
 
 			List<OrderTotalBean> list = new ArrayList<OrderTotalBean>();
-
+			while (rs.next()) {
+				java.sql.Date ordered_date = rs.getDate(1);
+				int count_of_order_detail = rs.getInt(2);
+				BigDecimal total_fee = rs.getBigDecimal(3);
+				BigDecimal average_fee = rs.getBigDecimal(4);
+				BigDecimal max_fee = rs.getBigDecimal(5);
+				OrderTotalBean bean = new OrderTotalBean(ordered_date, count_of_order_detail, total_fee, average_fee, max_fee);
+				list.add(bean);
+			}
 			return list;
 		} catch (Exception e) {
 			e.printStackTrace();

@@ -94,7 +94,6 @@ public class PostgreSQLOrderDetailDao {
 				int quantity = rs.getInt("quantity");
 				BigDecimal total_fee = rs.getBigDecimal("total_fee");
 				OrderDetailBean bean = new OrderDetailBean(order_id, product_code, quantity, total_fee);
-				System.out.println(order_id + ", " + product_code);
 				list.add(bean);
 			}
 			return list;

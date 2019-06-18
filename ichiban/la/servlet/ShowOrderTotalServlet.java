@@ -59,16 +59,16 @@ public class ShowOrderTotalServlet extends HttpServlet {
 
 		try {
 			List<OrderTotalBean> list = dao.selectByOrderedDate(year, month);
-			request.setAttribute("List", list);
+			request.setAttribute("order_totals", list);
 			gotoPage(request,response, "/orderTotal.jsp");
 		} catch (DataAccessException e) {
 			// TODO 自動生成された catch ブロック
 			e.printStackTrace();
-			gotoPage(request,response, "/AdminMenu.jsp");
+			gotoPage(request,response, "/adminMenu.jsp");
 		} catch (ParseException e) {
 			// TODO 自動生成された catch ブロック
 			e.printStackTrace();
-			gotoPage(request,response, "/AdminMenu.jsp");
+			gotoPage(request,response, "/adminMenu.jsp");
 		}
 	}
 
