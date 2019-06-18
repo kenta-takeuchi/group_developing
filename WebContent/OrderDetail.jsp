@@ -50,17 +50,22 @@
 			</tbody>
 			<tfoot>
 				<tr>
-					<th colspan="12" class="center aligned">
-						<form action="/group_developing/OrderShowUpdateFormServlet?action=update"
-							method="post">
-							<input type="hidden" name="order_id" value="${order_id}">
-							<button class="ui button teal" type="submit" name="button">変更</button>
-						</form>
-						<form action="/group_developing/ShowOrderDeleteConfirmServlet"
-							method="post">
-							<input type="hidden" name="order_id" value="${order_id}">
-							<button class="ui button" type="submit" name="button">削除</button>
-						</form>
+					<th colspan="12">
+						<div class="ui form raised very padded center aligned text aq-margin">
+							<div class="inline fields">
+								<form
+									action="/group_developing/OrderShowUpdateFormServlet?action=update"
+									method="post" class="field">
+									<input type="hidden" name="order_id" value="${order_id}">
+									<button class="ui left button teal" type="submit" name="button">変更</button>
+								</form>
+								<form action="/group_developing/ShowOrderDeleteConfirmServlet"
+									method="post" class="field">
+									<input type="hidden" name="order_id" value="${order_id}">
+									<button class="ui right  button" type="submit" name="button">削除</button>
+								</form>
+							</div>
+						</div>
 					</th>
 				</tr>
 			</tfoot>
