@@ -24,7 +24,6 @@
 	            ログアウト
 	          </button>
           </form>
-
         </div>
       </div>
       <div class="aq-wrapper">

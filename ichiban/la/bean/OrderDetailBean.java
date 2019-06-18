@@ -3,6 +3,7 @@ package la.bean;
 import java.io.Serializable;
 import java.math.BigDecimal;
 
+
 public class OrderDetailBean implements Serializable {
 	private String order_id;
 	private String product_code;
