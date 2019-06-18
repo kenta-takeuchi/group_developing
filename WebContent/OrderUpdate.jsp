@@ -54,7 +54,7 @@
 								<select class="ui select" name="product_${stat.count}">
 									<c:forEach items="${products}" var="p">
 										<c:choose>
-											<c:when test="${p.code eq od.product_code}">
+											<c:when test="${p.code == od.product_code}">
 												<option value="${p.code}" selected>${p.name}</option>
 											</c:when>
 											<c:otherwise>
