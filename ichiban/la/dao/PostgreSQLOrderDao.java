@@ -195,6 +195,10 @@ public class PostgreSQLOrderDao {
 			st.setInt(6, detail_quantity);
 			st.setInt(7, intSum);
 
+			PostgreSQLOrderDetailDao odDao = new PostgreSQLOrderDetailDao();
+			odDao.insertOrderDetail(listDetail);
+
+
 			//SQLの実行
 			intRet = st.executeUpdate();
 
@@ -259,7 +263,6 @@ public class PostgreSQLOrderDao {
 				OrderBean bean = new OrderBean(order_id, customer_code, employee_code, ordered_date, tax, count_of_order_detail, total_fee);
 				return bean;
 			} else {
-				System.out.println(0);
 				return null;
 			}
 

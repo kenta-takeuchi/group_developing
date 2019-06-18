@@ -10,6 +10,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import la.bean.OrderBean;
 import la.bean.ProductBean;
 import la.bean.UpdateBean;
 import la.dao.DataAccessException;
@@ -40,20 +41,21 @@ public class ShowOrderUpdateFormServlet extends HttpServlet {
 		request.setCharacterEncoding("UTF-8");
 		response.setContentType("text/html;charset=UTF-8");
 
-		//gotoPage(request, response,"/OrderUpdateView.jsp");
-		// TODO Auto-generated method stub
-
 		try {
 			String order_id = request.getParameter("order_id");
 			PostgreSQLOrderDao orderDao = new PostgreSQLOrderDao();
-			String customer_code = orderDao.selectById(order_id).getCustomer_code();
+			OrderBean bean = orderDao.selectByID(order_id);
+			String customer_code = bean.getCustomer_code();
+
 			PostgreSQLOrderDetailDao detailDao = new PostgreSQLOrderDetailDao();
 			List<UpdateBean> order_details = detailDao.findByUpdateCode(order_id);
+
 			PostgreSQLProductDao productDao = new PostgreSQLProductDao();
 			List<ProductBean> products = productDao.selectAll();
-			request.setAttribute("order_details", order_details);
+
 			request.setAttribute("order_id", order_id);
 			request.setAttribute("customer_code", customer_code);
+			request.setAttribute("order_details", order_details);
 			request.setAttribute("products", products);
 			gotoPage(request, response, "/OrderUpdate.jsp");
 		}catch(DataAccessException e){

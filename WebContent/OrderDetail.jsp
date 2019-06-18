@@ -54,7 +54,7 @@
 						<div class="ui form raised very padded center aligned text aq-margin">
 							<div class="inline fields">
 								<form
-									action="/group_developing/OrderShowUpdateFormServlet?action=update"
+									action="/group_developing/ShowOrderUpdateFormServlet"
 									method="post" class="field">
 									<input type="hidden" name="order_id" value="${order_id}">
 									<button class="ui left button teal" type="submit" name="button">変更</button>

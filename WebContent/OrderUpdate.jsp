@@ -24,7 +24,7 @@
 		<div class="aq-wrapper">
 			<div
 				class="ui raised very padded center aligned text container segment">
-				<form class="ui form" action="OrderUpdateServlet?action=regist"
+				<form class="ui form" action="OrderUpdateServlet"
 					method="post" method="post">
 					<div class="field">
 						<h2>得意先コード</h2>
@@ -53,7 +53,8 @@
 								<p>${stat.count}</p>
 							</div>
 							<div class="field">
-								<select class="ui select" name="product_${stat.count}">
+								<select class="ui select" name="product_code_${stat.count}">
+									<option value="-----">-----</option>
 									<c:forEach items="${products}" var="p">
 										<c:choose>
 											<c:when test="${p.code == od.product_code}">
@@ -72,7 +73,7 @@
 							</div>
 						</div>
 					</c:forEach>
-					<input type="hidden" name="code" value="${order_id}">
+					<input type="hidden" name="order_id" value="${order_id}">
 					<button type="submit" class="ui large teal button">登録</button>
 				</form>
 			</div>

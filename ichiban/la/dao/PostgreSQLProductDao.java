@@ -71,7 +71,7 @@ public class PostgreSQLProductDao {
 		return null;
 	}
 
-	public List<OrderAnalyzeBean> selectByProductId(String year, String month) throws DataAccessException, ParseException {
+	public List<OrderAnalyzeBean> selectByDate(String year, String month) throws DataAccessException, ParseException {
 		PreparedStatement st = null;
 		ResultSet rs = null;
 
@@ -140,6 +140,47 @@ public class PostgreSQLProductDao {
 				list.add(bean);
 			}
 			return list;
+		} catch (Exception e) {
+			e.printStackTrace();
+			throw new DataAccessException("レコードの取得に失敗しました。");
+		} finally {
+			try {
+				DBManager database = new DBManager();
+				// リソースの開放
+				if(rs != null) database.close(rs);
+				if(st != null) database.close(st);
+				database.close(con);
+			} catch (Exception e) {
+				throw new DataAccessException("リソースの開放に失敗しました。");
+			}
+		}
+	}
+
+	public ProductBean selectByProductId(String product_code) throws DataAccessException, ParseException {
+		PreparedStatement st = null;
+		ResultSet rs = null;
+		System.out.println(product_code);
+		try {
+			// SQL文の作成
+			String sql = "SELECT * FROM product WHERE code = ?";
+			// PreparedStatementオブジェクトの取得
+			st = con.prepareStatement(sql);
+			st.setString(1, product_code);
+			// SQLの実行
+			rs = st.executeQuery();
+			// 結果の取得および表示
+			if (rs.next()) {
+				String code = rs.getString("code");
+				String category_code = rs.getString("category_code");
+				String name = rs.getString("name");
+				int price = rs.getInt("price");
+				String unit = rs.getString("unit");
+				ProductBean bean = new ProductBean(code, category_code, name, price, unit);
+				return bean;
+			} else {
+				return null;
+			}
+
 		} catch (Exception e) {
 			e.printStackTrace();
 			throw new DataAccessException("レコードの取得に失敗しました。");
