@@ -60,6 +60,7 @@ public class ShowAdminMenuServlet extends HttpServlet {
 			}
 		}
 
+		gotoPage(request,response, "/adminMenu.jsp");
 
 	}
 

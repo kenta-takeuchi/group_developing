@@ -8,9 +8,11 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 
+import la.bean.CustomerBean;
 import la.bean.OrderBean;
 import la.bean.OrderDetailBean;
 import la.bean.OrderTotalBean;
+import la.bean.SearchResultBean;
 import la.java.CalcMonth;
 
 public class PostgreSQLOrderDao {
@@ -34,7 +36,48 @@ public class PostgreSQLOrderDao {
 		return null;
 	}
 
+	public List<SearchResultBean> select(String add_sql) throws DataAccessException {
+		PreparedStatement st = null;
+		ResultSet rs = null;
+		try {
+
+			// SQL文の作成
+			String sql = "SELECT * FROM ‘order’ WHERE 1=1" + add_sql;
+			// PreparedStatementオブジェクトの取得
+			st = con.prepareStatement(sql);
+			// SQLの実行
+			rs = st.executeQuery();
+			// 結果の取得および表示
+			List<SearchResultBean> list = new ArrayList<SearchResultBean>();
+
+			while (rs.next()) {
+				String id = rs.getString("id");
+				java.sql.Date ordered_date = rs.getDate("ordered_date");
+				String customer_code = rs.getString("customer_code");
+				String employee_code = rs.getString("employee_code");
+				SearchResultBean bean = new SearchResultBean(id, ordered_date, customer_code, employee_code);
+				list.add(bean);
+			}
+			return list;
+		} catch (Exception e) {
+			e.printStackTrace();
+			throw new DataAccessException("レコードの取得に失敗しました。");
+		} finally {
+			try {
+				DBManager database = new DBManager();
+				// リソースの開放
+				if(rs != null) database.close(rs);
+				if(st != null) database.close(st);
+				database.close(con);
+			} catch (Exception e) {
+				throw new DataAccessException("リソースの開放に失敗しました。");
+			}
+		}
+	}
+
+
 	public List<OrderTotalBean> selectByOrderedDate(String year, String month) throws DataAccessException, ParseException {
+
 		PreparedStatement st = null;
 		ResultSet rs = null;
 
@@ -189,5 +232,42 @@ public class PostgreSQLOrderDao {
 			}
 		}
 	}
+
+	public CustomerBean findBycustomer_code(String order_id) throws DataAccessException {
+		PreparedStatement st = null;
+		ResultSet rs = null;
+
+		try {
+
+			// SQL文の作成
+			String sql = "SELECT customer_code FROM ‘order’ WHERE id = ?";
+			// PreparedStatementオブジェクトの取得
+			st = con.prepareStatement(sql);
+			st.setString(1, order_id);
+			// SQLの実行
+			rs = st.executeQuery();
+			// 結果の取得および表示
+			CustomerBean CustomerBean = new CustomerBean();
+			String customer_code = rs.getString("customer_code");
+			CustomerBean.setCode(customer_code);
+			return CustomerBean;
+
+		} catch (Exception e) {
+			e.printStackTrace();
+			throw new DataAccessException("レコードの取得に失敗しました。");
+		} finally {
+			try {
+				DBManager database = new DBManager();
+				// リソースの開放
+				if(rs != null) database.close(rs);
+				if(st != null) database.close(st);
+				database.close(con);
+			} catch (Exception e) {
+				throw new DataAccessException("リソースの開放に失敗しました。");
+			}
+		}
+	}
+
+
 
 }
