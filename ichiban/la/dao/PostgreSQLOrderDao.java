@@ -195,6 +195,10 @@ public class PostgreSQLOrderDao {
 			st.setInt(6, detail_quantity);
 			st.setInt(7, intSum);
 
+			PostgreSQLOrderDetailDao odDao = new PostgreSQLOrderDetailDao();
+			odDao.insertOrderDetail(listDetail);
+
+
 			//SQLの実行
 			intRet = st.executeUpdate();
 

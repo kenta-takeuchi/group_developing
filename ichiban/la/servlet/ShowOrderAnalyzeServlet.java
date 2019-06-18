@@ -57,7 +57,7 @@ public class ShowOrderAnalyzeServlet extends HttpServlet {
 
 		}
 		try {
-			List<OrderAnalyzeBean> list = dao.selectByProductId(year, month);
+			List<OrderAnalyzeBean> list = dao.selectByDate(year, month);
 			request.setAttribute("order_analyzes", list);
 			gotoPage(request,response, "/orderAnalyze.jsp");
 		} catch (DataAccessException e) {
