@@ -35,6 +35,7 @@ public class ShowInputFormServlet extends HttpServlet {
  					for (int cnt = 1; cnt < 11; cnt++) {
  						// 前画面から渡された１明細ごとにBeanを作成し、リストに追加
  	 					OrderDetailBean bean = new OrderDetailBean();
+
  	 					if (request.getParameter("quantity_" + cnt).length() > 0) {
  	 	 					bean.setOrder_id(request.getParameter("product_" + cnt));
  	 	 					bean.setQuantity(Integer.parseInt(request.getParameter("quantity_" + cnt)));

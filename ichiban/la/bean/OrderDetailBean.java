@@ -17,6 +17,9 @@ public class OrderDetailBean implements Serializable {
 		this.total_fee = total_fee;
 	}
 
+	public OrderDetailBean() {
+	}
+
 	public String getOrder_id() {
 		return order_id;
 	}
@@ -48,6 +51,5 @@ public class OrderDetailBean implements Serializable {
 	public void setTotal_fee(BigDecimal total_fee) {
 		this.total_fee = total_fee;
 	}
-
 
 }

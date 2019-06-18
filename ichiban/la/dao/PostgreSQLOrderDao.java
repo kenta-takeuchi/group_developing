@@ -4,6 +4,7 @@ import java.sql.Connection;
 import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
@@ -130,7 +131,7 @@ public class PostgreSQLOrderDao {
 		return null;
 	}
 
-	public int insertOrder(OrderBean bean, ArrayList<OrderDetailBean> listDetail) throws DataAccessException {
+	public int insertOrder(OrderBean bean, ArrayList<OrderDetailBean> listDetail, String employee) throws DataAccessException {
 		PreparedStatement st = null;
 		ResultSet rs = null;
 		int intRet = -1;
@@ -149,35 +150,32 @@ public class PostgreSQLOrderDao {
 			strTmp = strTmp.substring(strTmp.length() - 4, strTmp.length());
 			//System.out.println("af strTmp:" + strTmp);
 
-			//従業員コードの取得
 
 
-			//税込みの計算
+			//明細計算用
 			rs.close();
 			int intSum = 0;
+			int detail_quantity = 0;
 			for(int i = 0; i < listDetail.size(); i++){
 				String tax = "select price from product where code = ?;";
 				st = con.prepareStatement(tax);
-				st.setString(1, listDetail.get(i).getProductCode());
+				st.setString(1, listDetail.get(i).getProduct_code());
 				System.out.println("i:" + i);
-				System.out.println("listDetail.get(i).getProductCode():" + listDetail.get(i).getProductCode());
+				System.out.println("listDetail.get(i).getProduct_code():" + listDetail.get(i).getProduct_code());
 				rs = st.executeQuery();
 				rs.next();
-				intSum = intSum + rs.getInt(1);
+				intSum = intSum + (rs.getInt(1) * listDetail.get(i).getQuantity());
+				detail_quantity =detail_quantity + listDetail.get(i).getQuantity();
 				rs.close();
 			}
 			int taxSum = (int)(intSum * 0.08);
 
 
-
 			//登録日の取得
-
-
-			//受注数の表示
-
-
-			//受注合計額の計算
-
+			java.util.Date date=new java.util.Date();
+			DateFormat dateFormat=new SimpleDateFormat("yyyy-MM-dd");
+			String formattedDate=dateFormat.format(date);
+			System.out.println(formattedDate);
 
 
 			//SQL文の作成
@@ -185,10 +183,10 @@ public class PostgreSQLOrderDao {
 			st = con.prepareStatement(sql);
 			st.setString(1, strTmp);
 			st.setString(2, bean.getCustomer_code());
-			st.setString(3, "0001");
-			st.setDate(4, Date.valueOf("2019-06-18"));
+			st.setString(3, employee);
+			st.setDate(4, Date.valueOf(formattedDate));
 			st.setInt(5, taxSum);
-			st.setInt(6, 1);
+			st.setInt(6, detail_quantity);
 			st.setInt(7, intSum);
 
 			//SQLの実行
