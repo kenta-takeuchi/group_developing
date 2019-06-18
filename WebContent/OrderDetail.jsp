@@ -1,80 +1,72 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
-<%@ taglib prefix = "c" uri = "http://java.sun.com/jsp/jstl/core" %>
+	pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 
 <!DOCTYPE html>
 <html>
-  <head>
-    <meta charset="utf-8">
-    <title>受注検索詳細表示</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.2.2/semantic.min.css">
-    <link rel="stylesheet" type="text/css" href="css/master.css">
-    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
-    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.2.2/semantic.min.js"></script>
-  </head>
-  <body>
-    <div class="ui container">
+<head>
+<meta charset="utf-8">
+<title>受注検索詳細表示</title>
+<link rel="stylesheet"
+	href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.2.2/semantic.min.css">
+<link rel="stylesheet" type="text/css" href="css/master.css">
+<script type="text/javascript"
+	src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+<script type="text/javascript"
+	src="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.2.2/semantic.min.js"></script>
+</head>
+<body>
+	<div class="ui container">
 
 
-      <div class="ui borderless topmenu menu">
-        <div class="ui container aq-header">
-          <h1 class="ui center aligned">受注詳細${order_code} TODO 受注コードをorder_codeで受け取る前提</h1>
-          <!--form action="OrderShowUpdateFormServlet?action=update" method = "post">
+		<div class="ui borderless topmenu menu">
+			<div class="ui container aq-header">
+				<h1 class="ui center aligned">受注詳細（注文番号：${order_id}）</h1>
+				<!--form action="OrderShowUpdateFormServlet?action=update" method = "post">
 	          <select name = "code">
 		          <option value="1">1
 	          </select>
           </form-->
-        </div>
-      </div>
-      <table class="ui celled padded table">
-        <thead>
-          <tr>
-            <th>番号</th>
-		          　<th>カテゴリ</th>
-		        　  <th>商品名</th>
-		        　  <th>受注数</th>
-		        　  <th>商品単価</th>
-		        　</tr>
-	      　</thead>
-        <tbody>
-        <c:forEach items = "${orderDetails}" var = "orderDetail" varStatus = "stat">
-        	<tr>
-	            <td>${stat.count}</td>
-	            <td class="single line">${orderDetail.category}</td>
-	            <td>${orderDetail.productName}</td>
-	            <td>${orderDetail.quantity}</td>
-	            <td>${orderDetail.productPrice}</td>
-          	</tr>
-        </c:forEach>
-          <tr>
-            <td>1</td>
-            <td class="single line">test</td>
-            <td>test</td>
-            <td>test</td>
-            <td>test</td>
-          </tr>
-          <tr>
-            <td>2</td>
-            <td>test</td>
-            <td>test</td>
-            <td>test</td>
-            <td>test</td>
-          </tr>
-        </tbody>
-        <tfoot>
-          <tr>
-            <th colspan="12" class="center aligned">
-            <form action = "OrderShowUpdateFormServlet?action=update" method = "post">
-            	<!-- input type="hidden" name="code" value="${order_code}"-->
-            	<input type="hidden" name="code" value="0001">
-            	<button class="ui button teal" type="submit" name="button">変更</button>
-            </form>
-              <button class="ui button"type="button" name="button" >削除</button>
-            </th>
-          </tr>
-        </tfoot>
-      </table>
-      <p>TODO 検索結果は${orderDetail}で受け取る前提</p>
-    </div>
-  </body>
+			</div>
+		</div>
+		<table class="ui celled padded table">
+			<thead>
+				<tr>
+					<th>番号</th>
+					<th>商品コード</th>
+					<th>受注数量</th>
+					<th>金額</th>
+				</tr>
+			</thead>
+			<tbody>
+				<c:forEach items="${orderDetails}" var="orderDetail" varStatus="stat">
+					<tr>
+						<td class="single line">${stat.count}</td>
+						<td>${orderDetail.product_code}</td>
+						<td>${orderDetail.quantity}</td>
+						<td>${orderDetail.total_fee}</td>
+					</tr>
+				</c:forEach>
+			</tbody>
+			<tfoot>
+				<tr>
+					<th colspan="12" class="center aligned">
+						<form action="/group_developing/OrderShowUpdateFormServlet?action=update"
+							method="post">
+							<input type="hidden" name="order_id" value="${order_id}">
+							<button class="ui button teal" type="submit" name="button">変更</button>
+						</form>
+						<form action="/group_developing/ShowOrderDeleteConfirmServlet"
+							method="post">
+							<input type="hidden" name="order_id" value="${order_id}">
+							<button class="ui button" type="submit" name="button">削除</button>
+						</form>
+					</th>
+				</tr>
+			</tfoot>
+		</table>
+	</div>
+</body>
 </html>
+
+

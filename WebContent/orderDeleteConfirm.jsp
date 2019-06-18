@@ -27,42 +27,35 @@
 
 		<div class="ui negative message">
 			<i class="close icon"></i>
-			<div class="header">以下の受注を削除します。</div>
+			<div class="header">注文番号：${order_id} の受注を削除します。</div>
 			<p>よろしければ確認ボタンを押してください。</p>
 		</div>
 		<table class="ui celled padded table center aligned">
 			<thead>
 				<tr>
 					<th>番号</th>
-					<th>カテゴリ</th>
-					<th>商品名</th>
-					<th>受注数</th>
-					<th>商品単価</th>
+					<th>商品コード</th>
+					<th>受注数量</th>
+					<th>金額</th>
 				</tr>
 			</thead>
 			<tbody>
-				<tr>
-					<td>1</td>
-					<td class="single line">test</td>
-					<td>test</td>
-					<td>test</td>
-					<td>test</td>
-				</tr>
-				<tr>
-					<td>2</td>
-					<td>test</td>
-					<td>test</td>
-					<td>test</td>
-					<td>test</td>
-				</tr>
+				<c:forEach items="${orderDetails}" var="orderDetail" varStatus="stat">
+					<tr>
+						<td class="single line">${stat.count}</td>
+						<td>${orderDetail.product_code}</td>
+						<td>${orderDetail.quantity}</td>
+						<td>${orderDetail.total_fee}</td>
+					</tr>
+				</c:forEach>
 			</tbody>
 			<tfoot>
 				<tr>
 					<th colspan="12" class="center aligned">
 						<form class="ui form"
 							action="/group_developing/OrderDeleteServlet" method="post">
-							<button class="ui button teal" type="submit" name="button">確認</button>
-							<input type="hidden" name="order_id" value="0001">
+							<button class="ui button teal" type="submit" name="button">削除</button>
+							<input type="hidden" name="order_id" value="${order_id}">
 						</form>
 					</th>
 				</tr>

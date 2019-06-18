@@ -35,10 +35,8 @@ public class ShowOrderDetailServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		System.out.println(0);
 		try {
 			//パラメータの取得
-			System.out.println(1);
 			String action = request.getParameter("action");
 			if (action.equals("detail")) {
 				String order_id = request.getParameter("order_id");

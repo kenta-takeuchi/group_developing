@@ -17,6 +17,8 @@
 		<div class="ui borderless topmenu menu">
 			<div class="ui container aq-header">
 				<h1>受注変更フォーム</h1>
+				<h1>${message}</h1>
+
 			</div>
 		</div>
 		<div class="aq-wrapper">
@@ -26,7 +28,7 @@
 					method="post" method="post">
 					<div class="field">
 						<h2>得意先コード</h2>
-						<input type="text" name="customer" value="${customer_code}" required>
+						<input type="text" name="customer_code" value="${customer_code}" required>
 					</div>
 					<div class="field">
 						<h2>商品入力</h2>

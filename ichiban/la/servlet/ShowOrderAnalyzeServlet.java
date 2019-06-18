@@ -58,18 +58,18 @@ public class ShowOrderAnalyzeServlet extends HttpServlet {
 		}
 		try {
 			List<OrderAnalyzeBean> list = dao.selectByProductId(year, month);
-			request.setAttribute("List", list);
+			request.setAttribute("order_analyzes", list);
 			gotoPage(request,response, "/orderAnalyze.jsp");
 		} catch (DataAccessException e) {
 			// TODO 自動生成された catch ブロック
 			e.printStackTrace();
-			gotoPage(request,response, "/AdminMenu.jsp");
+			gotoPage(request,response, "/adminMenu.jsp");
 		} catch (ParseException e) {
 			// TODO 自動生成された catch ブロック
 			e.printStackTrace();
-			gotoPage(request,response, "/AdminMenu.jsp");
+			gotoPage(request,response, "/adminMenu.jsp");
 		}
-
+		
 	}
 
 	/**

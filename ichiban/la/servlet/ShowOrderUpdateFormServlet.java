@@ -10,7 +10,6 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import la.bean.CustomerBean;
 import la.bean.ProductBean;
 import la.bean.UpdateBean;
 import la.dao.DataAccessException;
@@ -46,21 +45,21 @@ public class ShowOrderUpdateFormServlet extends HttpServlet {
 
 		try {
 			String order_id = request.getParameter("order_id");
+			PostgreSQLOrderDao orderDao = new PostgreSQLOrderDao();
+			String customer_code = orderDao.selectById(order_id).getCustomer_code();
 			PostgreSQLOrderDetailDao detailDao = new PostgreSQLOrderDetailDao();
 			List<UpdateBean> order_details = detailDao.findByUpdateCode(order_id);
 			PostgreSQLProductDao productDao = new PostgreSQLProductDao();
-			PostgreSQLOrderDao dao = new PostgreSQLOrderDao();
-			CustomerBean customer_code = dao.findBycustomer_code(order_id);
 			List<ProductBean> products = productDao.selectAll();
 			request.setAttribute("order_details", order_details);
 			request.setAttribute("order_id", order_id);
-			request.setAttribute("products", products);
 			request.setAttribute("customer_code", customer_code);
+			request.setAttribute("products", products);
 			gotoPage(request, response, "/OrderUpdate.jsp");
 		}catch(DataAccessException e){
 			e.printStackTrace();
 			request.setAttribute("message", "エラー");
-			gotoPage(request, response,"");
+			gotoPage(request, response,"Message.jsp");
 		}finally {
 
 		}

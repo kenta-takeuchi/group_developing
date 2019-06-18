@@ -93,29 +93,38 @@ public class PostgreSQLProductDao {
 		try {
 
 			// SQL文の作成
-			String sql = "select this.code, this.name, this.sum_sales, pre.sum_sales, (this.sum_sales - pre.sum_sales) as result " +
-					"FROM " +
-					"( " +
-					"SELECT p.code, p.name, sum(od.quantity) AS sum_sales FROM product p " +
-					"JOIN order_detail od ON p.code = od.product_code " +
-					"JOIN ‘order’ o ON od.order_id = o.id " +
-					"WHERE o.ordered_date BETWEEN ? AND ? " +
-					"GROUP BY p.code " +
-					") this" +
-					", " +
-					"( " +
-					"SELECT p.code, p.name, sum(od.quantity) AS sum_sales FROM product p " +
-					"JOIN order_detail od ON p.code = od.product_code " +
-					"JOIN ‘order’ o ON od.order_id = o.id " +
-					"WHERE o.ordered_date BETWEEN ? AND ? " +
-					"GROUP BY p.code " +
-					") pre";
+			String sql ="select main.code, main.name, coalesce(tougetu.sum_sales, 0) AS tougetu_sum_sales, coalesce(zengetu.sum_sales, 0) AS zengetu_sum_sales, (coalesce(tougetu.sum_sales, 0) - coalesce(zengetu.sum_sales, 0)) as prepare " +
+					"from " +
+					"(select distinct p.code, p.name " +
+					"FROM product p " +
+					"LEFT JOIN order_detail od ON p.code = od.product_code " +
+					"LEFT JOIN ‘order’ o ON od.order_id = o.id " +
+					"WHERE o.ordered_date >= ? AND o.ordered_date < ?) main " +
+					"left join " +
+					"(SELECT p.code, p.name, sum(od.quantity) AS sum_sales, 'tougetu' as month " +
+					"FROM product p " +
+					"LEFT JOIN order_detail od ON p.code = od.product_code " +
+					"LEFT JOIN ‘order’ o ON od.order_id = o.id " +
+					"WHERE o.ordered_date >= ? AND o.ordered_date < ? " +
+					"GROUP BY p.code  , p.name " +
+					") tougetu on main.code = tougetu.code " +
+					"left join " +
+					"(SELECT p.code, p.name, sum(od.quantity) AS sum_sales, 'zengetu' as month " +
+					"FROM product p " +
+					"LEFT JOIN order_detail od ON p.code = od.product_code " +
+					"LEFT JOIN ‘order’ o ON od.order_id = o.id " +
+					"WHERE o.ordered_date >= ? AND o.ordered_date < ? " +
+					"GROUP BY p.code  , p.name " +
+					") zengetu on main.code = zengetu.code " ;
+
 			// PreparedStatementオブジェクトの取得
 			st = con.prepareStatement(sql);
-			st.setDate(1, sqlThisDate);
+			st.setDate(1, sqlPreDate);
 			st.setDate(2, sqlNextDate);
-			st.setDate(3, sqlPreDate);
-			st.setDate(4, sqlThisDate);
+			st.setDate(3, sqlThisDate);
+			st.setDate(4, sqlNextDate);
+			st.setDate(5, sqlPreDate);
+			st.setDate(6, sqlThisDate);
 			// SQLの実行
 			rs = st.executeQuery();
 			// 結果の取得および表示

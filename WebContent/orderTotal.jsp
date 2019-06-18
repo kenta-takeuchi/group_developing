@@ -50,13 +50,13 @@
             </tr>
           </thead>
           <tbody style="height: 200px; overflow-y:scroll;">
-            <c:forEach items="${List}" var="l">
+            <c:forEach items="${order_totals}" var="ot">
               <tr>
-                <th>${l.ordered_date}</th>
-                <th>${l.count_of_order_detail}</th>
-                <th>${l.total_fee}</th>
-                <th>${l.average_fee}</th>
-                <th>${l.max_fee}</th>
+                <th>${ot.ordered_date}</th>
+                <th>${ot.count_of_order_detail}</th>
+                <th>${ot.total_fee}</th>
+                <th>${ot.average_fee}</th>
+                <th>${ot.max_fee}</th>
               </tr>
             </c:forEach>
           </tbody>
