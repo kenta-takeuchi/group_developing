@@ -104,11 +104,17 @@ public class LoginManager {
 	}
 
 
+	public static String getEmployeeCode(HttpSession session) throws ServletException, IOException {
+		// セッションからログインしているかを確認する
+		String employee_code = (String)session.getAttribute("employee_code");
+		return employee_code;
+	}
+
+
 	private static void gotoPage(HttpServletRequest request,
 			HttpServletResponse response, String page) throws ServletException,
 			IOException {
 		RequestDispatcher rd = request.getRequestDispatcher(page);
 		rd.forward(request, response);
 	}
-
 }
