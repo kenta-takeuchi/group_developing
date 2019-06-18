@@ -18,7 +18,6 @@ public class OrderDetailBean implements Serializable {
 	}
 
 	public OrderDetailBean() {
-		// TODO 自動生成されたコンストラクター・スタブ
 	}
 
 	public String getOrder_id() {
@@ -52,6 +51,5 @@ public class OrderDetailBean implements Serializable {
 	public void setTotal_fee(BigDecimal total_fee) {
 		this.total_fee = total_fee;
 	}
-
 
 }
