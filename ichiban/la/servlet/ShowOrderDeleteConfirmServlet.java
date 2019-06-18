@@ -1,7 +1,6 @@
 package la.servlet;
 
 import java.io.IOException;
-import java.text.ParseException;
 import java.util.List;
 
 import javax.servlet.RequestDispatcher;
@@ -11,23 +10,23 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import la.bean.OrderAnalyzeBean;
+import la.bean.OrderDetailBean;
 import la.dao.DataAccessException;
-import la.dao.PostgreSQLProductDao;
-import la.java.LoginManager;
+import la.dao.PostgreSQLOrderDetailDao;
 
 /**
- * Servlet implementation class LoginServlet
+ * Servlet implementation class OrderSearchDetail
  */
 @WebServlet("/ShowOrderDeleteConfirmServlet")
 public class ShowOrderDeleteConfirmServlet extends HttpServlet {
-	private static final long serialVersionUID = 1L;
 
 	/**
 	 * @see HttpServlet#HttpServlet()
 	 */
 	public ShowOrderDeleteConfirmServlet() {
 		super();
+		// TODO Auto-generated constructor stub
+
 	}
 
 	/**
@@ -35,38 +34,23 @@ public class ShowOrderDeleteConfirmServlet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-
-		request.setCharacterEncoding("UTF-8");
-		response.setContentType("text/html;charset=UTF-8");
-
-		LoginManager.checkAdmin(request, response);
-
-		String year = request.getParameter("year");
-		String month = request.getParameter("month");
-
-		PostgreSQLProductDao dao = null;
-
+		// TODO Auto-generated method stub
 		try {
-			dao = new PostgreSQLProductDao();
-		} catch (DataAccessException e1) {
-			// TODO 自動生成された catch ブロック
-			e1.printStackTrace();
-
-		}
-		try {
-			List<OrderAnalyzeBean> list = dao.selectByProductId(year, month);
-			request.setAttribute("List", list);
-			gotoPage(request,response, "/orderAnalyze.jsp");
+			//パラメータの取得
+			String order_id = request.getParameter("order_id");
+			PostgreSQLOrderDetailDao dao = new PostgreSQLOrderDetailDao();
+			List<OrderDetailBean> list = dao.selectByOrderId(order_id);
+			request.setAttribute("order_id", order_id);
+			request.setAttribute("orderDetails", list);
+			RequestDispatcher rd = request.getRequestDispatcher("/orderDeleteConfirm.jsp");
+			rd.forward(request, response);
 		} catch (DataAccessException e) {
-			// TODO 自動生成された catch ブロック
 			e.printStackTrace();
-			gotoPage(request,response, "/AdminMenu.jsp");
-		} catch (ParseException e) {
-			// TODO 自動生成された catch ブロック
-			e.printStackTrace();
-			gotoPage(request,response, "/AdminMenu.jsp");
-		}
+			request.setAttribute("message", "内部エラーが発生しました。");
+			RequestDispatcher rd = request.getRequestDispatcher("/errInternal.jsp");
+			rd.forward(request, response);
 
+		}
 	}
 
 	/**
@@ -76,13 +60,6 @@ public class ShowOrderDeleteConfirmServlet extends HttpServlet {
 			throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		doGet(request, response);
-	}
-
-	private void gotoPage(HttpServletRequest request,
-			HttpServletResponse response, String page) throws ServletException,
-			IOException {
-		RequestDispatcher rd = request.getRequestDispatcher(page);
-		rd.forward(request, response);
 	}
 
 }

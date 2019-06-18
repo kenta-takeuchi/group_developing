@@ -30,7 +30,7 @@
         <div class="ui raised very padded center aligned text container segment">
           <div class="ui link list">
             <h2 class="active">受注管理</h2>
-        　  <a class="item" href="/group_development/ShowInputFormServlet.java">受注登録</a>
+            <a class="item" href="/group_developing/ShowInputFormServlet?action=list">受注登録</a>
             <a class="item" href="/group_developing/ToSearch">検索</a>
           </div>
         </div>

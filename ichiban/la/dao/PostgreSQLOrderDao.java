@@ -5,11 +5,13 @@ import java.sql.Connection;
 import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 
 import la.bean.OrderBean;
+import la.bean.OrderDetailBean;
 import la.bean.OrderTotalBean;
 import la.bean.SearchResultBean;
 import la.java.CalcMonth;
@@ -75,21 +77,18 @@ public class PostgreSQLOrderDao {
 	}
 
 
-	public List<OrderTotalBean> selectByOrderedDate(String year, String month) throws DataAccessException, ParseException {
+	public List<OrderTotalBean> selectByOrderedDate(String year, String month) throws DataAccessException, ParseException{
 
 		PreparedStatement st = null;
 		ResultSet rs = null;
 
-		Date thisDate = new SimpleDateFormat("yyyy-MM-dd").parse(year + "-" + month + "-01");
+		java.util.Date thisDate = new SimpleDateFormat("yyyy-MM-dd").parse(year + "-" + month + "-01");
 
-		System.out.println(0);
-		Date nextDate = CalcMonth.getCalcMonth(thisDate, 1);
+		java.util.Date nextDate = CalcMonth.getCalcMonth(thisDate, 1);
 
-		System.out.println(1);
 
-		java.sql.Date sqlThisDate = CalcMonth.CastToSQLDate(thisDate);
-		java.sql.Date sqlNextDate = CalcMonth.CastToSQLDate(nextDate);
-		System.out.println(2);
+		Date sqlThisDate = CalcMonth.CastToSQLDate(thisDate);
+		Date sqlNextDate = CalcMonth.CastToSQLDate(nextDate);
 
 		System.out.println(sqlThisDate);
 		System.out.println(sqlNextDate);
@@ -107,7 +106,15 @@ public class PostgreSQLOrderDao {
 			// 結果の取得および表示
 
 			List<OrderTotalBean> list = new ArrayList<OrderTotalBean>();
-
+			while (rs.next()) {
+				java.sql.Date ordered_date = rs.getDate(1);
+				int count_of_order_detail = rs.getInt(2);
+				BigDecimal total_fee = rs.getBigDecimal(3);
+				BigDecimal average_fee = rs.getBigDecimal(4);
+				BigDecimal max_fee = rs.getBigDecimal(5);
+				OrderTotalBean bean = new OrderTotalBean(ordered_date, count_of_order_detail, total_fee, average_fee, max_fee);
+				list.add(bean);
+			}
 			return list;
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -129,7 +136,7 @@ public class PostgreSQLOrderDao {
 		return null;
 	}
 
-	public int insertOrder(OrderBean bean) throws DataAccessException {
+	public int insertOrder(OrderBean bean, ArrayList<OrderDetailBean> listDetail) throws DataAccessException {
 		PreparedStatement st = null;
 		ResultSet rs = null;
 		int intRet = -1;
@@ -139,16 +146,43 @@ public class PostgreSQLOrderDao {
 			String max = "select max(cast(id as integer)) from ‘order’;";
 			st = con.prepareStatement(max);
 			rs = st.executeQuery();
-
 			rs.next();
 			int intMax = rs.getInt(1) + 1;
-
 			// 0文字付加
 			int intTmp = intMax;
 			String strTmp = ("0000" + intTmp);
 			//System.out.println("b4 strTmp:" + strTmp);
 			strTmp = strTmp.substring(strTmp.length() - 4, strTmp.length());
 			//System.out.println("af strTmp:" + strTmp);
+
+			//従業員コードの取得
+
+
+			//税込みの計算
+			rs.close();
+			int intSum = 0;
+			for(int i = 0; i < listDetail.size(); i++){
+				String tax = "select price from product where code = ?;";
+				st = con.prepareStatement(tax);
+				st.setString(1, listDetail.get(i).getProductCode());
+				System.out.println("i:" + i);
+				System.out.println("listDetail.get(i).getProductCode():" + listDetail.get(i).getProductCode());
+				rs = st.executeQuery();
+				rs.next();
+				intSum = intSum + rs.getInt(1);
+				rs.close();
+			}
+			int taxSum = (int)(intSum * 0.08);
+
+
+
+			//登録日の取得
+
+
+			//受注数の表示
+
+
+			//受注合計額の計算
 
 
 
@@ -158,10 +192,10 @@ public class PostgreSQLOrderDao {
 			st.setString(1, strTmp);
 			st.setString(2, bean.getCustomer_code());
 			st.setString(3, "0001");
-			st.setDate(4, Date.valueOf("2019-06-17"));
-			st.setInt(5, 1);
+			st.setDate(4, Date.valueOf("2019-06-18"));
+			st.setInt(5, taxSum);
 			st.setInt(6, 1);
-			st.setInt(7, 1);
+			st.setInt(7, intSum);
 
 			//SQLの実行
 			intRet = st.executeUpdate();

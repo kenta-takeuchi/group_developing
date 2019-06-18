@@ -17,6 +17,10 @@ public class OrderDetailBean implements Serializable {
 		this.total_fee = total_fee;
 	}
 
+	public OrderDetailBean() {
+		// TODO 自動生成されたコンストラクター・スタブ
+	}
+
 	public String getOrder_id() {
 		return order_id;
 	}
