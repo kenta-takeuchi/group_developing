@@ -51,13 +51,11 @@
 			<tfoot>
 				<tr>
 					<th colspan="12" class="center aligned">
-						<form action="/group_developing/OrderShowUpdateFormServlet?action=update"
-							method="post">
+						<form action="/group_developing/ShowOrderUpdateFormServlet" method="post">
 							<input type="hidden" name="order_id" value="${order_id}">
 							<button class="ui button teal" type="submit" name="button">変更</button>
 						</form>
-						<form action="/group_developing/ShowOrderDeleteConfirmServlet"
-							method="post">
+						<form action="/group_developing/ShowOrderDeleteConfirmServlet" method="post">
 							<input type="hidden" name="order_id" value="${order_id}">
 							<button class="ui button" type="submit" name="button">削除</button>
 						</form>

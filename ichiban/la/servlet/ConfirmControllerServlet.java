@@ -17,6 +17,7 @@ import la.bean.OrderBean;
 import la.bean.OrderDetailBean;
 import la.dao.DataAccessException;
 import la.dao.PostgreSQLOrderDao;
+import la.java.LoginManager;
 
 /**
  * Servlet implementation class ConfirmControllerServlet
@@ -54,12 +55,14 @@ public class ConfirmControllerServlet extends HttpServlet {
 					}
 					beanDetail.setOrder_id(request.getParameter("order_id_" + cnt));
 					beanDetail.setQuantity(Integer.parseInt(request.getParameter("quantity_" + cnt)));
-					beanDetail.setProductCode(request.getParameter("order_id_" + cnt));
+					beanDetail.setProduct_code(request.getParameter("order_id_" + cnt));
 					list.add(beanDetail);
 				}
 
 				PostgreSQLOrderDao regist = new PostgreSQLOrderDao();
-				regist.insertOrder(bean, list);
+				LoginManager login = new LoginManager();
+				String employee = login.getEmployeeCode(request.getSession());
+				regist.insertOrder(bean, list, employee);
 
 			} catch (DataAccessException e) {
 				e.printStackTrace();
