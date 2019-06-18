@@ -38,28 +38,38 @@ public class SearchServlet extends HttpServlet {
 		//パラメータチェック
 		boolean flg = true;
 		String add_sql = "";
-		if (ordered_date.length() != 0) {
+		if (ordered_date.length() != 0 || ordered_date != null) {
 			if (ordered_date.matches("[0-9]{4}-[0-9]{2}-[0-9]{2}")) {
 				add_sql += " AND ordered_date ='" + ordered_date + "'";
 			} else {
 				flg = false;
+				request.setAttribute("message", "もう一度入力してください。");
+				RequestDispatcher rd = request.getRequestDispatcher("/Search.jsp");
+				rd.forward(request, response);
 			}
 		}
 		if (customer_code.length() != 0) {
-			if (customer_code.matches("[0-9]{4}")) {
+			if (customer_code.matches("[0-9]{1}[0-9]{1}[0-9]{1}[0-9]{1}")) {
 				add_sql += " AND customer_code ='" + customer_code + "'";
 			} else {
 				flg = false;
+				request.setAttribute("message", "もう一度入力してください。");
+				RequestDispatcher rd = request.getRequestDispatcher("/Search.jsp");
+				rd.forward(request, response);
 			}
 		}
 		if (employee_code.length() != 0) {
-			if (employee_code.matches("[0-9]{4}")) {
+			if (employee_code.matches("[0-9]{1}[0-9]{1}[0-9]{1}[0-9]{1}")) {
 				add_sql += " AND employee_code ='" + employee_code + "'";
 			} else {
 				flg = false;
+				request.setAttribute("message", "もう一度入力してください。");
+				RequestDispatcher rd = request.getRequestDispatcher("/Search.jsp");
+				rd.forward(request, response);
 			}
 		}
 		if (!flg) {
+			request.setAttribute("message", "もう一度入力してください。");
 			RequestDispatcher rd = request.getRequestDispatcher("/Search.jsp");
 			rd.forward(request, response);
 		}
