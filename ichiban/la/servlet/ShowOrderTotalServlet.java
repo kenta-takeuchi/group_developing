@@ -1,6 +1,7 @@
 package la.servlet;
 
 import java.io.IOException;
+import java.text.ParseException;
 import java.util.List;
 
 import javax.servlet.RequestDispatcher;
@@ -13,7 +14,7 @@ import javax.servlet.http.HttpServletResponse;
 import la.bean.OrderTotalBean;
 import la.dao.DataAccessException;
 import la.dao.PostgreSQLOrderDao;
-import la.java.LoginCheck;
+import la.java.LoginManager;
 
 /**
  * Servlet implementation class LoginServlet
@@ -38,8 +39,10 @@ public class ShowOrderTotalServlet extends HttpServlet {
 		request.setCharacterEncoding("UTF-8");
 		response.setContentType("text/html;charset=UTF-8");
 
-		LoginCheck logchk = new LoginCheck();
-		logchk.checkAdmin(request, response);
+		boolean flg = LoginManager.checkAdmin(request, response);
+		if (flg == false) {
+			return;
+		}
 
 		String year = request.getParameter("year");
 		String month = request.getParameter("month");
@@ -53,6 +56,7 @@ public class ShowOrderTotalServlet extends HttpServlet {
 			e1.printStackTrace();
 
 		}
+
 		try {
 			List<OrderTotalBean> list = dao.selectByOrderedDate(year, month);
 			request.setAttribute("List", list);
@@ -61,8 +65,11 @@ public class ShowOrderTotalServlet extends HttpServlet {
 			// TODO 自動生成された catch ブロック
 			e.printStackTrace();
 			gotoPage(request,response, "/AdminMenu.jsp");
+		} catch (ParseException e) {
+			// TODO 自動生成された catch ブロック
+			e.printStackTrace();
+			gotoPage(request,response, "/AdminMenu.jsp");
 		}
-
 	}
 
 	/**

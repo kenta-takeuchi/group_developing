@@ -3,24 +3,24 @@ package la.bean;
 import java.io.Serializable;
 
 public class UpdateBean implements Serializable{
-	private String orderCode;
-	private String productName;
+	private String order_id;
+	private String product_code;
 	private int quantity;
 
-	public String getOrderCode() {
-		return orderCode;
+	public String getOrder_id() {
+		return order_id;
 	}
 
-	public void setOrderCode(String orderCode) {
-		this.orderCode = orderCode;
+	public void setOrder_id(String order_id) {
+		this.order_id = order_id;
 	}
 
-	public String getProductName() {
-		return productName;
+	public String getProduct_code() {
+		return product_code;
 	}
 
-	public void setProductName(String productName) {
-		this.productName = productName;
+	public void setProduct_code(String product_code) {
+		this.product_code = product_code;
 	}
 
 	public int getQuantity() {
@@ -31,12 +31,9 @@ public class UpdateBean implements Serializable{
 		this.quantity = quantity;
 	}
 
-	public UpdateBean() {
-	}
-
-	public UpdateBean(String orderCode, String productName, int quantity) {
-		this.orderCode = orderCode;
-		this.productName = productName;
+	public UpdateBean(String order_id, String product_code, int quantity) {
+		this.order_id = order_id;
+		this.product_code = product_code;
 		this.quantity = quantity;
 	}
 
