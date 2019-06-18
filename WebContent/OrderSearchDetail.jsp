@@ -16,6 +16,8 @@
 	<tr><td>${OrderDetailBean.customer_code}</td></tr>
 	<tr><td>${OrderDetailBean.quantity}</td></tr>
 	<tr><td>${OrderDetailBean.total_fee}</td></tr>
+	<tr><td>${OrderDetailBean.total_fee / OrderDetailBean.total_fee}</td></tr>
+
 
 
 	</c:forEach>
