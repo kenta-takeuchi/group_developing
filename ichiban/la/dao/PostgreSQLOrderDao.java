@@ -8,6 +8,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 
+import la.bean.CustomerBean;
 import la.bean.OrderBean;
 import la.bean.OrderTotalBean;
 import la.bean.SearchResultBean;
@@ -203,5 +204,42 @@ public class PostgreSQLOrderDao {
 			}
 		}
 	}
+
+	public CustomerBean findBycustomer_code(String order_id) throws DataAccessException {
+		PreparedStatement st = null;
+		ResultSet rs = null;
+
+		try {
+
+			// SQL文の作成
+			String sql = "SELECT customer_code FROM ‘order’ WHERE id = ?";
+			// PreparedStatementオブジェクトの取得
+			st = con.prepareStatement(sql);
+			st.setString(1, order_id);
+			// SQLの実行
+			rs = st.executeQuery();
+			// 結果の取得および表示
+			CustomerBean CustomerBean = new CustomerBean();
+			String customer_code = rs.getString("customer_code");
+			CustomerBean.setCode(customer_code);
+			return CustomerBean;
+
+		} catch (Exception e) {
+			e.printStackTrace();
+			throw new DataAccessException("レコードの取得に失敗しました。");
+		} finally {
+			try {
+				DBManager database = new DBManager();
+				// リソースの開放
+				if(rs != null) database.close(rs);
+				if(st != null) database.close(st);
+				database.close(con);
+			} catch (Exception e) {
+				throw new DataAccessException("リソースの開放に失敗しました。");
+			}
+		}
+	}
+
+
 
 }
