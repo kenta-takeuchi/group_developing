@@ -21,6 +21,9 @@
 				</div>
 			</div>
 
+					<!--入力項目に不備があった場合、もしくはデータがなかった場合に以下にエラーメッセージを加えて検索画面に戻ってくる  -->
+					<h1>${message}</h1>
+
 			<div class="aq-wrapper">
 				<h2 class="ui header">受注検索</h2>
 				<div class="field inline">

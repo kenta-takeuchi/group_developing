@@ -31,7 +31,7 @@
 					<div class="field">
 						<h2>商品入力</h2>
 					</div>
-					<div class="four fields">
+					<div class="three fields">
 						<div class="field">
 							<label class="ui label">番号</label>
 						</div>
@@ -46,7 +46,7 @@
 					<!--c:forEach items = "${items}" var = "item" varStatus = "stat"
             	var ="i" begin = "1" end = "10" step = "1"-->
 					<c:forEach items="${order_details}" var="od" varStatus="stat">
-						<div class="four fields">
+						<div class="three fields">
 							<div class="field">
 								<p>${stat.count}</p>
 							</div>

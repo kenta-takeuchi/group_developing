@@ -12,6 +12,7 @@ import java.util.List;
 
 import la.bean.CustomerBean;
 import la.bean.OrderBean;
+import la.bean.OrderDetailBean;
 import la.bean.OrderTotalBean;
 import la.bean.SearchResultBean;
 import la.java.CalcMonth;
@@ -136,7 +137,7 @@ public class PostgreSQLOrderDao {
 		return null;
 	}
 
-	public int insertOrder(OrderBean bean) throws DataAccessException {
+	public int insertOrder(OrderBean bean, ArrayList<OrderDetailBean> listDetail) throws DataAccessException {
 		PreparedStatement st = null;
 		ResultSet rs = null;
 		int intRet = -1;
@@ -146,16 +147,43 @@ public class PostgreSQLOrderDao {
 			String max = "select max(cast(id as integer)) from ‘order’;";
 			st = con.prepareStatement(max);
 			rs = st.executeQuery();
-
 			rs.next();
 			int intMax = rs.getInt(1) + 1;
-
 			// 0文字付加
 			int intTmp = intMax;
 			String strTmp = ("0000" + intTmp);
 			//System.out.println("b4 strTmp:" + strTmp);
 			strTmp = strTmp.substring(strTmp.length() - 4, strTmp.length());
 			//System.out.println("af strTmp:" + strTmp);
+
+			//従業員コードの取得
+
+
+			//税込みの計算
+			rs.close();
+			int intSum = 0;
+			for(int i = 0; i < listDetail.size(); i++){
+				String tax = "select price from product where code = ?;";
+				st = con.prepareStatement(tax);
+				st.setString(1, listDetail.get(i).getProductCode());
+				System.out.println("i:" + i);
+				System.out.println("listDetail.get(i).getProductCode():" + listDetail.get(i).getProductCode());
+				rs = st.executeQuery();
+				rs.next();
+				intSum = intSum + rs.getInt(1);
+				rs.close();
+			}
+			int taxSum = (int)(intSum * 0.08);
+
+
+
+			//登録日の取得
+
+
+			//受注数の表示
+
+
+			//受注合計額の計算
 
 
 
@@ -165,10 +193,10 @@ public class PostgreSQLOrderDao {
 			st.setString(1, strTmp);
 			st.setString(2, bean.getCustomer_code());
 			st.setString(3, "0001");
-			st.setDate(4, Date.valueOf("2019-06-17"));
-			st.setInt(5, 1);
+			st.setDate(4, Date.valueOf("2019-06-18"));
+			st.setInt(5, taxSum);
 			st.setInt(6, 1);
-			st.setInt(7, 1);
+			st.setInt(7, intSum);
 
 			//SQLの実行
 			intRet = st.executeUpdate();
