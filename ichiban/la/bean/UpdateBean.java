@@ -7,7 +7,7 @@ public class UpdateBean implements Serializable{
 	private String product_code;
 	private int quantity;
 
-	public UpdateBean(String order_id, String product_code, String customer_code, int quantity) {
+	public UpdateBean(String order_id, String product_code, int quantity) {
 		this.order_id = order_id;
 		this.product_code = product_code;
 		this.quantity = quantity;

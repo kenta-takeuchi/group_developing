@@ -164,9 +164,9 @@ public class PostgreSQLOrderDao {
 			for(int i = 0; i < listDetail.size(); i++){
 				String tax = "select price from product where code = ?;";
 				st = con.prepareStatement(tax);
-				st.setString(1, listDetail.get(i).getProductCode());
+				st.setString(1, listDetail.get(i).getProduct_code());
 				System.out.println("i:" + i);
-				System.out.println("listDetail.get(i).getProductCode():" + listDetail.get(i).getProductCode());
+				System.out.println("listDetail.get(i).getProductCode():" + listDetail.get(i).getProduct_code());
 				rs = st.executeQuery();
 				rs.next();
 				intSum = intSum + rs.getInt(1);
@@ -261,7 +261,6 @@ public class PostgreSQLOrderDao {
 				OrderBean bean = new OrderBean(order_id, customer_code, employee_code, ordered_date, tax, count_of_order_detail, total_fee);
 				return bean;
 			} else {
-				System.out.println(0);
 				return null;
 			}
 

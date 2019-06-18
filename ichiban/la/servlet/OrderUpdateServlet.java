@@ -41,11 +41,6 @@ public class OrderUpdateServlet extends HttpServlet {
 		response.setContentType("text/html;charset=UTF-8");
 		// TODO Auto-generated method stub
 		try {
-			String action = request.getParameter("action");
-
-			if(action == null || action.length() == 0 || action.equals("")) {
-				request.setAttribute("message", "エラー");
-			}else if(action.equals("regist")) {
 				String order_id = request.getParameter("order_id");
 				String product_code = request.getParameter("product_code");
 				String customer_code = request.getParameter("customer_code");
@@ -75,7 +70,7 @@ public class OrderUpdateServlet extends HttpServlet {
 							detailDao.deleteByOrderId(order_id);
 
 							Integer.parseInt(cnt);
-							bean = new UpdateBean(order_id, product_code, customer_code, quantity);
+							bean = new UpdateBean(order_id, product_code, quantity);
 							order_details.add(bean);
 							} catch (Exception e) {
 								request.setAttribute("message", "正しく操作してください");
@@ -89,7 +84,6 @@ public class OrderUpdateServlet extends HttpServlet {
 
 					request.setAttribute("message", "更新しました。");
 					gotoPage(request, response,"/Message.jsp");
-				}
 
 
 

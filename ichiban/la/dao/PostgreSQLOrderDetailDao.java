@@ -119,21 +119,24 @@ public class PostgreSQLOrderDetailDao {
 			ResultSet rs = null;
 			try {
 				//order_detailと‘order’からproduct_code、od.quantity、o.customer_codeを取得する
-				String sql = "SELECT od.product_code, od.quantity FROM order_detail WHERE od.order_id = ?";
+				String sql = "SELECT product_code, quantity FROM order_detail WHERE order_id = ?";
 				st = con.prepareStatement(sql);
 				st.setString(1,order_id);
 				rs = st.executeQuery();
 
+				System.out.println(0);
 				List<UpdateBean> list = new ArrayList<UpdateBean>();
 				int cnt = 10;
 				while(rs.next()) {
+					System.out.println("test");
 					String product_code = rs.getString("product_code");
 					int quantity = rs.getInt("quantity");
-					String customer_code = rs.getString("customer_code");
 					UpdateBean bean = new UpdateBean(order_id, product_code, quantity);
 					list.add(bean);
 					cnt--;
 				}
+
+				System.out.println(1);
 
 				for (int i=0; i < cnt; i++) {
 					list.add(null);
