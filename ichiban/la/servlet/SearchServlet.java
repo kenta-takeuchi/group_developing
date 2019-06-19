@@ -98,8 +98,8 @@ public class SearchServlet extends HttpServlet {
 			}
 		} catch (DataAccessException e) {
 			e.printStackTrace();
-			request.setAttribute("message", "");
-			RequestDispatcher rd = request.getRequestDispatcher("/errInternal.jsp");
+			request.setAttribute("message", "データベースに接続できず検索できませんでした。");
+			RequestDispatcher rd = request.getRequestDispatcher("/Message.jsp");
 			rd.forward(request, response);
 		}
 	}
