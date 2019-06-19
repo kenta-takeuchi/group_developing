@@ -84,7 +84,6 @@ public class ShowInputFormServlet extends HttpServlet {
 			request.setAttribute("products", products);
 			gotoPage(request, response, "/OrderRegist.jsp");
 		} else {
-			request.setAttribute("message", "正しく操作してください");
 			gotoPage(request, response, "/OrderRegistError.jsp");
 		}
 	}

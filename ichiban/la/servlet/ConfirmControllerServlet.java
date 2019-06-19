@@ -60,13 +60,18 @@ public class ConfirmControllerServlet extends HttpServlet {
 
 			} catch (DataAccessException e) {
 				e.printStackTrace();
+				e.printStackTrace();
+				request.setAttribute("message", "データベースと接続できず処理できませんでした。");
+				gotoPage(request, response,"/Message.jsp");
 				// TODO 足りない項目を後で追加
 			}
+
 			gotoPage(request, response, "/OrderRegistResult.jsp");
 
 		} else {
-
-			gotoPage(request, response, "/OrderRegistError.jsp");
+			request.setAttribute("message", "正しく操作してください");
+			gotoPage(request, response,"/Message.jsp");
+			return;
 		}
 
 	}
