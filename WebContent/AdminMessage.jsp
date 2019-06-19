@@ -30,8 +30,8 @@
 			<tfoot>
 				<tr>
 					<th colspan="12" class="center aligned">
-						<form class="ui form" action="/group_developing/MainMenu.jsp" method="post">
-						<button class="ui button teal" type="submit" name="button">メインメニューに戻る</button>
+						<form class="ui form" action="/group_developing/adminMenu.jsp" method="post">
+						<button class="ui button teal" type="submit" name="button">管理者メニューに戻る</button>
 						</form>
 					</th>
 				</tr>
