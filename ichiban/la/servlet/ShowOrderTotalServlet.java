@@ -79,11 +79,14 @@ public class ShowOrderTotalServlet extends HttpServlet {
 		} catch (DataAccessException e) {
 			// TODO 自動生成された catch ブロック
 			e.printStackTrace();
-			gotoPage(request,response, "/adminMenu.jsp");
+			request.setAttribute("message", "データベースと接続できず集計できませんでした。");
+			gotoPage(request, response,"/AdminMessage.jsp");
 		} catch (ParseException e) {
 			// TODO 自動生成された catch ブロック
 			e.printStackTrace();
-			gotoPage(request,response, "/adminMenu.jsp");
+			request.setAttribute("message", "正しく操作してください");
+			gotoPage(request, response,"/AdminMessage.jsp");
+
 		}
 	}
 
