@@ -56,7 +56,6 @@ public class ShowInputFormServlet extends HttpServlet {
 				}
 			}
 
-			//
 			PostgreSQLProductDao productDao = null;
 			List<ProductBean> products = null;
 			try {

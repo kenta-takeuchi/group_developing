@@ -169,17 +169,13 @@ public class PostgreSQLOrderDao {
 				System.out.println("listDetail.get(i).getProduct_code():" + listDetail.get(i).getProduct_code());
 				rs = st.executeQuery();
 				rs.next();
-				/*total_feeの計算
-				listに追加された分の商品数をかけ、intSumに代入*/
+				//total_feeの計算 listに追加された分の商品数をかけ、intSumに代入
 				intSum = intSum + (rs.getInt(1) * listDetail.get(i).getQuantity());
-				/*quantityの計算
-				商品数を増やす*/
+				//quantityの計算 商品数を増やす
 				detail_quantity = detail_quantity + listDetail.get(i).getQuantity();
 				rs.close();
 			}
-			/*taxの計算
-			 * 商品の合計値に税率をかけ、消費税分を求める。
-			 */
+			//taxの計算 商品の合計値に税率をかけ、消費税分を求める。
 			int taxSum = (int)(intSum * 0.08);
 
 
