@@ -11,9 +11,11 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import la.bean.CustomerBean;
 import la.bean.OrderDetailBean;
 import la.bean.ProductBean;
 import la.dao.DataAccessException;
+import la.dao.PostgreSQLCustomerDao;
 import la.dao.PostgreSQLProductDao;
 import la.java.LoginManager;
 
@@ -67,6 +69,7 @@ public class ShowInputFormServlet extends HttpServlet {
 			}
 
 			request.setAttribute("products", products);
+
 			request.setAttribute("list", list);
 			gotoPage(request, response, "/OrderRegistConfirm.jsp");
 
@@ -81,7 +84,19 @@ public class ShowInputFormServlet extends HttpServlet {
 				// TODO 自動生成された catch ブロック
 				e.printStackTrace();
 			}
+
+			PostgreSQLCustomerDao customerDao = null;
+			List<CustomerBean> customers = null;
+			try {
+				customerDao = new PostgreSQLCustomerDao();
+				customers = customerDao.selectAll();
+			} catch (DataAccessException e) {
+				// TODO 自動生成された catch ブロック
+				e.printStackTrace();
+			}
+			request.setAttribute("customers", customers);
 			request.setAttribute("products", products);
+
 			gotoPage(request, response, "/OrderRegist.jsp");
 		} else {
 			gotoPage(request, response, "/OrderRegistError.jsp");

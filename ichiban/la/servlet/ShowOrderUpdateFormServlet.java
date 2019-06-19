@@ -10,10 +10,12 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import la.bean.CustomerBean;
 import la.bean.OrderBean;
 import la.bean.ProductBean;
 import la.bean.UpdateBean;
 import la.dao.DataAccessException;
+import la.dao.PostgreSQLCustomerDao;
 import la.dao.PostgreSQLOrderDao;
 import la.dao.PostgreSQLOrderDetailDao;
 import la.dao.PostgreSQLProductDao;
@@ -69,9 +71,21 @@ public class ShowOrderUpdateFormServlet extends HttpServlet {
 			PostgreSQLProductDao productDao = new PostgreSQLProductDao();
 			List<ProductBean> products = productDao.selectAll();
 
+			PostgreSQLCustomerDao customerDao = null;
+			List<CustomerBean> customers = null;
+			try {
+				customerDao = new PostgreSQLCustomerDao();
+				customers = customerDao.selectAll();
+			} catch (DataAccessException e) {
+				// TODO 自動生成された catch ブロック
+				e.printStackTrace();
+			}
+
+
 			//OrderUpdate.jspで表示させるために必要な情報を送る
 			request.setAttribute("order_id", order_id);
 			request.setAttribute("customer_code", customer_code);
+			request.setAttribute("customers", customers);
 			request.setAttribute("order_details", order_details);
 			request.setAttribute("products", products);
 			gotoPage(request, response, "/OrderUpdate.jsp");

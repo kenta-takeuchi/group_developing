@@ -30,8 +30,11 @@
 					method="post">
 					<div class="field">
 						<h2>得意先コード</h2>
-						<input type="text" name="customer_code" placeholder="半角数字のみ"
-							required>
+						<select class="ui select" name="customer_code">
+							<c:forEach items="${customers}" var="c">
+								<option value="${c.code}">${c.name}</option>
+							</c:forEach>
+						</select>
 					</div>
 					<div class="field">
 						<h2>商品入力</h2>

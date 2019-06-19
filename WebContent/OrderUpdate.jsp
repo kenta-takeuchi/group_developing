@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
-<%@ page import="java.util.*" %>
+	pageEncoding="UTF-8"%>
+<%@ page import="java.util.*"%>
 
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html>
@@ -27,11 +27,23 @@
 		<div class="aq-wrapper">
 			<div
 				class="ui raised very padded center aligned text container segment">
-				<form class="ui form" action="OrderUpdateServlet"
-					method="post" method="post">
+				<form class="ui form" action="OrderUpdateServlet" method="post"
+					method="post">
 					<div class="field">
 						<h2>得意先コード</h2>
-						<input type="text" name="customer_code" value="${customer_code}" required>
+						<select class="ui select" name="customer_code">
+							<c:forEach items="${customers}" var="c">
+								<c:choose>
+									<c:when test="${c.code == customer_code}">
+										<option value="${c.code}" selected>${c.name}</option>
+									</c:when>
+									<c:otherwise>
+										<option value="${c.code}">${c.name}</option>
+									</c:otherwise>
+								</c:choose>
+							</c:forEach>
+						</select>
+
 					</div>
 					<div class="field">
 						<h2>商品入力</h2>
