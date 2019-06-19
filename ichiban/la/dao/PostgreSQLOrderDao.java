@@ -43,7 +43,10 @@ public class PostgreSQLOrderDao {
 		ResultSet rs = null;
 		try {
 
-			// SQL文の作成
+			/*
+			SQL文の作成　WHERE 1=1 は、SearchServletで条件分岐する際、入力項目が1，2，3個のどれでも実行できるように入れた値。
+			最初に入れておいて、そのあとはどれが最初に入っても良くなる。条件分岐のコードが少なくて済む。
+			*/
 			String sql = "SELECT * FROM ‘order’ WHERE 1=1" + add_sql;
 			// PreparedStatementオブジェクトの取得
 			st = con.prepareStatement(sql);
@@ -58,7 +61,7 @@ public class PostgreSQLOrderDao {
 				String customer_code = rs.getString("customer_code");
 				String employee_code = rs.getString("employee_code");
 				SearchResultBean bean = new SearchResultBean(id, ordered_date, customer_code, employee_code);
-				list.add(bean);
+				list.add(bean); //SearchResultBeanにlistで格納する。
 			}
 			return list;
 		} catch (Exception e) {

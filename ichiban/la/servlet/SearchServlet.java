@@ -50,7 +50,9 @@ public class SearchServlet extends HttpServlet {
 		//パラメータチェック
 		flg = true;
 		String add_sql = "";
+		//ordered_dateがnullではない、かつ、ordered_dateの長さが0でないとき
 		if (ordered_date != null && ordered_date.length() != 0) {
+			//ordered_dateが0~9で4桁、0~9で2桁,0~9で2桁の時、以下のsql文を実行する。
 			if (ordered_date.matches("[0-9]{4}-[0-9]{2}-[0-9]{2}")) {
 				add_sql += " AND ordered_date ='" + ordered_date + "'";
 			} else {
@@ -58,6 +60,7 @@ public class SearchServlet extends HttpServlet {
 			}
 		}
 		if (customer_code != null && customer_code.length() != 0) {
+			//customer_codeが0~9で4桁の時以下のsql文を実行する。
 			if (customer_code.matches("[0-9]{4}")) {
 				add_sql += " AND customer_code ='" + customer_code + "'";
 			} else {
@@ -65,25 +68,34 @@ public class SearchServlet extends HttpServlet {
 			}
 		}
 		if (employee_code != null && employee_code.length() != 0) {
+			//employee_codeが0~9で4桁の時以下のsql文を実行する。
 			if (employee_code.matches("[0-9]{4}")) {
 				add_sql += " AND employee_code ='" + employee_code + "'";
 			} else {
 				flg = false;
 			}
 		}
-
-		if (flg == false) {
-			request.setAttribute("message", "もう一度入力してください。");
+		//何も入力されていない状態で検索ボタンが押されたとき、messageにエラーメッセージを入れて元の検索画面に戻す。
+		if (flg == false && ordered_date.length() == 0 && customer_code.length() == 0 && employee_code.length() == 0) {
+			request.setAttribute("message", "数値を入力してください。");
 			RequestDispatcher rd = request.getRequestDispatcher("/Search.jsp");
 			rd.forward(request, response);
 		}
 
+		//list型の"searchResults"で検索結果画面にforwardする。
 		try {
 			PostgreSQLOrderDao dao = new PostgreSQLOrderDao();
 			List<SearchResultBean> list = dao.select(add_sql);
-			request.setAttribute("searchResults", list);
-			RequestDispatcher rd = request.getRequestDispatcher("/OrderSearchResult.jsp");
-			rd.forward(request, response);
+			//検索結果が存在しないとき
+			if (list.size() == 0) {
+				request.setAttribute("message", "検索結果がありません。");
+				RequestDispatcher rd = request.getRequestDispatcher("/Search.jsp");
+				rd.forward(request, response);
+			} else {
+				request.setAttribute("searchResults", list);
+				RequestDispatcher rd = request.getRequestDispatcher("/OrderSearchResult.jsp");
+				rd.forward(request, response);
+			}
 		} catch (DataAccessException e) {
 			e.printStackTrace();
 			request.setAttribute("message", "");
@@ -92,6 +104,7 @@ public class SearchServlet extends HttpServlet {
 		}
 	}
 
+	//Postで送られてきた場合、Getに送る。
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		doGet(request, response);
