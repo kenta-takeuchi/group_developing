@@ -28,8 +28,8 @@
 				<br>
 				<div>
 					<div class="center aligned">
-						<form class="ui form" action="/group_developing/Search.jsp" method="post">
-							<button class="ui button teal" type="submit" name="button">検索メニューに戻る</button>
+						<form class="ui form" action="/group_developing/adminMenu.jsp" method="post">
+							<button class="ui button teal" type="submit" name="button">管理者メニューに戻る</button>
 						</form>
 					</div><br>
 					<div class="center aligned">

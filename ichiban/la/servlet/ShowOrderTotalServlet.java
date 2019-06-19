@@ -1,6 +1,7 @@
 package la.servlet;
 
 import java.io.IOException;
+import java.math.BigDecimal;
 import java.text.ParseException;
 import java.util.List;
 
@@ -59,16 +60,31 @@ public class ShowOrderTotalServlet extends HttpServlet {
 
 		try {
 			List<OrderTotalBean> list = dao.selectByOrderedDate(year, month);
+
+			BigDecimal total_fee = BigDecimal.valueOf(0);
+			int count_of_order_detail = 0;
+			int cnt = 1;
+			for (OrderTotalBean bean: list) {
+				total_fee = total_fee.add(bean.getTotal_fee());
+				count_of_order_detail += bean.getCount_of_order_detail();
+			}
+
 			request.setAttribute("order_totals", list);
+			request.setAttribute("total_fee", total_fee);
+			request.setAttribute("count_of_order_detail", count_of_order_detail);
+
 			gotoPage(request,response, "/orderTotal.jsp");
 		} catch (DataAccessException e) {
 			// TODO 自動生成された catch ブロック
 			e.printStackTrace();
-			gotoPage(request,response, "/adminMenu.jsp");
+			request.setAttribute("message", "データベースと接続できず集計できませんでした。");
+			gotoPage(request, response,"/AdminMessage.jsp");
 		} catch (ParseException e) {
 			// TODO 自動生成された catch ブロック
 			e.printStackTrace();
-			gotoPage(request,response, "/adminMenu.jsp");
+			request.setAttribute("message", "正しく操作してください");
+			gotoPage(request, response,"/AdminMessage.jsp");
+
 		}
 	}
 

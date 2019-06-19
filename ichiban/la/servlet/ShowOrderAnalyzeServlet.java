@@ -39,6 +39,7 @@ public class ShowOrderAnalyzeServlet extends HttpServlet {
 		request.setCharacterEncoding("UTF-8");
 		response.setContentType("text/html;charset=UTF-8");
 
+		// 管理者でログイン済みかチェック
 		boolean flg = LoginManager.checkAdmin(request, response);
 		if (flg == false) {
 			return;
@@ -63,13 +64,15 @@ public class ShowOrderAnalyzeServlet extends HttpServlet {
 		} catch (DataAccessException e) {
 			// TODO 自動生成された catch ブロック
 			e.printStackTrace();
-			gotoPage(request,response, "/adminMenu.jsp");
+			request.setAttribute("message", "データベースと接続できず分析できませんでした。");
+			gotoPage(request, response,"/AdminMessage.jsp");
 		} catch (ParseException e) {
 			// TODO 自動生成された catch ブロック
 			e.printStackTrace();
-			gotoPage(request,response, "/adminMenu.jsp");
+			request.setAttribute("message", "正しく操作してください。");
+			gotoPage(request, response,"/AdminMessage.jsp");
 		}
-		
+
 	}
 
 	/**

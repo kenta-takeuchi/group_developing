@@ -11,7 +11,6 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
 import la.bean.OrderBean;
 import la.bean.OrderDetailBean;
@@ -30,17 +29,14 @@ public class ConfirmControllerServlet extends HttpServlet {
 			throws ServletException, IOException {
 		request.setCharacterEncoding("utf-8");
 		response.setContentType("text/html:charset=UTF-8");
-		HttpSession session = request.getSession(false);
 
-		if (session == null) {
-			request.setAttribute("message", "セッションが切れています、もう一度ログインしてください");
+		boolean flg = LoginManager.checkEmployee(request, response);
+		if (flg == false) {
+			return;
 		}
 
-		//String order_id = request.getParameter("order_id");
 		String customer_code = request.getParameter("customer_code");
-		System.out.println("customer_code:" + customer_code);
 
-		//if(order_id != null && customer_code != null) {
 		if (customer_code != null) {
 			try {
 				OrderBean bean = new OrderBean("", customer_code, "", Date.valueOf("2019-06-17"), BigDecimal.valueOf(0),0, BigDecimal.valueOf(0));
@@ -53,26 +49,29 @@ public class ConfirmControllerServlet extends HttpServlet {
 					if (request.getParameter("quantity_" + cnt) == null) {
 						break;
 					}
-					beanDetail.setOrder_id(request.getParameter("order_id_" + cnt));
 					beanDetail.setQuantity(Integer.parseInt(request.getParameter("quantity_" + cnt)));
-					beanDetail.setProduct_code(request.getParameter("order_id_" + cnt));
+					beanDetail.setProduct_code(request.getParameter("product_code_" + cnt));
 					list.add(beanDetail);
 				}
 
 				PostgreSQLOrderDao regist = new PostgreSQLOrderDao();
-				LoginManager login = new LoginManager();
-				String employee = login.getEmployeeCode(request.getSession());
+				String employee = LoginManager.getEmployeeCode(request.getSession());
 				regist.insertOrder(bean, list, employee);
 
 			} catch (DataAccessException e) {
 				e.printStackTrace();
+				e.printStackTrace();
+				request.setAttribute("message", "データベースと接続できず処理できませんでした。");
+				gotoPage(request, response,"/Message.jsp");
 				// TODO 足りない項目を後で追加
 			}
+
 			gotoPage(request, response, "/OrderRegistResult.jsp");
 
 		} else {
-
-			gotoPage(request, response, "/OrderRegistError.jsp");
+			request.setAttribute("message", "正しく操作してください");
+			gotoPage(request, response,"/Message.jsp");
+			return;
 		}
 
 	}

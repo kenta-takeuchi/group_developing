@@ -17,8 +17,6 @@
 		<div class="ui borderless topmenu menu">
 			<div class="ui container aq-header">
 				<h1>受注変更フォーム</h1>
-				<h1>${message}</h1>
-
 			</div>
 		</div>
 		<div class="aq-wrapper">
@@ -45,22 +43,25 @@
 							<label class="ui label">受注数</label> <br>
 						</div>
 					</div>
-					<!--c:forEach items = "${items}" var = "item" varStatus = "stat"
-            	var ="i" begin = "1" end = "10" step = "1"-->
+					<!-- List型のorder_detailsが所有する情報があるだけ繰り返す -->
 					<c:forEach items="${order_details}" var="od" varStatus="stat">
 						<div class="three fields">
 							<div class="field">
+								<!-- 情報を数える -->
 								<p>${stat.count}</p>
 							</div>
 							<div class="field">
 								<select class="ui select" name="product_code_${stat.count}">
+									<!-- 商品名の初期値を----と設定 -->
 									<option value="-----">-----</option>
 									<c:forEach items="${products}" var="p">
 										<c:choose>
+											<!-- 商品テーブルと受注明細の商品コードが一致したらその商品名を表示させる -->
 											<c:when test="${p.code == od.product_code}">
 												<option value="${p.code}" selected>${p.name}</option>
 											</c:when>
 											<c:otherwise>
+												<!-- 商品テーブルと受注明細の商品コードが一致しなかったら商品名の初期値を表示させる  -->
 												<option value="${p.code}">${p.name}</option>
 											</c:otherwise>
 										</c:choose>

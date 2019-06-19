@@ -28,12 +28,12 @@
           </div>
           <div class="pink statistic">
             <div class="label">受注件数</div>
-            <div class="value">500</div>
+            <div class="value">${count_of_order_detail}</div>
             <div class="label">件</div>
           </div>
           <div class="orange statistic">
             <div class="label">受注総額</div>
-            <div class="value">2,000,000,000</div>
+            <div class="value">${total_fee}</div>
             <div class="label">円</div>
           </div>
         </div>
@@ -44,7 +44,7 @@
             <tr>
               <th>日にち</th>
               <th>受注件数</th>
-              <th>受注金額</th>
+              <th>受注合計金額</th>
               <th>平均受注金額</th>
               <th>最高受注額</th>
             </tr>

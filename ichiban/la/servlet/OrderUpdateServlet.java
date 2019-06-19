@@ -13,6 +13,7 @@ import javax.servlet.http.HttpServletResponse;
 import la.bean.OrderDetailBean;
 import la.dao.DataAccessException;
 import la.dao.PostgreSQLOrderDetailDao;
+import la.java.LoginManager;
 
 
 
@@ -23,22 +24,25 @@ import la.dao.PostgreSQLOrderDetailDao;
 public class OrderUpdateServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
-    /**
-     * @see HttpServlet#HttpServlet()
-     *
-     */
-
 	/**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
-//	 public UpdateServlet() {
-//	        super();
+	 public OrderUpdateServlet() {
+	        super();
+	 }
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
+
 		request.setCharacterEncoding("UTF-8");
 		response.setContentType("text/html;charset=UTF-8");
-		// TODO Auto-generated method stub
+
+		// 一般従業員でログイン済みかチェック
+		boolean flg = LoginManager.checkEmployee(request, response);
+		if (flg == false) {
+			return;
+		}
+
 		try {
 			String order_id = request.getParameter("order_id");
 
@@ -46,10 +50,11 @@ public class OrderUpdateServlet extends HttpServlet {
 
 			for (int i=0; i<10; i++) {
 
+				//受注数と商品コードの有無で新規か既存のデータを更新かを判断するため
 				String strQuantity = request.getParameter("quantity_" + i);
 				String product_code = request.getParameter("product_code_" + i);
 
-				//strCountが「null」か「空文字」だったら次へ
+				//strQuantityが「null」か「空文字」だったら次へ
 				if ((strQuantity == null) || (strQuantity.length() == 0)) {
 					continue;
 				}
@@ -71,7 +76,9 @@ public class OrderUpdateServlet extends HttpServlet {
 			detailDao.deleteByOrderId(order_id);
 
 
-			//resistOrderDetailは仮名、登録するメソッド名
+			//新規入力された情報を追加する
+
+			// データを登録する処理
 			detailDao = new PostgreSQLOrderDetailDao();
 			detailDao.insertOrderDetail(order_details);
 
@@ -79,11 +86,11 @@ public class OrderUpdateServlet extends HttpServlet {
 			gotoPage(request, response,"/Message.jsp");
 		} catch (NumberFormatException e) {
 			request.setAttribute("message", "受注数には数字を入力してください。");
-			gotoPage(request, response,"/OrderUpdate.jsp");
+			gotoPage(request, response,"/Message.jsp");
 			return;
 		}  catch(DataAccessException e){
 			e.printStackTrace();
-			request.setAttribute("message", "正しく操作してください");
+			request.setAttribute("message", "データベースと接続できず更新できませんでした。");
 			gotoPage(request, response,"/Message.jsp");
 		} catch (Exception e) {
 			request.setAttribute("message", "正しく操作してください");

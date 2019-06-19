@@ -39,6 +39,10 @@ public class ShowMainMenuServlet extends HttpServlet {
 		if ((action!=null) && (action.length()!=0) && (action.equals("employeeLogin"))) {
 			String employee_code = request.getParameter("employee_code");
 			String password = request.getParameter("password");
+			if ((employee_code == null) || (employee_code.length() ==0) || (password == null) || (password.length() ==0)) {
+				gotoPage(request,response, "/loginError.jsp");
+				return;
+			}
 			try {
 				boolean isLogin = LoginManager.login(request, response, employee_code, password);
 				if (isLogin) {
@@ -52,13 +56,13 @@ public class ShowMainMenuServlet extends HttpServlet {
 				gotoPage(request,response, "/loginError.jsp");
 			}
 		} else {
+			// 一般従業員でログイン済みかチェック
 			boolean flg = LoginManager.checkEmployee(request, response);
 			if (flg == false) {
 				return;
 			}
 		}
 
-		gotoPage(request,response, "/MainMenu.jsp");
 	}
 
 	/**

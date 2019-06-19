@@ -62,11 +62,14 @@ public class OrderDeleteServlet extends HttpServlet {
 		try {
 			daoOrderDetail.deleteByOrderId(order_id);
 			daoOrder.deleteById(order_id);
-			gotoPage(request,response, "/MainMenu.jsp");
+			request.setAttribute("message", "削除しました。");
+			gotoPage(request, response,"/Message.jsp");
 		} catch (DataAccessException e) {
 			// TODO 自動生成された catch ブロック
 			e.printStackTrace();
-			gotoPage(request,response, "/MainMenu.jsp");
+			request.setAttribute("message", "データベースと接続できず更新できませんでした。");
+			gotoPage(request, response,"/Message.jsp");
+
 		}
 	}
 

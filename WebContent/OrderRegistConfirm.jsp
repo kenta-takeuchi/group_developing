@@ -15,7 +15,7 @@
     <div class="ui container">
       <div class="ui borderless topmenu menu">
         <div class="ui container aq-header">
-          <h1>受注変更</h1>
+          <h1>受注登録</h1>
         </div>
       </div>
       <div class="ui green message">
@@ -38,18 +38,19 @@
             <c:forEach items="${list}" var="bean" varStatus="stat">
               <tr>
                 <td class="single line">${stat.count}</td>
-                <td>${bean.order_id}</td>
+                <td>${bean.product_code}</td>
                 <td>${bean.quantity}</td>
-                <input type="hidden" name="order_id_${stat.count}" value="${bean.order_id}">
-                <input type="hidden" name="quantity_${stat.count}" value="${bean.quantity}">
               </tr>
+              <input type="hidden" name="product_code_${stat.count}" value="${bean.product_code}">
+              <input type="hidden" name="quantity_${stat.count}" value="${bean.quantity}">
             </c:forEach>
           </tbody>
           <tfoot>
             <tr>
               <th colspan="12" class="center aligned">
-                <button class="ui button teal"type="submit" name="button">確認</button>
+                <button class="ui button teal" type="submit" name="button">確認</button>
                 <input type="hidden" name="customer_code" value="${customer_code}">
+                <input type="hidden" name="order_id" value="${order_id}">
               </th>
             </tr>
           </tfoot>

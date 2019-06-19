@@ -94,13 +94,10 @@ public class PostgreSQLOrderDao {
 		Date sqlThisDate = CalcMonth.CastToSQLDate(thisDate);
 		Date sqlNextDate = CalcMonth.CastToSQLDate(nextDate);
 
-		System.out.println(sqlThisDate);
-		System.out.println(sqlNextDate);
-
 		try {
 
 			// SQL文の作成
-			String sql = "SELECT ordered_date, count(*), sum(total_fee), avg(total_fee), max(total_fee) FROM ‘order’ WHERE ordered_date BETWEEN ? AND ? GROUP BY ordered_date";
+			String sql = "SELECT ordered_date, count(*), sum(total_fee), trunc(avg(total_fee), 0), max(total_fee) FROM ‘order’ WHERE ordered_date BETWEEN ? AND ? GROUP BY ordered_date";
 			// PreparedStatementオブジェクトの取得
 			st = con.prepareStatement(sql);
 			st.setDate(1, sqlThisDate);
@@ -144,6 +141,7 @@ public class PostgreSQLOrderDao {
 		PreparedStatement st = null;
 		ResultSet rs = null;
 		int intRet = -1;
+		String strTmp;
 
 		try {
 			// idの最大値を取得する
@@ -151,32 +149,36 @@ public class PostgreSQLOrderDao {
 			st = con.prepareStatement(max);
 			rs = st.executeQuery();
 			rs.next();
+			//1を足し、最大値を更新
 			int intMax = rs.getInt(1) + 1;
+
 			// 0文字付加
 			int intTmp = intMax;
-			String strTmp = ("0000" + intTmp);
-			//System.out.println("b4 strTmp:" + strTmp);
+			strTmp = ("0000" + intTmp);
 			strTmp = strTmp.substring(strTmp.length() - 4, strTmp.length());
-			//System.out.println("af strTmp:" + strTmp);
 
-
-
-			//明細計算用
+			//もろもろの計算
 			rs.close();
 			int intSum = 0;
 			int detail_quantity = 0;
+			//登録された商品の数分for文を回す
 			for(int i = 0; i < listDetail.size(); i++){
+				//金額をselectで取得
 				String tax = "select price from product where code = ?;";
 				st = con.prepareStatement(tax);
+				//登録された商品に値するproduct_codeをセット
 				st.setString(1, listDetail.get(i).getProduct_code());
 				System.out.println("i:" + i);
 				System.out.println("listDetail.get(i).getProduct_code():" + listDetail.get(i).getProduct_code());
 				rs = st.executeQuery();
 				rs.next();
+				//total_feeの計算 listに追加された分の商品数をかけ、intSumに代入
 				intSum = intSum + (rs.getInt(1) * listDetail.get(i).getQuantity());
-				detail_quantity =detail_quantity + listDetail.get(i).getQuantity();
+				//quantityの計算 商品数を増やす
+				detail_quantity = detail_quantity + listDetail.get(i).getQuantity();
 				rs.close();
 			}
+			//taxの計算 商品の合計値に税率をかけ、消費税分を求める。
 			int taxSum = (int)(intSum * 0.08);
 
 
@@ -198,17 +200,27 @@ public class PostgreSQLOrderDao {
 			st.setInt(6, detail_quantity);
 			st.setInt(7, intSum);
 
-			PostgreSQLOrderDetailDao odDao = new PostgreSQLOrderDetailDao();
-			odDao.insertOrderDetail(listDetail);
-
-
 			//SQLの実行
 			intRet = st.executeUpdate();
 
 		}catch(Exception e) {
 			e.printStackTrace();
 			throw new DataAccessException("レコードの追加に失敗しました");
+		} finally {
+			try {
+				DBManager database = new DBManager();
+				// リソースの開放
+				if(rs != null) database.close(rs);
+				if(st != null) database.close(st);
+				database.close(con);
+			} catch (Exception e) {
+				throw new DataAccessException("リソースの開放に失敗しました。");
+			}
 		}
+
+		PostgreSQLOrderDetailDao odDao = new PostgreSQLOrderDetailDao();
+
+		odDao.insertOrderDetail(listDetail, strTmp);
 
 		return intRet;
 	}

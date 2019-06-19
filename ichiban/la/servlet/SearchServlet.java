@@ -13,6 +13,7 @@ import javax.servlet.http.HttpServletResponse;
 import la.bean.SearchResultBean;
 import la.dao.DataAccessException;
 import la.dao.PostgreSQLOrderDao;
+import la.java.LoginManager;
 
 /**
  * Servlet implementation class HelloServlet
@@ -31,12 +32,23 @@ public class SearchServlet extends HttpServlet {
 
 	protected void doGet(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException {
+
+		request.setCharacterEncoding("UTF-8");
+		response.setContentType("text/html;charset=UTF-8");
+
+		// 一般従業員でログイン済みかチェック
+		boolean flg = LoginManager.checkEmployee(request, response);
+		if (flg == false) {
+			return;
+		}
+
 		//パラメーターの解析
 		String ordered_date = request.getParameter("ordered_date");
 		String customer_code = request.getParameter("customer_code");
 		String employee_code = request.getParameter("employee_code");
+
 		//パラメータチェック
-		boolean flg = true;
+		flg = true;
 		String add_sql = "";
 		//ordered_dateがnullではない、かつ、ordered_dateの長さが0でないとき
 		if (ordered_date != null && ordered_date.length() != 0) {

@@ -1,14 +1,15 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 
 <!DOCTYPE html>
 <html>
 <head>
-<meta charset="UTF-8">
-<title>受注検索</title>
-<link rel="stylesheet" href="css/master.css">
-<script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
-<script src="js/semantic.min.js"></script>
+	<meta charset="UTF-8">
+	<title>受注検索</title>
+	<link rel="stylesheet" href="css/master.css">
+	<script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
+	<script src="js/semantic.min.js"></script>
 </head>
 <body>
 	<div class="ui container">
