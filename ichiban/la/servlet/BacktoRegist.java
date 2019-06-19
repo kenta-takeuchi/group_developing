@@ -9,6 +9,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import la.java.LoginManager;
+
 /**
  * Servlet implementation class BacktoRegist
  */
@@ -20,6 +22,10 @@ public class BacktoRegist extends HttpServlet {
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		request.setCharacterEncoding("utf-8");
+		boolean flg = LoginManager.checkEmployee(request, response);
+		if (flg == false) {
+			return;
+		}
 		gotoPage(request, response, "/MainMenu.jsp");
 	}
 

@@ -97,7 +97,7 @@ public class PostgreSQLOrderDao {
 		try {
 
 			// SQL文の作成
-			String sql = "SELECT ordered_date, count(*), sum(total_fee), avg(total_fee), max(total_fee) FROM ‘order’ WHERE ordered_date BETWEEN ? AND ? GROUP BY ordered_date";
+			String sql = "SELECT ordered_date, count(*), sum(total_fee), trunc(avg(total_fee), 0), max(total_fee) FROM ‘order’ WHERE ordered_date BETWEEN ? AND ? GROUP BY ordered_date";
 			// PreparedStatementオブジェクトの取得
 			st = con.prepareStatement(sql);
 			st.setDate(1, sqlThisDate);
@@ -141,6 +141,7 @@ public class PostgreSQLOrderDao {
 		PreparedStatement st = null;
 		ResultSet rs = null;
 		int intRet = -1;
+		String strTmp;
 
 		try {
 			// idの最大値を取得する
@@ -151,12 +152,10 @@ public class PostgreSQLOrderDao {
 			int intMax = rs.getInt(1) + 1;
 			// 0文字付加
 			int intTmp = intMax;
-			String strTmp = ("0000" + intTmp);
+			strTmp = ("0000" + intTmp);
 			//System.out.println("b4 strTmp:" + strTmp);
 			strTmp = strTmp.substring(strTmp.length() - 4, strTmp.length());
 			//System.out.println("af strTmp:" + strTmp);
-
-
 
 			//明細計算用
 			rs.close();
@@ -195,17 +194,27 @@ public class PostgreSQLOrderDao {
 			st.setInt(6, detail_quantity);
 			st.setInt(7, intSum);
 
-			PostgreSQLOrderDetailDao odDao = new PostgreSQLOrderDetailDao();
-			odDao.insertOrderDetail(listDetail);
-
-
 			//SQLの実行
 			intRet = st.executeUpdate();
 
 		}catch(Exception e) {
 			e.printStackTrace();
 			throw new DataAccessException("レコードの追加に失敗しました");
+		} finally {
+			try {
+				DBManager database = new DBManager();
+				// リソースの開放
+				if(rs != null) database.close(rs);
+				if(st != null) database.close(st);
+				database.close(con);
+			} catch (Exception e) {
+				throw new DataAccessException("リソースの開放に失敗しました。");
+			}
 		}
+
+		PostgreSQLOrderDetailDao odDao = new PostgreSQLOrderDetailDao();
+
+		odDao.insertOrderDetail(listDetail, strTmp);
 
 		return intRet;
 	}

@@ -86,6 +86,50 @@ public class PostgreSQLOrderDetailDao {
 	}
 
 
+	public int insertOrderDetail(ArrayList<OrderDetailBean> listDetail, String order_id) throws DataAccessException {
+		PreparedStatement st = null;
+		ResultSet rs = null;
+		int intRet = -1;
+
+		try {
+
+			for (OrderDetailBean bean: listDetail) {
+				//SQL文の作成
+				String sql = "INSERT INTO order_detail VALUES(?, ?, ?, ?);";
+				st = con.prepareStatement(sql);
+				st.setString(1, order_id);
+				st.setString(2, bean.getProduct_code());
+				st.setInt(3, bean.getQuantity());
+
+				PostgreSQLProductDao productDao = new PostgreSQLProductDao();
+				String product_code = bean.getProduct_code();
+				ProductBean productBean = productDao.selectByProductId(product_code);
+				BigDecimal total_fee = BigDecimal.valueOf(bean.getQuantity() * productBean.getPrice());
+				st.setBigDecimal(4, total_fee);
+				//SQLの実行
+				intRet = st.executeUpdate();
+			}
+
+			return intRet;
+
+		}catch(Exception e) {
+			e.printStackTrace();
+			throw new DataAccessException("レコードの追加に失敗しました");
+		} finally {
+			try {
+				DBManager database = new DBManager();
+				// リソースの開放
+				if (rs != null)
+					database.close(rs);
+				if (st != null)
+					database.close(st);
+				database.close(con);
+			} catch (Exception e) {
+				throw new DataAccessException("リソースの開放に失敗しました。");
+			}
+		}
+	}
+
 	public int deleteByOrderId(String id) throws DataAccessException {
 		PreparedStatement st = null;
 		ResultSet rs = null;

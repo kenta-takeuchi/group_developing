@@ -13,6 +13,7 @@ import javax.servlet.http.HttpServletResponse;
 import la.bean.OrderDetailBean;
 import la.dao.DataAccessException;
 import la.dao.PostgreSQLOrderDetailDao;
+import la.java.LoginManager;
 
 
 
@@ -23,22 +24,25 @@ import la.dao.PostgreSQLOrderDetailDao;
 public class OrderUpdateServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
-    /**
-     * @see HttpServlet#HttpServlet()
-     *
-     */
-
 	/**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
-//	 public UpdateServlet() {
-//	        super();
+	 public OrderUpdateServlet() {
+	        super();
+	 }
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
+
 		request.setCharacterEncoding("UTF-8");
 		response.setContentType("text/html;charset=UTF-8");
-		// TODO Auto-generated method stub
+
+		// 一般従業員でログイン済みかチェック
+		boolean flg = LoginManager.checkEmployee(request, response);
+		if (flg == false) {
+			return;
+		}
+
 		try {
 			String order_id = request.getParameter("order_id");
 
@@ -73,6 +77,8 @@ public class OrderUpdateServlet extends HttpServlet {
 
 
 			//新規入力された情報を追加する
+
+			// データを登録する処理
 			detailDao = new PostgreSQLOrderDetailDao();
 			detailDao.insertOrderDetail(order_details);
 

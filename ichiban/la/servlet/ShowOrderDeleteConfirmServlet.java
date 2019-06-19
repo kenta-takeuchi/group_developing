@@ -13,6 +13,7 @@ import javax.servlet.http.HttpServletResponse;
 import la.bean.OrderDetailBean;
 import la.dao.DataAccessException;
 import la.dao.PostgreSQLOrderDetailDao;
+import la.java.LoginManager;
 
 /**
  * Servlet implementation class OrderSearchDetail
@@ -34,12 +35,22 @@ public class ShowOrderDeleteConfirmServlet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		// TODO Auto-generated method stub
+		request.setCharacterEncoding("UTF-8");
+		response.setContentType("text/html;charset=UTF-8");
+
+		// 一般従業員でログイン済みかチェック
+		boolean flg = LoginManager.checkEmployee(request, response);
+		if (flg == false) {
+			return;
+		}
+
 		try {
 			//パラメータの取得
 			String order_id = request.getParameter("order_id");
+
 			PostgreSQLOrderDetailDao dao = new PostgreSQLOrderDetailDao();
 			List<OrderDetailBean> list = dao.selectByOrderId(order_id);
+
 			request.setAttribute("order_id", order_id);
 			request.setAttribute("orderDetails", list);
 			RequestDispatcher rd = request.getRequestDispatcher("/orderDeleteConfirm.jsp");
