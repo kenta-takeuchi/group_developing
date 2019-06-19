@@ -14,7 +14,12 @@
 	<div class="ui container">
 		<div class="ui borderless topmenu menu">
 			<div class="ui container aq-header">
-				<h1>受注登録フォーム</h1>
+				<h1 class="ui center aligned">受注登録</h1>
+			</div>
+			<div class="ui header item green">
+				<form action="/group_developing/BacktoRegist" method="post">
+					<button class="positive ui button">メニューに戻る</button>
+				</form>
 			</div>
 		</div>
 		<div class="aq-wrapper">
@@ -63,7 +68,7 @@
 						</div>
 					</c:forEach>
 
-					<button type="submit" class="ui large teal button">登録</button>
+					<button type="submit" class="ui teal button">登録</button>
 				</form>
 			</div>
 		</div>

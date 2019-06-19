@@ -9,6 +9,10 @@ body{
 	margin:0 auto;
 }
 
+.aq-margin-bottom{
+	margin-bottom:75px;
+}
+
 .aq-wrapper{
   margin-top: 30px;
 }
