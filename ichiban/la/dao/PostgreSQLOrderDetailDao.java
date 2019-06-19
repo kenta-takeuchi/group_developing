@@ -204,6 +204,7 @@ public class PostgreSQLOrderDetailDao {
 	}
 
 
+	//ShowOrderUpdateFormから取得した情報からOrderUpdate.jspで必要なデータを取得する
 	public List<UpdateBean> findByUpdateCode(String order_id) throws DataAccessException{
 			PreparedStatement st = null;
 			ResultSet rs = null;
@@ -215,16 +216,19 @@ public class PostgreSQLOrderDetailDao {
 				rs = st.executeQuery();
 
 				List<UpdateBean> list = new ArrayList<UpdateBean>();
-				int cnt = 10;
+				//受注明細の数だけorderCountを引くため
+				int orderCount = 10;
 				while(rs.next()) {
 					String product_code = rs.getString("product_code");
 					int quantity = rs.getInt("quantity");
 					UpdateBean bean = new UpdateBean(order_id, product_code, quantity);
 					list.add(bean);
-					cnt--;
+					//Listの数からorderCount（10）を引き、OrderUpdat.jspで10個の情報を表示させる
+					orderCount--;
 				}
 
-				for (int i=0; i < cnt; i++) {
+				//Listが10になるまでnullを入れるため
+				for (int i=0; i < orderCount; i++) {
 					list.add(null);
 				}
 
