@@ -42,6 +42,7 @@ public class ShowOrderUpdateFormServlet extends HttpServlet {
 		response.setContentType("text/html;charset=UTF-8");
 
 		try {
+			//OrderDetailから送られてきたorder_idを取得する
 			String order_id = request.getParameter("order_id");
 			PostgreSQLOrderDao orderDao = new PostgreSQLOrderDao();
 			OrderBean bean = orderDao.selectByID(order_id);

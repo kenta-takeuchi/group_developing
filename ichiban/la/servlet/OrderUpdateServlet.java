@@ -71,7 +71,7 @@ public class OrderUpdateServlet extends HttpServlet {
 			detailDao.deleteByOrderId(order_id);
 
 
-			//resistOrderDetailは仮名、登録するメソッド名
+			//登録するメソッド
 			detailDao = new PostgreSQLOrderDetailDao();
 			detailDao.insertOrderDetail(order_details);
 

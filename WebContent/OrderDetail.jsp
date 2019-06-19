@@ -52,6 +52,7 @@
 				<tr>
 					<th colspan="12" class="center aligned">
 						<form action="/group_developing/ShowOrderUpdateFormServlet" method="post">
+						<!-- 受注コードをフォームで ShowOrderUpdateFormnに送る-->
 							<input type="hidden" name="order_id" value="${order_id}">
 							<button class="ui button teal" type="submit" name="button">変更</button>
 						</form>
