@@ -86,7 +86,7 @@ public class SearchServlet extends HttpServlet {
 			rd.forward(request, response);
 		} catch (DataAccessException e) {
 			e.printStackTrace();
-			request.setAttribute("message", "内部エラーが発生しました。");
+			request.setAttribute("message", "");
 			RequestDispatcher rd = request.getRequestDispatcher("/errInternal.jsp");
 			rd.forward(request, response);
 		}

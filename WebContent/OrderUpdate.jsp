@@ -53,15 +53,15 @@
 							<div class="field">
 								<select class="ui select" name="product_code_${stat.count}">
 									<!-- 商品名の初期値を----と設定 -->
+									<!-- 商品テーブルと受注明細の商品コードが一致したらその商品名を表示させる -->
+									<!-- 商品テーブルと受注明細の商品コードが一致しなかったら商品名の初期値を表示させる  -->
 									<option value="-----">-----</option>
 									<c:forEach items="${products}" var="p">
 										<c:choose>
-											<!-- 商品テーブルと受注明細の商品コードが一致したらその商品名を表示させる -->
 											<c:when test="${p.code == od.product_code}">
 												<option value="${p.code}" selected>${p.name}</option>
 											</c:when>
 											<c:otherwise>
-												<!-- 商品テーブルと受注明細の商品コードが一致しなかったら商品名の初期値を表示させる  -->
 												<option value="${p.code}">${p.name}</option>
 											</c:otherwise>
 										</c:choose>
