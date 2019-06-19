@@ -72,10 +72,8 @@ public class ShowAdminMenuServlet extends HttpServlet {
 			if (flg == false) {
 				return;
 			}
+			gotoPage(request,response, "/adminMenu.jsp");
 		}
-
-		gotoPage(request,response, "/adminMenu.jsp");
-
 	}
 
 	/**

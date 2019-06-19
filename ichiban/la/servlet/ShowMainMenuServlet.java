@@ -61,6 +61,7 @@ public class ShowMainMenuServlet extends HttpServlet {
 			if (flg == false) {
 				return;
 			}
+			gotoPage(request,response, "/MainMenu.jsp");
 		}
 
 	}
