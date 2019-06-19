@@ -25,28 +25,12 @@ public class PostgreSQLOrderDao {
 		con = database.getConnection();
 	}
 
-	public OrderBean selectById(String id) throws DataAccessException {
-		return null;
-
-	}
-
-	public OrderBean selectByCustomerCode(String customer_code) throws DataAccessException {
-		return null;
-	}
-
-	public OrderBean selectByEmployeeCode(String employee_code) throws DataAccessException {
-		return null;
-	}
-
 	public List<SearchResultBean> select(String add_sql) throws DataAccessException {
 		PreparedStatement st = null;
 		ResultSet rs = null;
 		try {
 
-			/*
-			SQL文の作成　WHERE 1=1 は、SearchServletで条件分岐する際、入力項目が1，2，3個のどれでも実行できるように入れた値。
-			最初に入れておいて、そのあとはどれが最初に入っても良くなる。条件分岐のコードが少なくて済む。
-			*/
+			// SQL文の作成
 			String sql = "SELECT * FROM ‘order’ WHERE 1=1" + add_sql;
 			// PreparedStatementオブジェクトの取得
 			st = con.prepareStatement(sql);
@@ -61,7 +45,7 @@ public class PostgreSQLOrderDao {
 				String customer_code = rs.getString("customer_code");
 				String employee_code = rs.getString("employee_code");
 				SearchResultBean bean = new SearchResultBean(id, ordered_date, customer_code, employee_code);
-				list.add(bean); //SearchResultBeanにlistで格納する。
+				list.add(bean);
 			}
 			return list;
 		} catch (Exception e) {
@@ -133,8 +117,37 @@ public class PostgreSQLOrderDao {
 		}
 	}
 
-	public Boolean update(String id) throws DataAccessException {
-		return null;
+	public int updateCostomerCodeById(String id, String customer_code) throws DataAccessException {
+		PreparedStatement st = null;
+		ResultSet rs = null;
+		int intRet = -1;
+
+		try {
+			// idの最大値を取得する
+			//SQL文の作成
+			String sql = "UPDATE ‘order’ SET customer_code = ? WHERE id = ?";
+			st = con.prepareStatement(sql);
+			st.setString(1, customer_code);
+			st.setString(2, id);
+			//SQLの実行
+			intRet = st.executeUpdate();
+
+		}catch(Exception e) {
+			e.printStackTrace();
+			throw new DataAccessException("レコードの更新に失敗しました");
+		} finally {
+			try {
+				DBManager database = new DBManager();
+				// リソースの開放
+				if(rs != null) database.close(rs);
+				if(st != null) database.close(st);
+				database.close(con);
+			} catch (Exception e) {
+				throw new DataAccessException("リソースの開放に失敗しました。");
+			}
+		}
+
+		return intRet;
 	}
 
 	public int insertOrder(OrderBean bean, ArrayList<OrderDetailBean> listDetail, String employee) throws DataAccessException {

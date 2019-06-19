@@ -59,8 +59,7 @@
 									<button class="ui button teal" type="submit" name="button">削除</button>
 									<input type="hidden" name="order_id" value="${order_id}">
 								</form>
-								<form action="/group_developing/ShowMainMenuServlet"
-									method="post" class="field">
+								<form action="/group_developing/ShowMainMenuServlet" method="post" class="field">
 									<button class="ui button" type="submit" name="button">戻る</button>
 								</form>
 							</div>

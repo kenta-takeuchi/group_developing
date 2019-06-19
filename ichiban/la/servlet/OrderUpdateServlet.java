@@ -12,6 +12,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import la.bean.OrderDetailBean;
 import la.dao.DataAccessException;
+import la.dao.PostgreSQLOrderDao;
 import la.dao.PostgreSQLOrderDetailDao;
 import la.java.LoginManager;
 
@@ -45,6 +46,7 @@ public class OrderUpdateServlet extends HttpServlet {
 
 		try {
 			String order_id = request.getParameter("order_id");
+			String customer_code = request.getParameter("customer_code");
 
 			ArrayList<OrderDetailBean> order_details = new ArrayList<OrderDetailBean>();
 
@@ -71,14 +73,16 @@ public class OrderUpdateServlet extends HttpServlet {
 				order_details.add(beanDetail);
 			}
 
+			PostgreSQLOrderDao orderDao = new PostgreSQLOrderDao();
+			//既存のデータを消去する処理
+			orderDao.updateCostomerCodeById(order_id, customer_code);
+
+
 			PostgreSQLOrderDetailDao detailDao = new PostgreSQLOrderDetailDao();
 			//既存のデータを消去する処理
 			detailDao.deleteByOrderId(order_id);
 
-
 			//新規入力された情報を追加する
-
-			// データを登録する処理
 			detailDao = new PostgreSQLOrderDetailDao();
 			detailDao.insertOrderDetail(order_details);
 

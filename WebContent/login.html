@@ -1,45 +1,47 @@
 <!DOCTYPE html>
 <html lang="en" dir="ltr">
-  <head>
-    <meta charset="utf-8">
-    <title>受注担当者ログイン</title>
-    <link rel="stylesheet" href="css/master.css">
-    <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
-    <script src="js/semantic.min.js"></script>
-  </head>
+<head>
+<meta charset="utf-8">
+<title>受注担当者ログイン</title>
+<link rel="stylesheet" href="css/master.css">
+<script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
+<script src="js/semantic.min.js"></script>
+</head>
 <body>
-  <div class="ui container">
-    <div class="ui borderless teal inverted menu is-adminlogin">
-      <div class="ui container aq-header">
-        <h1 class="ui center aligned">受注担当者ログイン</h1>
-      </div>
-    </div>
-    <div class="aq-wrapper">
-      <form class="ui form raised very padded center aligned text container segment" action="/group_developing/ShowMainMenuServlet" method="POST">
-        <h2 class="ui header">受注担当者ログイン</h2><br>
-        <div class="field inline">
-          <label>ID</label>
-          <div class="ui left input">
-            <input type="text" name="employee_code" autofocus="true">
-          </div>
-        </div>
-        <br>
-        <div class="field inline">
-          <label>Pass</label>
-          <div class="ui left input">
-            <input type="password" name="password">
-          </div>
-        </div>
-        <br>
-        <br>
-        <div class="actions inline">
-          <button class="ui large teal button" type="submit">ログイン</button>
-          <input type="hidden" name="action" value="employeeLogin">
-          <a href="adminLogin.html">管理者はこちら</a>
-        </div>
-        <br>
-      </form>
-    </div>
-  </div>
+	<div class="ui container">
+		<div class="ui borderless teal inverted menu is-adminlogin">
+			<div class="ui container aq-header">
+				<h1 class="ui center aligned">受注担当者ログイン</h1>
+			</div>
+		</div>
+		<div class="aq-wrapper">
+			<form
+				class="ui form raised very padded center aligned text container segment"
+				action="/group_developing/ShowMainMenuServlet" method="POST">
+				<h2 class="ui header">受注担当者ログイン</h2>
+				<br>
+				<div class="field inline">
+					<label>ID</label>
+					<div class="ui left input">
+						<input type="text" name="employee_code" autofocus="true">
+					</div>
+				</div>
+				<br>
+				<div class="field inline">
+					<label>Pass</label>
+					<div class="ui left input">
+						<input type="password" name="password">
+					</div>
+				</div>
+				<br> <br>
+				<div class="actions inline">
+					<button class="ui large teal button" type="submit">ログイン</button>
+					<input type="hidden" name="action" value="employeeLogin"> <a
+						href="adminLogin.html">管理者はこちら</a>
+				</div>
+				<br>
+			</form>
+		</div>
+	</div>
 </body>
 </html>
