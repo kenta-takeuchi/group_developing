@@ -39,7 +39,7 @@ public class ShowAdminMenuServlet extends HttpServlet {
 		String action = request.getParameter("action");
 
 		// ログインページから遷移した場合
-		if ((action!=null) && (action.length()!=0) && (action.equals("adminLogin"))) {
+		if ((action !=null) && (action.length()!=0) && (action.equals("adminLogin"))) {
 			String employee_code = request.getParameter("employee_code");
 			String password = request.getParameter("password");
 			// 従業員コードとパスワードのバリデーションチェック
