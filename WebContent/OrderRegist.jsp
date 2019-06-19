@@ -50,7 +50,7 @@
 								<p>${stat.count}</p>
 							</div>
 							<div class="field">
-								<select class="ui select" name="product_${stat.count}">
+								<select class="ui select" name="product_code_${stat.count}">
 									<option value="-----">-----</option>
 									<c:forEach items="${products}" var="p">
 										<option value="${p.code}">${p.name}</option>

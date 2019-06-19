@@ -39,6 +39,7 @@ public class ShowOrderAnalyzeServlet extends HttpServlet {
 		request.setCharacterEncoding("UTF-8");
 		response.setContentType("text/html;charset=UTF-8");
 
+		// 管理者でログイン済みかチェック
 		boolean flg = LoginManager.checkAdmin(request, response);
 		if (flg == false) {
 			return;
@@ -69,7 +70,7 @@ public class ShowOrderAnalyzeServlet extends HttpServlet {
 			e.printStackTrace();
 			gotoPage(request,response, "/adminMenu.jsp");
 		}
-		
+
 	}
 
 	/**

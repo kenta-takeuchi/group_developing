@@ -13,6 +13,7 @@ import javax.servlet.http.HttpServletResponse;
 import la.bean.OrderDetailBean;
 import la.dao.DataAccessException;
 import la.dao.PostgreSQLOrderDetailDao;
+import la.java.LoginManager;
 
 /**
  * Servlet implementation class OrderSearchDetail
@@ -34,7 +35,15 @@ public class ShowOrderDetailServlet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		// TODO Auto-generated method stub
+		request.setCharacterEncoding("UTF-8");
+		response.setContentType("text/html;charset=UTF-8");
+
+		// 一般従業員でログイン済みかチェック
+		boolean flg = LoginManager.checkEmployee(request, response);
+		if (flg == false) {
+			return;
+		}
+
 		try {
 			//パラメータの取得
 			String action = request.getParameter("action");

@@ -17,6 +17,7 @@ import la.dao.DataAccessException;
 import la.dao.PostgreSQLOrderDao;
 import la.dao.PostgreSQLOrderDetailDao;
 import la.dao.PostgreSQLProductDao;
+import la.java.LoginManager;
 
 /**
  * Servlet implementation class ShowUpdateFormServlet
@@ -38,8 +39,15 @@ public class ShowOrderUpdateFormServlet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
+
 		request.setCharacterEncoding("UTF-8");
 		response.setContentType("text/html;charset=UTF-8");
+
+		// 一般従業員でログイン済みかチェック
+		boolean flg = LoginManager.checkEmployee(request, response);
+		if (flg == false) {
+			return;
+		}
 
 		try {
 			String order_id = request.getParameter("order_id");

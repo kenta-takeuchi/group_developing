@@ -38,21 +38,35 @@ public class ShowAdminMenuServlet extends HttpServlet {
 		// 管理者でログインしているかチェックする
 		String action = request.getParameter("action");
 
+		// ログインページから遷移した場合
 		if ((action!=null) && (action.length()!=0) && (action.equals("adminLogin"))) {
 			String employee_code = request.getParameter("employee_code");
 			String password = request.getParameter("password");
+			// 従業員コードとパスワードのバリデーションチェック
+			if ((employee_code == null) || (employee_code.length() ==0) || (password == null) || (password.length() ==0)) {
+				gotoPage(request,response, "/loginError.jsp");
+				return;
+			}
+
 			try {
+				/*
+				データベースに登録されているかを確認する。
+				*/
 				boolean isLogin = LoginManager.login(request, response, employee_code, password, "0001");
+
 				if (isLogin) {
 					gotoPage(request,response, "/adminMenu.jsp");
 				} else {
 					gotoPage(request,response, "/loginError.jsp");
 				}
+
 			} catch (DataAccessException e) {
 				// TODO 自動生成された catch ブロック
 				e.printStackTrace();
 				gotoPage(request,response, "/loginError.jsp");
 			}
+
+		// ログインページ以外から遷移した場合
 		} else {
 			boolean flg = LoginManager.checkAdmin(request, response);
 			if (flg == false) {
