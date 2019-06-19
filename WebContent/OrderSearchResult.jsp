@@ -20,11 +20,15 @@
 	<div class="ui container">
 		<div class="ui borderless topmenu menu">
 			<div class="ui container aq-header">
-
 				<h1>検索結果一覧</h1>
 			</div>
+			<div class="ui header item green">
+				<form action="/group_developing/BacktoRegist" method="post">
+					<button class="positive ui button">メニューに戻る</button>
+				</form>
+			</div>
 		</div>
-		<table class="ui celled padded table center aligned">
+		<table class="aq-margin-bottom ui celled padded table center aligned aq-margin-bottom">
 			<thead>
 				<tr>
 					<th>受注コード</th>

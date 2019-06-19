@@ -17,16 +17,14 @@
 </head>
 <body>
 	<div class="ui container">
-
-
 		<div class="ui borderless topmenu menu">
 			<div class="ui container aq-header">
-				<h1 class="ui center aligned">受注詳細（注文番号：${order_id}）</h1>
-				<!--form action="OrderShowUpdateFormServlet?action=update" method = "post">
-	          <select name = "code">
-		          <option value="1">1
-	          </select>
-          </form-->
+				<h1>受注詳細（注文番号：${order_id}）</h1>
+			</div>
+			<div class="ui header item green">
+				<form action="/group_developing/BacktoRegist" method="post">
+					<button class="positive ui button">メニューに戻る</button>
+				</form>
 			</div>
 		</div>
 		<table class="ui celled padded table">

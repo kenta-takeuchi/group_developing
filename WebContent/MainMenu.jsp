@@ -20,7 +20,7 @@
         </div>
         <div class="ui header item">
           <form action="/group_developing/LogoutServlet" method="post">
-	          <button class="ui button header item">
+	          <button class="negative ui button">
 	            ログアウト
 	          </button>
           </form>

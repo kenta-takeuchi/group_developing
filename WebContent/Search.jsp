@@ -17,6 +17,11 @@
 			<div class="ui container aq-header">
 				<h1 class="ui center aligned">受注検索フォーム</h1>
 			</div>
+			<div class="ui header item green">
+				<form action="/group_developing/BacktoRegist" method="post">
+					<button class="positive ui button">メニューに戻る</button>
+				</form>
+			</div>
 		</div>
 		<div class="aq-wrapper">
 			<form class="ui form raised very padded center aligned text container segment" action="/group_developing/SearchServlet" method="post">
