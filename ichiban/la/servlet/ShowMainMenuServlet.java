@@ -40,7 +40,7 @@ public class ShowMainMenuServlet extends HttpServlet {
 			String employee_code = request.getParameter("employee_code");
 			String password = request.getParameter("password");
 			if ((employee_code == null) || (employee_code.length() ==0) || (password == null) || (password.length() ==0)) {
-				gotoPage(request,response, "/loginError.jsp");
+				gotoPage(request,response, "/loginError.html");
 				return;
 			}
 			try {
@@ -48,12 +48,12 @@ public class ShowMainMenuServlet extends HttpServlet {
 				if (isLogin) {
 					gotoPage(request,response, "/MainMenu.jsp");
 				} else {
-					gotoPage(request,response, "/loginError.jsp");
+					gotoPage(request,response, "/loginError.html");
 				}
 			} catch (DataAccessException e) {
 				// TODO 自動生成された catch ブロック
 				e.printStackTrace();
-				gotoPage(request,response, "/loginError.jsp");
+				gotoPage(request,response, "/loginError.html");
 			}
 		} else {
 			// 一般従業員でログイン済みかチェック

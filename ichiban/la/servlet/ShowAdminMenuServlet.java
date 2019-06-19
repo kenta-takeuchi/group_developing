@@ -44,7 +44,7 @@ public class ShowAdminMenuServlet extends HttpServlet {
 			String password = request.getParameter("password");
 			// 従業員コードとパスワードのバリデーションチェック
 			if ((employee_code == null) || (employee_code.length() ==0) || (password == null) || (password.length() ==0)) {
-				gotoPage(request,response, "/loginError.jsp");
+				gotoPage(request,response, "/loginError.html");
 				return;
 			}
 
@@ -57,7 +57,7 @@ public class ShowAdminMenuServlet extends HttpServlet {
 				if (isLogin) {
 					gotoPage(request,response, "/adminMenu.jsp");
 				} else {
-					gotoPage(request,response, "/loginError.jsp");
+					gotoPage(request,response, "/loginError.html");
 				}
 
 			} catch (DataAccessException e) {
