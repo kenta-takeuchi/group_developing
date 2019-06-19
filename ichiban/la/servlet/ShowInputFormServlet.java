@@ -32,8 +32,10 @@ public class ShowInputFormServlet extends HttpServlet {
 			return;
 		}
 
+
 		String action = request.getParameter("action");
 
+		//formのactionがregistの場合の処理
 		if (action.equals("regist")) {
 			String customer_code = request.getParameter("customer_code");
 			request.setAttribute("customer_code", customer_code);
@@ -44,13 +46,17 @@ public class ShowInputFormServlet extends HttpServlet {
 				// 前画面から渡された１明細ごとにBeanを作成し、リストに追加
 				OrderDetailBean bean = new OrderDetailBean();
 
+				//0以上の場合＝商品がある場合
 				if (request.getParameter("quantity_" + cnt).length() > 0) {
+				//順番にProduct_codeをセットする
 					bean.setProduct_code(request.getParameter("product_code_" + cnt));
+				//Product_codeをキャストする
 					bean.setQuantity(Integer.parseInt(request.getParameter("quantity_" + cnt)));
 					list.add(bean);
 				}
 			}
 
+			//
 			PostgreSQLProductDao productDao = null;
 			List<ProductBean> products = null;
 			try {
@@ -65,6 +71,7 @@ public class ShowInputFormServlet extends HttpServlet {
 			request.setAttribute("list", list);
 			gotoPage(request, response, "/OrderRegistConfirm.jsp");
 
+		//formのactionがlistの場合の処理
 		} else if (action.equals("list")) {
 			PostgreSQLProductDao productDao = null;
 			List<ProductBean> products = null;
