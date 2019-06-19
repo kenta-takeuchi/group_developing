@@ -21,8 +21,7 @@
 			<div class="ui header item">
 				<form class="ui form" action="/group_developing/LogoutServlet"
 					method="post">
-					<button class="ui button header item" type="submit">ログアウト
-					</button>
+					<button class="negative ui button" type="submit">ログアウト</button>
 				</form>
 			</div>
 		</div>

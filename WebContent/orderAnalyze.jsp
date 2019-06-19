@@ -24,7 +24,7 @@
 				<h1 class="ui center aligned">分析表</h1>
 			</div>
 		</div>
-		<form class="ui form" action="" method="post">
+		<form class="ui form" action="/group_developing/ShowAdminMenuServlet" method="post">
 			<table class="ui celled padded table">
 				<thead>
 					<tr>
@@ -49,7 +49,7 @@
 				<tfoot>
 					<tr>
 						<th colspan="12" class="center aligned">
-							<button class="ui button teal" type="button" name="button">メニューに戻る</button>
+							<button class="ui button teal" type="submit" name="button">メニューに戻る</button>
 						</th>
 					</tr>
 				</tfoot>

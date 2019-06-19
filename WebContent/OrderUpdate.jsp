@@ -18,6 +18,11 @@
 			<div class="ui container aq-header">
 				<h1>受注変更フォーム</h1>
 			</div>
+			<div class="ui header item green">
+				<form action="/group_developing/BacktoRegist" method="post">
+					<button class="positive ui button">メニューに戻る</button>
+				</form>
+			</div>
 		</div>
 		<div class="aq-wrapper">
 			<div
