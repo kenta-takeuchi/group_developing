@@ -36,12 +36,14 @@ public class ShowOrderDetailServlet extends HttpServlet {
 			throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		try {
-			//パラメータの取得
+			//パラメータの取得actionを定義して、その後SearchResult.jspで詳細ボタンを押されたときに実行。
 			String action = request.getParameter("action");
 			if (action.equals("detail")) {
 				String order_id = request.getParameter("order_id");
 				PostgreSQLOrderDetailDao dao = new PostgreSQLOrderDetailDao();
 				List<OrderDetailBean> list = dao.selectByOrderId(order_id);
+
+				//order_idとlistという名前でorderDetails/OrderDetail.jspに送る。
 				request.setAttribute("order_id", order_id);
 				request.setAttribute("orderDetails", list);
 				RequestDispatcher rd = request.getRequestDispatcher("/OrderDetail.jsp");
