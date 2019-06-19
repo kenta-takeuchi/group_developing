@@ -15,7 +15,7 @@
     <div class="ui container">
       <div class="ui borderless topmenu menu">
         <div class="ui container aq-header">
-          <h1>受注変更</h1>
+          <h1>受注登録</h1>
         </div>
       </div>
       <div class="ui green message">
@@ -48,7 +48,7 @@
           <tfoot>
             <tr>
               <th colspan="12" class="center aligned">
-                <button class="ui button teal"type="submit" name="button">確認</button>
+                <button class="ui button teal" type="submit" name="button">確認</button>
                 <input type="hidden" name="customer_code" value="${customer_code}">
                 <input type="hidden" name="order_id" value="${order_id}">
               </th>

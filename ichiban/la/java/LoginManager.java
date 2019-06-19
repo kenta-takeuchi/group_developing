@@ -22,10 +22,11 @@ public class LoginManager {
 			機能：
 				一般従業員としてログインする
 			結果：
-				ログイン成功すれば「true」、失敗すれば「false」を返す
+				true：ログイン成功
+				false：ログイン失敗
 			引数：
 				employee_code：従業員コード
-				password：従業員コード
+				password：パスワード
 		*/
 
 		// Daoに接続
@@ -63,7 +64,7 @@ public class LoginManager {
 				false：ログイン失敗
 			引数：
 				employee_code：従業員コード
-				password：従業員コード
+				password：従業員パスワード
 		*/
 
 		// Daoに接続

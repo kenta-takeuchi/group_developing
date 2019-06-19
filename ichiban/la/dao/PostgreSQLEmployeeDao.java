@@ -13,6 +13,17 @@ public class PostgreSQLEmployeeDao {
 	}
 
 	public Boolean loginEmployee(String code, String password) throws DataAccessException {
+		/*
+			機能：
+				指定された一般従業員がデータベースに登録されているかをチェックする
+			結果：
+				true：データベースに登録されている
+				false：データベースに登録されていない
+			引数：
+				employee_code：従業員コード
+				password：パスワード
+		*/
+
 		PreparedStatement st = null;
 		ResultSet rs = null;
 
@@ -48,6 +59,16 @@ public class PostgreSQLEmployeeDao {
 	}
 
 	public Boolean loginAdmin(String code, String password, String admin_code) throws DataAccessException {
+		/*
+			機能：
+				指定された管理者がデータベースに登録されているかをチェックする
+			結果：
+				true：データベースに登録されている
+				false：データベースに登録されていない
+			引数：
+				employee_code：従業員コード
+				password：パスワード
+		*/
 		PreparedStatement st = null;
 		ResultSet rs = null;
 

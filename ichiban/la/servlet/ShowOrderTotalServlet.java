@@ -63,13 +63,11 @@ public class ShowOrderTotalServlet extends HttpServlet {
 
 			BigDecimal total_fee = BigDecimal.valueOf(0);
 			int count_of_order_detail = 0;
-
+			int cnt = 1;
 			for (OrderTotalBean bean: list) {
-				total_fee.add(bean.getTotal_fee());
+				total_fee = total_fee.add(bean.getTotal_fee());
 				count_of_order_detail += bean.getCount_of_order_detail();
 			}
-			System.out.println("total_fee：" + total_fee);
-			System.out.println("count_of_order_detail：" + count_of_order_detail);
 
 			request.setAttribute("order_totals", list);
 			request.setAttribute("total_fee", total_fee);

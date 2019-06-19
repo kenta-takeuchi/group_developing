@@ -26,9 +26,8 @@
 		</div>
 
 		<div class="ui negative message">
-			<i class="close icon"></i>
 			<div class="header">注文番号：${order_id} の受注を削除します。</div>
-			<p>よろしければ確認ボタンを押してください。</p>
+			<p>よろしければ削除ボタンを押してください。</p>
 		</div>
 		<table class="ui celled padded table center aligned">
 			<thead>
@@ -52,11 +51,20 @@
 			<tfoot>
 				<tr>
 					<th colspan="12" class="center aligned">
-						<form class="ui form"
-							action="/group_developing/OrderDeleteServlet" method="post">
-							<button class="ui button teal" type="submit" name="button">削除</button>
-							<input type="hidden" name="order_id" value="${order_id}">
-						</form>
+						<div class="ui form raised very padded center aligned text aq-margin">
+							<div class="inline fields">
+								<form
+									action="/group_developing/OrderDeleteServlet"
+									method="post" class="field">
+									<button class="ui button teal" type="submit" name="button">削除</button>
+									<input type="hidden" name="order_id" value="${order_id}">
+								</form>
+								<form action="/group_developing/ShowMainMenuServlet"
+									method="post" class="field">
+									<button class="ui button" type="submit" name="button">戻る</button>
+								</form>
+							</div>
+						</div>
 					</th>
 				</tr>
 			</tfoot>
