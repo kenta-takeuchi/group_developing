@@ -28,12 +28,12 @@
           </div>
           <div class="pink statistic">
             <div class="label">受注件数</div>
-            <div class="value">${month_count_of_order_detail}</div>
+            <div class="value">${count_of_order_detail}</div>
             <div class="label">件</div>
           </div>
           <div class="orange statistic">
             <div class="label">受注総額</div>
-            <div class="value">${month_total_ee}</div>
+            <div class="value">${total_fee}</div>
             <div class="label">円</div>
           </div>
         </div>

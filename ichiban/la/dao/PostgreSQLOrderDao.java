@@ -91,9 +91,6 @@ public class PostgreSQLOrderDao {
 		Date sqlThisDate = CalcMonth.CastToSQLDate(thisDate);
 		Date sqlNextDate = CalcMonth.CastToSQLDate(nextDate);
 
-		System.out.println(sqlThisDate);
-		System.out.println(sqlNextDate);
-
 		try {
 
 			// SQL文の作成
