@@ -38,7 +38,7 @@
 							<label>受注分析：</label>
 							<div class="ui input">
 								<select class="ui select" name="year">
-									<option value="2018">2019年</option>
+									<option value="2018">2018年</option>
 									<option value="2019" selected>2019年</option>
 									<option value="2020">2020年</option>
 									<option value="2021">2021年</option>
@@ -73,7 +73,7 @@
 							<label>受注集計：</label>
 							<div class="ui input">
 								<select class="ui select" name="year">
-									<option value="2018">2019年</option>
+									<option value="2018">2018年</option>
 									<option value="2019" selected>2019年</option>
 									<option value="2020">2020年</option>
 									<option value="2021">2021年</option>

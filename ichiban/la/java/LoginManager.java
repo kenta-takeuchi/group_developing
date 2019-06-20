@@ -166,7 +166,7 @@ public class LoginManager {
 		return true;
 	}
 
-
+	
 	public static String getEmployeeCode(HttpSession session) throws ServletException, IOException {
 		/*
 			機能：
@@ -182,7 +182,7 @@ public class LoginManager {
 
 	}
 
-
+	
 	private static void gotoPage(HttpServletRequest request,
 			HttpServletResponse response, String page) throws ServletException,
 			IOException {

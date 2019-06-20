@@ -24,7 +24,7 @@
       <div class="ui segment center aligned text container">
         <div class="ui small statistics">
           <div class="statistic">
-            <h2>6月度受注総計</h2>
+            <h2>受注総計</h2>
           </div>
           <div class="pink statistic">
             <div class="label">受注件数</div>
