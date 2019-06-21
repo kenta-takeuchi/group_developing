@@ -39,8 +39,7 @@ public class ShowInputFormServlet extends HttpServlet {
 
 		//formのactionがregistの場合の処理
 		if (action.equals("regist")) {
-			String customer_code = request.getParameter("customer_code");
-			request.setAttribute("customer_code", customer_code);
+
 			// 次のサーブレットに渡すリストを準備
 			ArrayList<OrderDetailBean> list = new ArrayList<OrderDetailBean>();
 
@@ -67,6 +66,21 @@ public class ShowInputFormServlet extends HttpServlet {
 				// TODO 自動生成された catch ブロック
 				e.printStackTrace();
 			}
+
+			String customer_code = request.getParameter("customer_code");
+
+			PostgreSQLCustomerDao customerDao;
+			CustomerBean customer_bean = null;
+			try {
+				customerDao = new PostgreSQLCustomerDao();
+				customer_bean = customerDao.selectByCode(customer_code);
+			} catch (DataAccessException e) {
+				// TODO 自動生成された catch ブロック
+				e.printStackTrace();
+			}
+
+			request.setAttribute("customer_code", customer_code);
+			request.setAttribute("customer_name", customer_bean.getName());
 
 			request.setAttribute("products", products);
 

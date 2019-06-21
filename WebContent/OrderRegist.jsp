@@ -29,7 +29,7 @@
 					action="/group_developing/ShowInputFormServlet?action=regist"
 					method="post">
 					<div class="field">
-						<h2>得意先コード</h2>
+						<h2>得意先名</h2>
 						<select class="ui select" name="customer_code">
 							<c:forEach items="${customers}" var="c">
 								<option value="${c.code}">${c.name}</option>

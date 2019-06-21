@@ -31,16 +31,26 @@
 			<thead>
 				<tr>
 					<th>番号</th>
-					<th>商品コード</th>
+					<th>商品名</th>
 					<th>受注数量</th>
 					<th>金額</th>
 				</tr>
 			</thead>
 			<tbody>
-				<c:forEach items="${orderDetails}" var="orderDetail" varStatus="stat">
+				<c:forEach items="${orderDetails}" var="orderDetail"
+					varStatus="stat">
 					<tr>
 						<td class="single line">${stat.count}</td>
-						<td>${orderDetail.product_code}</td>
+						<td>
+							<c:forEach items="${products}"
+								var="p">
+								<c:choose>
+									<c:when test="${p.code == orderDetail.product_code}">
+											${p.name}
+										</c:when>
+								</c:choose>
+							</c:forEach>
+						</td>
 						<td>${orderDetail.quantity}</td>
 						<td>${orderDetail.total_fee}</td>
 					</tr>
@@ -49,10 +59,10 @@
 			<tfoot>
 				<tr>
 					<th colspan="12">
-						<div class="ui form raised very padded center aligned text aq-margin">
+						<div
+							class="ui form raised very padded center aligned text aq-margin">
 							<div class="inline fields">
-								<form
-									action="/group_developing/ShowOrderUpdateFormServlet"
+								<form action="/group_developing/ShowOrderUpdateFormServlet"
 									method="post" class="field">
 									<input type="hidden" name="order_id" value="${order_id}">
 									<button class="ui left button teal" type="submit" name="button">変更</button>

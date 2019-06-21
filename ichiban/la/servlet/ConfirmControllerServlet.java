@@ -53,7 +53,8 @@ public class ConfirmControllerServlet extends HttpServlet {
 					beanDetail.setProduct_code(request.getParameter("product_code_" + cnt));
 					list.add(beanDetail);
 				}
-
+				
+				
 				PostgreSQLOrderDao regist = new PostgreSQLOrderDao();
 				String employee = LoginManager.getEmployeeCode(request.getSession());
 				regist.insertOrder(bean, list, employee);

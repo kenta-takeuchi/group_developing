@@ -7,8 +7,25 @@ import java.math.BigDecimal;
 public class OrderDetailBean implements Serializable {
 	private String order_id;
 	private String product_code;
+	private String product_name;
 	private int quantity;
 	private BigDecimal total_fee;
+
+	public OrderDetailBean(String order_id, String product_code, String product_name, int quantity, BigDecimal total_fee) {
+		this.order_id = order_id;
+		this.product_code = product_code;
+		this.product_name = product_name;
+		this.quantity = quantity;
+		this.total_fee = total_fee;
+	}
+
+	public String getProduct_name() {
+		return product_name;
+	}
+
+	public void setProduct_name(String product_name) {
+		this.product_name = product_name;
+	}
 
 	public OrderDetailBean(String order_id, String product_code, int quantity, BigDecimal total_fee) {
 		this.order_id = order_id;

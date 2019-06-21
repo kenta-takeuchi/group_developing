@@ -11,8 +11,10 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import la.bean.OrderDetailBean;
+import la.bean.ProductBean;
 import la.dao.DataAccessException;
 import la.dao.PostgreSQLOrderDetailDao;
+import la.dao.PostgreSQLProductDao;
 import la.java.LoginManager;
 
 /**
@@ -52,9 +54,20 @@ public class ShowOrderDetailServlet extends HttpServlet {
 				PostgreSQLOrderDetailDao dao = new PostgreSQLOrderDetailDao();
 				List<OrderDetailBean> list = dao.selectByOrderId(order_id);
 
+				PostgreSQLProductDao productDao = null;
+				List<ProductBean> products = null;
+				try {
+					productDao = new PostgreSQLProductDao();
+					products = productDao.selectAll();
+				} catch (DataAccessException e) {
+					// TODO 自動生成された catch ブロック
+					e.printStackTrace();
+				}
+
 				//order_idとlistという名前でorderDetails/OrderDetail.jspに送る。
 				request.setAttribute("order_id", order_id);
 				request.setAttribute("orderDetails", list);
+				request.setAttribute("products", products);
 				RequestDispatcher rd = request.getRequestDispatcher("/OrderDetail.jsp");
 				rd.forward(request, response);
 			}

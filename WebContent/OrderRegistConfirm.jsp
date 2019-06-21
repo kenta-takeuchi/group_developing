@@ -29,7 +29,7 @@
 		</div>
 		<form class="ui form"
 			action="/group_developing/ConfirmControllerServlet" method="post">
-			<label class="ui label large"> 得意先コード：${customer_code} </label>
+			<label class="ui label large"> 得意先名：${customer_name} </label>
 			<table class="ui celled padded table center aligned">
 				<thead>
 					<tr>
@@ -42,7 +42,15 @@
 					<c:forEach items="${list}" var="bean" varStatus="stat">
 						<tr>
 							<td class="single line">${stat.count}</td>
-							<td>${bean.product_code}</td>
+							<td>
+								<c:forEach items="${products}" var="p">
+									<c:choose>
+										<c:when test="${p.code == bean.product_code}">
+											${p.name}
+										</c:when>
+									</c:choose>
+								</c:forEach>
+							</td>
 							<td>${bean.quantity}</td>
 						</tr>
 						<input type="hidden" name="product_code_${stat.count}"
