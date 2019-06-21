@@ -25,14 +25,14 @@
 			</div>
 		</div>
 		<form class="ui form" action="/group_developing/ShowAdminMenuServlet" method="post">
-			<table class="ui celled padded table">
+			<table class="ui celled padded table center aligned">
 				<thead>
 					<tr>
-						<th>商品名</th>
 						<th>商品コード</th>
+						<th>商品名</th>
 						<th>売り上げ</th>
 						<th>前月売り上げ</th>
-						<th>前月比</th>
+						<th>前月からの増減数</th>
 					</tr>
 				</thead>
 				<tbody>
