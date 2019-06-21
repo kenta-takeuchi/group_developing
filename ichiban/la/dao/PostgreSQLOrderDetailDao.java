@@ -21,26 +21,6 @@ public class PostgreSQLOrderDetailDao {
 		con = database.getConnection();
 	}
 
-	public OrderDetailBean selectByProductCode(String product_code) throws DataAccessException {
-		return null;
-	}
-
-	public OrderDetailBean selectById(String order_id, String product_code) throws DataAccessException {
-		return null;
-	}
-
-	public Boolean update(String order_id, String product_code) throws DataAccessException {
-		return null;
-	}
-
-	public OrderDetailBean update(String id) throws DataAccessException {
-		return null;
-	}
-
-	public OrderDetailBean createOrderDetailFromResultSet(ResultSet rs) throws DataAccessException {
-		return null;
-	}
-
 	public int insertOrderDetail(ArrayList<OrderDetailBean> listDetail) throws DataAccessException {
 		PreparedStatement st = null;
 		ResultSet rs = null;
