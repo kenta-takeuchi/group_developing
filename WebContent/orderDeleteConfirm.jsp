@@ -33,7 +33,7 @@
 			<thead>
 				<tr>
 					<th>番号</th>
-					<th>商品コード</th>
+					<th>商品名</th>
 					<th>受注数量</th>
 					<th>金額</th>
 				</tr>
@@ -42,7 +42,15 @@
 				<c:forEach items="${orderDetails}" var="orderDetail" varStatus="stat">
 					<tr>
 						<td class="single line">${stat.count}</td>
-						<td>${orderDetail.product_code}</td>
+						<td>
+							<c:forEach items="${products}" var="p">
+								<c:choose>
+									<c:when test="${p.code == orderDetail.product_code}">
+										${p.name}
+									</c:when>
+								</c:choose>
+							</c:forEach>
+						</td>
 						<td>${orderDetail.quantity}</td>
 						<td>${orderDetail.total_fee}</td>
 					</tr>

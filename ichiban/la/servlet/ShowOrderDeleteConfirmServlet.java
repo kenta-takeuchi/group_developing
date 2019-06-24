@@ -11,8 +11,10 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import la.bean.OrderDetailBean;
+import la.bean.ProductBean;
 import la.dao.DataAccessException;
 import la.dao.PostgreSQLOrderDetailDao;
+import la.dao.PostgreSQLProductDao;
 import la.java.LoginManager;
 
 /**
@@ -51,7 +53,18 @@ public class ShowOrderDeleteConfirmServlet extends HttpServlet {
 			PostgreSQLOrderDetailDao dao = new PostgreSQLOrderDetailDao();
 			List<OrderDetailBean> list = dao.selectByOrderId(order_id);
 
+			PostgreSQLProductDao productDao = null;
+			List<ProductBean> products = null;
+			try {
+				productDao = new PostgreSQLProductDao();
+				products = productDao.selectAll();
+			} catch (DataAccessException e) {
+				// TODO 自動生成された catch ブロック
+				e.printStackTrace();
+			}
+
 			request.setAttribute("order_id", order_id);
+			request.setAttribute("products", products);
 			request.setAttribute("orderDetails", list);
 			RequestDispatcher rd = request.getRequestDispatcher("/orderDeleteConfirm.jsp");
 			rd.forward(request, response);
